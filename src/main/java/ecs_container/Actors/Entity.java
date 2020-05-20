@@ -8,6 +8,10 @@ public abstract class Entity {
     protected int x, y;
     protected boolean isActive = true;
 
+    public Entity() {
+
+    }
+
     public Entity(int x, int y) {
         this.x = x;
         this.y = y;

@@ -15,6 +15,10 @@ public abstract class Mob extends Entity {
     int height;
     int width;
 
+    public Mob() {
+        super();
+    }
+
     public void move() {
 
     }

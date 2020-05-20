@@ -226,6 +226,15 @@ public class MapManager {
         return property;
     }
 
+    public Tile getTileByCoordinates(int xCoord, int yCoord) {
+        for (Tile tile : tiles) {
+            if (tile.getX() == xCoord && tile.getY() == yCoord) {
+                return tile;
+            }
+        }
+        return null;
+    }
+
     public boolean positionInBounds(Constants.PairOfCoordinates pair) {
         return ( pair.getxCoord() / Constants.TILE_SIZE >= 0 &&
                 pair.getxCoord() / Constants.TILE_SIZE <= Constants.MAP_SIZE &&

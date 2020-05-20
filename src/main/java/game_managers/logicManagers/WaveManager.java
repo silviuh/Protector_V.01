@@ -65,7 +65,7 @@ public class WaveManager {
 
     public void update() {
         if (currentNrOfEnemies < totalNrOfEnemies) {
-            currentEnemyType = Constants.enemyType.values()[new Random().nextInt( ( int ) totalNumberOfEnemyTypes )];
+            currentEnemyType = Constants.enemyType.values()[new Random().nextInt( ( int ) totalNumberOfEnemyTypes - 1 )]; // -1 as we don't want the undefined type too
             if (wavesClocks.get( "WAVE_1" ).mayUpate()) {
                 System.out.println( "Enemy created..." );
                 enemyManager.addEnemy(

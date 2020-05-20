@@ -9,6 +9,9 @@ import utilities.Clock;
 import java.util.ArrayList;
 
 public class Groot extends Enemy{
+    public Groot(){
+        super();
+    }
     public Groot(Tile startTile, int height, int width, ArrayList< SpriteSheet > sprites, Clock clock, int livesTaken) {
         super(
                 startTile,

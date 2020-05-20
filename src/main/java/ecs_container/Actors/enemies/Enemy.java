@@ -21,6 +21,10 @@ public abstract class Enemy extends Mob {
     protected int     lastX;
     protected int     lastY;
 
+    public Enemy() {
+        super();
+    }
+
     public Enemy(Tile startTile, int height, int width, ArrayList< SpriteSheet > sprites, Clock clock, int livesTaken) {
         super(
                 startTile.getX(),
@@ -30,6 +34,18 @@ public abstract class Enemy extends Mob {
                 sprites
         );
 
+        /*
+        super(
+                200,
+                200,
+                height,
+                width,
+                sprites
+        );
+
+         */
+
+
         this.startTile = startTile;
         this.health = 100;
         this.initialHealth = health;
@@ -37,8 +53,12 @@ public abstract class Enemy extends Mob {
         this.livesTaken = livesTaken;
         this.enemyGotHit = false;
         this.clock = clock;
+
+        // !!!!
         this.lastX = startTile.getX();
         this.lastY = startTile.getY();
+        // this.lastX = 200;
+        // this.lastY = 200;
     }
 
     public Enemy(Tile startTile, ArrayList< SpriteSheet > sprites, Clock clock, int livesTaken) {

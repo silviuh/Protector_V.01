@@ -9,6 +9,11 @@ import utilities.Clock;
 import java.util.ArrayList;
 
 public class Owl extends Enemy {
+
+    public Owl(){
+        super();
+    }
+
     public Owl(Tile startTile, int height, int width, ArrayList< SpriteSheet > sprites, Clock clock, int livesTaken) {
         super(
                 startTile,

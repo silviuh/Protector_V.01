@@ -9,6 +9,10 @@ import utilities.Clock;
 import java.util.ArrayList;
 
 public class Sonic extends Enemy {
+    public Sonic() {
+        super();
+    }
+
     public Sonic(Tile startTile, int height, int width, ArrayList< SpriteSheet > sprites, Clock clock, int livesTaken) {
         super(
                 startTile,

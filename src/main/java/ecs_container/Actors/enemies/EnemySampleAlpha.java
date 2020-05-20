@@ -7,6 +7,10 @@ import utilities.Clock;
 import java.util.ArrayList;
 
 public class EnemySampleAlpha extends Enemy {
+    public EnemySampleAlpha() {
+        super();
+    }
+
     public EnemySampleAlpha(Tile startTile, int height, int width, ArrayList< SpriteSheet > sprites, Clock clock, int livesTaken) {
         super(
                 startTile,

@@ -10,6 +10,10 @@ import java.util.ArrayList;
 
 public class Devil extends Enemy {
 
+    public Devil() {
+        super();
+    }
+
     public Devil(Tile startTile, int height, int width, ArrayList< SpriteSheet > sprites, Clock clock, int livesTaken) {
         super(
                 startTile,

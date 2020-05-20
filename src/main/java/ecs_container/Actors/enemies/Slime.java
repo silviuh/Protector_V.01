@@ -9,6 +9,11 @@ import utilities.Clock;
 import java.util.ArrayList;
 
 public class Slime extends Enemy {
+
+    public Slime(){
+        super();
+    }
+
     public Slime(Tile startTile, int height, int width, ArrayList< SpriteSheet > sprites, Clock clock, int livesTaken) {
         super(
                 startTile,

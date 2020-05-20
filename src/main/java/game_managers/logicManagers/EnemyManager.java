@@ -3,6 +3,7 @@ package game_managers.logicManagers;
 import Constants.Constants;
 import ecs_container.Actors.Player;
 import ecs_container.Actors.enemies.Enemy;
+import factories.EnemyFactory;
 import graphic_context.MapManager;
 
 import java.awt.*;
@@ -140,6 +141,69 @@ public class EnemyManager {
             }
         }
         return validCandidates;
+    }
+
+    public String serializeEnemies() {
+        StringBuilder result = new StringBuilder();
+
+        for (ArrayList< Enemy > enemyList : container.values()) {
+            if (enemyList.size() > 10) {
+                for (Enemy enemy : enemyList) {
+                    if (enemy.isActive()) {
+                        result.append(
+                                "|" +
+                                        getEnemyByClassName( enemy.getClass().getSimpleName() ) + " " +
+                                        enemy.getHealth() + " " +
+                                        new Integer( enemy.getX() ).toString() + " " +
+                                        new Integer( enemy.getY() ).toString()
+                        );
+                    }
+                }
+            }
+        }
+
+        System.out.println( result.toString() );
+        return result.toString();
+    }
+
+    public void deserializeEnemies(String serializedContainer) {
+        String[] enemiesTokens = serializedContainer.split( "\\|" );
+
+        for (int i = 0; i < enemiesTokens.length; i++) {
+            if (enemiesTokens[i].length() > 1) {
+                String[] values = enemiesTokens[i].split( " " );
+                addEnemy(
+                        EnemyFactory.createDeserializedInstance(
+                                mapManager.getTileByCoordinates( Integer.parseInt( values[2] ), Integer.parseInt( values[3] ) ),
+                                Constants.enemyType.values()[getEnemyByClassName( values[0] )],
+                                Double.parseDouble( values[1] )
+                        ),
+                        "GENERIC_NAME"
+                );
+            }
+        }
+    }
+
+
+    public Integer getEnemyByClassName(String className) {
+        switch (className) {
+            case "Devil": {
+                return 0;
+            }
+            case "Groot": {
+                return 1;
+            }
+            case "Sonic": {
+                return 2;
+            }
+            case "Owl": {
+                return 3;
+            }
+            case "Slime": {
+                return 4;
+            }
+        }
+        return -1;
     }
 
     static public ArrayList< Constants.PairOfCoordinates > spriteRectangleVertices(int xCoord, int yCoord) {

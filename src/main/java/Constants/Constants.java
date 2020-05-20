@@ -160,6 +160,7 @@ public class Constants {
         TYPE_3,
         TYPE_4,
         TYPE_5,
+        UNDEFINED_TYPE
         // TYPE_6,
         // TYPE_7
     }
