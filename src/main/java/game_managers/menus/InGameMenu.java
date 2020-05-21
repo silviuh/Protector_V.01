@@ -1,7 +1,10 @@
 package game_managers.menus;
 
 import Constants.Constants;
+import ecs_container.Actors.Player;
 import game_managers.logicManagers.AccelerationManager;
+import game_managers.logicManagers.GameMainFrame;
+import game_managers.logicManagers.GamePanel;
 import game_managers.logicManagers.GameStateManager;
 
 import javax.swing.*;
@@ -9,6 +12,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
@@ -16,14 +20,14 @@ import java.util.concurrent.locks.ReentrantLock;
 public class InGameMenu {
     private static          ReentrantLock singletonLock;
     private static volatile InGameMenu    inGameMenu;
-    private                 JFrame        mainFrame;
+    private                 GameMainFrame mainFrame;
     private                 JMenuBar      menuBar;
     private                 JMenu         menu, submenu;
     private GameStateManager    stateManager;
     private AccelerationManager accelerationManager;
     private List< JMenuItem >   menuItems;
 
-    private InGameMenu(JFrame mainFrame, GameStateManager stateManager, AccelerationManager accelerationManager) {
+    private InGameMenu(GameMainFrame mainFrame, GameStateManager stateManager, AccelerationManager accelerationManager) {
         this.menuItems = new ArrayList< JMenuItem >();
         this.stateManager = stateManager;
         this.accelerationManager = accelerationManager;
@@ -105,6 +109,37 @@ public class InGameMenu {
 
 
         currentMenuItem = new JMenuItem(
+                "Save Game",
+                new ImageIcon( Constants.SAVE_GAME_ICON_URL )
+        );
+        currentMenuItem.setSize( 32, 32 );
+        currentMenuItem.setMnemonic( KeyEvent.VK_B );
+        currentMenuItem.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                GamePanel gamePanel = mainFrame.getGamePanel();
+                try {
+                    mainFrame.getDbManager().openConnection();
+                    mainFrame.getDbManager().INSERTIntoGameSavings(
+                            gamePanel.getEnemyManager().serializeEnemies(),
+                            gamePanel.getTowerManager().serializeTowers(),
+                            Player.getLives(),
+                            Player.getCurrentScore(),
+                            0, // !
+                            Player.getCurrentAmountOfMoney()
+                    );
+                    mainFrame.getDbManager().closeConnection();
+                } catch ( SQLException | ClassNotFoundException throwables ) {
+                    throwables.printStackTrace();
+                }
+            }
+        } );
+        currentMenuItem.setOpaque( true );
+        currentMenuItem.setBackground( Color.WHITE );
+        menuItems.add( currentMenuItem );
+
+
+        currentMenuItem = new JMenuItem(
                 "Exit",
                 new ImageIcon( Constants.EXIT_BUTTON_1_URL )
         );
@@ -145,7 +180,7 @@ public class InGameMenu {
         mainFrame.setJMenuBar( menuBar );
     }
 
-    public static InGameMenu getInstance(JFrame mainFrame, GameStateManager stateManager, AccelerationManager accelerationManager) {
+    public static InGameMenu getInstance(GameMainFrame mainFrame, GameStateManager stateManager, AccelerationManager accelerationManager) {
         singletonLock = new ReentrantLock();
         if (inGameMenu == null) {
             try {

@@ -304,5 +304,13 @@ public class GamePanel extends JPanel {
                 Constants.FPS_RATE_Y + Constants.FPS_RATE_Y_PADDING
         );
     }
+
+    public EnemyManager getEnemyManager() {
+        return enemyManager;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
 }
 

@@ -423,6 +423,7 @@ public class Constants {
     public static final String SELL_BUTTON_URL    = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\in_game_buttons\\2.png";
     public static final String SELL_ICON_URL      = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\in_game_icons\\sell_dollar_3.png";
 
+    public static final String SAVE_GAME_ICON_URL = "C:\\Users\\silviu\\IdeaProjects\\Protector_Maven\\src\\main\\java\\assets\\in_game_icons\\save_3.png";
 
     public static final String IN_GAME_MENU_BACKGROUND = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\in_game_menu_bg\\5.jpg";
 

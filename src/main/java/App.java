@@ -8,12 +8,11 @@ public class App {
     public static void main(String[] args) {
 
         SwingUtilities.invokeLater( new Runnable() {
-
             DBManager dbManager = DBManager.getInstance();
 
             @Override
             public void run() {
-                GameMainFrame game = new GameMainFrame();
+                GameMainFrame game = new GameMainFrame(dbManager);
             }
         } );
     }

@@ -82,6 +82,7 @@ public class Player {
         */
     }
 
+
     public static boolean modifyLives(int amount) {
         if (lives + amount <= Constants.MAX_LIVES_AMOUNT_LEVEL_1) {
             lives += amount;
@@ -184,7 +185,18 @@ public class Player {
         return fortressY;
     }
 
-    public static int getNrOfLives(){
+    public static int getNrOfLives() {
         return Player.uiHeartBar.getCurrentNrOfLifes();
     }
+
+    public static int getCurrentScore() {
+        // !
+        return 0;
+    }
+
+    public static float getCurrentAmountOfMoney() {
+        return deposit;
+    }
+
+
 }

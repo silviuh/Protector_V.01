@@ -1,6 +1,7 @@
 package game_managers.logicManagers;
 
 import Constants.Constants;
+import game_managers.db.DBManager;
 import game_managers.menus.HelpMenu;
 import game_managers.menus.InGameMenu;
 import game_managers.menus.MainMenu;
@@ -14,13 +15,15 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class GameMainFrame extends JFrame {
+    private JPanel     mainPanelContainer = null;
+    private GamePanel  gamePanel          = null;
+    private MainMenu   mainMenuPanel      = null;
+    private HelpMenu   helpMenu           = null;
+    private InGameMenu inGameMenu         = null;
+    private CardLayout panelSwitcher      = null;
 
-    private JPanel                    mainPanelContainer = null;
-    private GamePanel                 gamePanel          = null;
-    private MainMenu                  mainMenuPanel      = null;
-    private HelpMenu                  helpMenu           = null;
-    private InGameMenu                inGameMenu         = null;
-    private CardLayout                panelSwitcher      = null;
+    private DBManager dbManager = null;
+
     private HashMap< String, JPanel > panels;
     Dimension screenDimension = null;
 
@@ -28,8 +31,8 @@ public class GameMainFrame extends JFrame {
         return gamePanel;
     }
 
-    public GameMainFrame() {
-
+    public GameMainFrame(DBManager dbManager) {
+        this.dbManager = dbManager;
         mainPanelContainer = new JPanel();
         gamePanel = new GamePanel( this );
         mainMenuPanel = new MainMenu( this );
@@ -113,5 +116,9 @@ public class GameMainFrame extends JFrame {
 
     public JPanel getMainPanelContainer() {
         return mainPanelContainer;
+    }
+
+    public DBManager getDbManager() {
+        return dbManager;
     }
 }

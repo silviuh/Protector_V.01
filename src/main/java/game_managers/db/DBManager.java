@@ -56,6 +56,17 @@ public class DBManager {
         return dbManager;
     }
 
+    public void openConnection() throws ClassNotFoundException, SQLException {
+        Class.forName( DBManager.DB_SERVER );
+        this.connection = DriverManager.getConnection( DBManager.DB_NAME );
+        this.connection.setAutoCommit( false );
+    }
+
+    public void closeConnection() throws SQLException {
+        this.connection.commit();
+        this.connection.close();
+    }
+
     private void initDataBase() throws SQLException {
         try {
             Class.forName( DBManager.DB_SERVER );
@@ -67,11 +78,13 @@ public class DBManager {
             createTable( "HighScores" );
             createTable( "GameSavings" );
 
-
+            /*
             INSERTIntoMapFiles(
                     "C:\\Users\\silviu\\IdeaProjects\\Protector_Maven\\src\\main\\java\\config_files\\level_1.txt",
-                    1
+                    1,
+                    200
             );
+             */
             // SELECTFileContent( 1 );
 
             /*
@@ -146,7 +159,10 @@ public class DBManager {
                 this.preparedStatement = connection.prepareStatement( "CREATE TABLE MapFiles " +
                         "(LEVELNUMBER INT NOT NULL," +
                         "NAME TEXT NOT NULL," +
-                        "CONTENT TEXT NOT NULL)" );
+                        "CONTENT TEXT NOT NULL," +
+                        "NR_OF_MONSTERS_PER_LEVEL INT NOT NULL" +
+                        ")"
+                );
                 this.preparedStatement.executeUpdate();
                 break;
             }
@@ -183,7 +199,7 @@ public class DBManager {
         this.preparedStatement.close();
     }
 
-    public void INSERTIntoMapFiles(String fileName, int levelNumber) throws SQLException {
+    public void INSERTIntoMapFiles(String fileName, int levelNumber, int numberOfMonsters) throws SQLException {
         String fileContent = null;
 
         if (fileName != null) {
@@ -202,11 +218,12 @@ public class DBManager {
 
         this.preparedStatement = connection.prepareStatement(
                 "INSERT INTO MapFiles " +
-                        "(LEVELNUMBER, NAME, CONTENT) VALUES(?, ?, ?);"
+                        "(LEVELNUMBER, NAME, CONTENT, NR_OF_MONSTERS_PER_LEVEL) VALUES(?, ?, ?, ?);"
         );
         this.preparedStatement.setInt( 1, levelNumber );
         this.preparedStatement.setString( 2, fileName );
         this.preparedStatement.setString( 3, fileContent );
+        this.preparedStatement.setInt( 4, numberOfMonsters );
         this.preparedStatement.executeUpdate();
     }
 
@@ -219,6 +236,17 @@ public class DBManager {
         resultSet.next();
 
         return resultSet.getString( "CONTENT" );
+    }
+
+    public int SELECTNR_OF_MONSTERS_PER_LEVEL(int levelNumber) throws SQLException {
+        this.preparedStatement = connection.prepareStatement(
+                "SELECT NR_OF_MONSTERS_PER_LEVEL FROM MapFiles WHERE LEVELNUMBER  = ?;"
+        );
+        this.preparedStatement.setInt( 1, levelNumber );
+        ResultSet resultSet = this.preparedStatement.executeQuery();
+        resultSet.next();
+
+        return resultSet.getInt( "NR_OF_MONSTERS_PER_LEVEL" );
     }
 
     public void INSERTIntoHighScores(int highScore) throws SQLException {
