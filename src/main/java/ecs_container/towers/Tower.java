@@ -13,12 +13,13 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public abstract class Tower {
-    public    String         name;
-    public    boolean        drawRange       = false;
-    protected SpriteSheet    sprite;
-    protected Clock          clock;
-    protected EnemyManager   enemyManagerRef = null;
-    protected TowerBehaviour behaviour;
+    public    String                   name;
+    public    boolean                  drawRange       = false;
+    protected SpriteSheet              sprite;
+    protected Clock                    clock;
+    protected EnemyManager             enemyManagerRef = null;
+    protected TowerBehaviour           behaviour;
+    protected Constants.projectileType projectileType;
 
     protected ArrayList< Projectile > projectiles;
 
@@ -42,7 +43,7 @@ public abstract class Tower {
 
     public Tower(int xPos, int yPos, SpriteSheet sprite, Color innerCirclecColor,
                  Color outerCircleColor, Color textInfoColor, int range, String name,
-                 TowerBehaviour towerBehaviour, Clock clock, EnemyManager enemyManager) {
+                 TowerBehaviour towerBehaviour, Clock clock, EnemyManager enemyManager, Constants.projectileType projectileType) {
 
         this.xPos = xPos;
         this.yPos = yPos;
@@ -58,6 +59,7 @@ public abstract class Tower {
         this.enemyManagerRef = enemyManager;
         this.behaviour = towerBehaviour;
         this.projectiles = new ArrayList< Projectile >();
+        this.projectileType = projectileType;
 
         this.setActive( true );
     }
@@ -99,7 +101,7 @@ public abstract class Tower {
             if (numberOfEnemiesInRange > 0) {
                 projectiles.add(
                         ProjectileFactory.createInstance(
-                                Constants.projectileType.CANNON_BLAST,
+                                projectileType,
                                 this.xPos + Constants.PROJECTILE_PADDING,
                                 this.yPos + Constants.PROJECTILE_PADDING,
                                 enemies.get( new Random().nextInt( numberOfEnemiesInRange ) ),

@@ -233,7 +233,7 @@ public class GamePanel extends JPanel {
         UIConsole.update();
 
         if (toDeleteDesTowers == false) {
-            towerManager.deserializeTowers( "|ArcaneTower 588 168 3 CANNON_TOWER|CraneTower 798 168 1 ARCANE_TOWER|ZombieTower 294 168 2 CRANE_TOWER" );
+            towerManager.deserializeTowers( "|CannonTower 588 168 3 CANNON_TOWER|CraneTower 798 168 1 ARCANE_TOWER|ZombieTower 294 168 2 CRANE_TOWER" );
             toDeleteDesTowers = true;
         }
     }

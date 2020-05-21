@@ -1,15 +1,17 @@
 package ecs_container.towers;
 
+import Constants.Constants;
 import game_managers.logicManagers.EnemyManager;
 import graphic_context.SpriteSheet;
 import utilities.Clock;
 
 import java.awt.*;
+import java.sql.Connection;
 
 public class ArcaneTower extends Tower {
     public ArcaneTower(int xPos, int yPos, SpriteSheet sprite, Color innerCirclecColor, Color outerCircleColor,
                        Color textInfoColor, int range, String name, TowerBehaviour towerBehaviour,
-                       Clock clock, EnemyManager enemyManager) {
+                       Clock clock, EnemyManager enemyManager, Constants.projectileType projectileType) {
         super(
                 xPos,
                 yPos,
@@ -21,7 +23,8 @@ public class ArcaneTower extends Tower {
                 name,
                 towerBehaviour,
                 clock,
-                enemyManager
+                enemyManager,
+                projectileType
         );
     }
 

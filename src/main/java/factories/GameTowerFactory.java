@@ -46,7 +46,8 @@ public class GameTowerFactory {
                                 Constants.attackBehaviour.CRANE
                         ),
                         clock,
-                        enemyManager
+                        enemyManager,
+                        Constants.projectileType.CRANE_TRACKER
                 );
                 break;
             }
@@ -67,7 +68,8 @@ public class GameTowerFactory {
                                 Constants.attackBehaviour.ARCANE
                         ),
                         clock,
-                        enemyManager
+                        enemyManager,
+                        Constants.projectileType.ARCANE_BLAST
                 );
                 break;
             }
@@ -88,7 +90,8 @@ public class GameTowerFactory {
                                 Constants.attackBehaviour.ZOMBIE
                         ),
                         clock,
-                        enemyManager
+                        enemyManager,
+                        Constants.projectileType.ZOMBIE_MISSLE
                 );
                 break;
             }
@@ -109,7 +112,8 @@ public class GameTowerFactory {
                                 Constants.attackBehaviour.CANNON
                         ),
                         clock,
-                        enemyManager
+                        enemyManager,
+                        Constants.projectileType.CANNON_BLAST
                 );
                 break;
             }
@@ -147,7 +151,8 @@ public class GameTowerFactory {
                                 Constants.attackBehaviour.CRANE
                         ),
                         clock,
-                        enemyManager
+                        enemyManager,
+                        Constants.projectileType.CRANE_TRACKER
                 );
                 break;
             }
@@ -168,7 +173,8 @@ public class GameTowerFactory {
                                 Constants.attackBehaviour.ARCANE
                         ),
                         clock,
-                        enemyManager
+                        enemyManager,
+                        Constants.projectileType.ARCANE_BLAST
                 );
                 break;
             }
@@ -189,7 +195,8 @@ public class GameTowerFactory {
                                 Constants.attackBehaviour.ZOMBIE
                         ),
                         clock,
-                        enemyManager
+                        enemyManager,
+                        Constants.projectileType.ZOMBIE_MISSLE
                 );
                 break;
             }
@@ -210,7 +217,8 @@ public class GameTowerFactory {
                                 Constants.attackBehaviour.CANNON
                         ),
                         clock,
-                        enemyManager
+                        enemyManager,
+                        Constants.projectileType.CANNON_BLAST
                 );
                 break;
             }
