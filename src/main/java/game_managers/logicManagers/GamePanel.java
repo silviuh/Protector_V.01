@@ -23,6 +23,7 @@ import java.io.IOException;
 
 public class GamePanel extends JPanel {
 
+    private boolean              toDeleteDesTowers = false;
     private ImageIcon            backgroundImage;
     private Font                 textFont;
     private Timer                timer;
@@ -230,6 +231,11 @@ public class GamePanel extends JPanel {
         towerManager.update();
         enemyManager.update();
         UIConsole.update();
+
+        if (toDeleteDesTowers == false) {
+            towerManager.deserializeTowers( "|ArcaneTower 588 168 3 CANNON_TOWER|CraneTower 798 168 1 ARCANE_TOWER|ZombieTower 294 168 2 CRANE_TOWER" );
+            toDeleteDesTowers = true;
+        }
     }
 
     public void drawUI(Graphics g) {

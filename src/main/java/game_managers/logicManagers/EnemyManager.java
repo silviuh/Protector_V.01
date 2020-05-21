@@ -147,22 +147,18 @@ public class EnemyManager {
         StringBuilder result = new StringBuilder();
 
         for (ArrayList< Enemy > enemyList : container.values()) {
-            if (enemyList.size() > 10) {
-                for (Enemy enemy : enemyList) {
-                    if (enemy.isActive()) {
-                        result.append(
-                                "|" +
-                                        getEnemyByClassName( enemy.getClass().getSimpleName() ) + " " +
-                                        enemy.getHealth() + " " +
-                                        new Integer( enemy.getX() ).toString() + " " +
-                                        new Integer( enemy.getY() ).toString()
-                        );
-                    }
+            for (Enemy enemy : enemyList) {
+                if (enemy.isActive()) {
+                    result.append(
+                            "|" +
+                                    ( enemy.getClass().getSimpleName() ) + " " +
+                                    enemy.getHealth() + " " +
+                                    new Integer( enemy.getX() ).toString() + " " +
+                                    new Integer( enemy.getY() ).toString()
+                    );
                 }
             }
         }
-
-        System.out.println( result.toString() );
         return result.toString();
     }
 
@@ -175,6 +171,7 @@ public class EnemyManager {
                 addEnemy(
                         EnemyFactory.createDeserializedInstance(
                                 mapManager.getTileByCoordinates( Integer.parseInt( values[2] ), Integer.parseInt( values[3] ) ),
+                                // Constants.enemyType.values()[getEnemyByClassName( values[0] )],
                                 Constants.enemyType.values()[getEnemyByClassName( values[0] )],
                                 Double.parseDouble( values[1] )
                         ),

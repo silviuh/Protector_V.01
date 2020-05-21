@@ -14,6 +14,7 @@ import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class WaveManager {
+    private                 boolean                               deleteFlagValue = false;
     private static volatile WaveManager                           waveManager;
     private                 EnemyManager                          enemyManager;
     private                 ClockManager                          clockManager;
@@ -78,6 +79,14 @@ public class WaveManager {
                 currentNrOfEnemies++;
             }
         }
+        /*
+        if (deleteFlagValue == false) {
+            enemyManager.deserializeEnemies(
+                    "|Devil 40.0 126 168|Owl 80.0 42 42|Slime 40.0 84 42|Sonic 90.0 42 84"
+            );
+            deleteFlagValue = true;
+        }
+         */
     }
 
     public void render(Graphics graphics) {

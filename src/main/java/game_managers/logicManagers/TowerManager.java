@@ -1,7 +1,10 @@
 package game_managers.logicManagers;
 
 import Constants.Constants;
+import ecs_container.Actors.enemies.Enemy;
+import ecs_container.towers.ArcaneTower;
 import ecs_container.towers.Tower;
+import factories.EnemyFactory;
 import factories.GameTowerFactory;
 import graphic_context.MapManager;
 
@@ -127,5 +130,100 @@ public class TowerManager {
             }
         }
         return null;
+    }
+
+    public int getTowerByClassName(String towerName) {
+        switch (towerName) {
+            case "ArcaneTower": {
+                return 0;
+            }
+            case "CannonTower": {
+                return 1;
+            }
+            case "ZombieTower": {
+                return 2;
+            }
+            case "CraneTower": {
+                return 3;
+            }
+        }
+        return -1;
+    }
+
+    public String getTowerUINameByClasssName(String towerName) {
+        switch (towerName) {
+            case "ArcaneTower": {
+                return "ARCANE_TOWER";
+            }
+            case "CannonTower": {
+                return "CANNON_TOWER";
+            }
+            case "ZombieTower": {
+                return "ZOMBIE_TOWER";
+            }
+            case "CraneTower": {
+                return "CRANE_TOWER";
+            }
+        }
+        return "UNDEFINED";
+    }
+
+    public int getTowerTypeByClassName(String towerName) {
+        switch (towerName) {
+            case "ArcaneTower": {
+                return 0;
+            }
+            case "CannonTower": {
+                return 1;
+            }
+            case "ZombieTower": {
+                return 2;
+            }
+            case "CraneTower": {
+                return 3;
+            }
+        }
+        return -1;
+    }
+
+
+    public String serializeTowers() {
+        StringBuilder result = new StringBuilder();
+
+        for (ArrayList< Tower > towerList : container.values()) {
+            for (Tower tower : towerList) {
+                if (tower.isActive()) {
+                    result.append(
+                            "|" +
+                                    ( tower.getClass().getSimpleName() ) + " " +
+                                    new Integer( tower.getxPos() ).toString() + " " +
+                                    new Integer( tower.getyPos() ).toString() + " " +
+                                    new Integer( tower.getLevel() ).toString() + " " +
+                                    getTowerUINameByClasssName( tower.getClass().getSimpleName() )
+                    );
+                }
+            }
+        }
+
+        return result.toString();
+    }
+
+    public void deserializeTowers(String serializedContainer) {
+        String[] towersTokens = serializedContainer.split( "\\|" );
+
+        for (int i = 0; i < towersTokens.length; i++) {
+            if (towersTokens[i].length() > 1) {
+                String[] values = towersTokens[i].split( " " );
+                addTower(
+                        GameTowerFactory.createDeserializedInstance(
+                                Integer.parseInt( values[1] ),
+                                Integer.parseInt( values[2] ),
+                                Constants.towerType.values()[getTowerTypeByClassName( values[0] )],
+                                Integer.parseInt( values[3] )
+                        ),
+                        values[4]
+                );
+            }
+        }
     }
 }

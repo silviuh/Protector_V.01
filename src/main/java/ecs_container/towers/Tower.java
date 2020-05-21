@@ -128,6 +128,10 @@ public abstract class Tower {
         return this.behaviour.refundValue;
     }
 
+    public int getLevel() {
+        return this.behaviour.currentLevel;
+    }
+
     public boolean upgrade() {
         if (this.behaviour.currentLevel < this.behaviour.maxLevel) {
             this.behaviour.currentLevel++;

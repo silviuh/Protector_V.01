@@ -11,6 +11,44 @@ public class SpriteContainerFactory {
 
     }
 
+    public static SpriteSheet createTowerSprite(Constants.towerType towerType) {
+        switch (towerType) {
+            case IN_GAME_CRANE_TOWER: {
+                return new SpriteSheet(
+                        Constants.tileProperty.SOLID,
+                        new ImageIcon( Constants.CRANE_TOWER_URL ).getImage(),
+                        Constants.TILE_SIZE,
+                        Constants.TILE_SIZE
+                );
+            }
+            case IN_GAME_ARCANE_TOWER: {
+                return new SpriteSheet(
+                        Constants.tileProperty.SOLID,
+                        new ImageIcon( Constants.ARCANE_TOWER_URL ).getImage(),
+                        Constants.TILE_SIZE,
+                        Constants.TILE_SIZE
+                );
+            }
+            case IN_GAME_ZOMBIE_TOWER: {
+                return new SpriteSheet(
+                        Constants.tileProperty.SOLID,
+                        new ImageIcon( Constants.ZOMBIE_TOWER_URL ).getImage(),
+                        Constants.TILE_SIZE,
+                        Constants.TILE_SIZE
+                );
+            }
+            case IN_GAME_CANNON_TOWER: {
+                return new SpriteSheet(
+                        Constants.tileProperty.SOLID,
+                        new ImageIcon( Constants.CANNON_TOWER_URL ).getImage(),
+                        Constants.TILE_SIZE,
+                        Constants.TILE_SIZE
+                );
+            }
+        }
+        return null;
+    }
+
     public static ArrayList< SpriteSheet > createSprite(Constants.enemyType enemyType) {
         ArrayList< SpriteSheet > sprites = new ArrayList< SpriteSheet >();
 
