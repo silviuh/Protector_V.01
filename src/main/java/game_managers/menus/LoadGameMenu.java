@@ -82,8 +82,8 @@ public class LoadGameMenu extends JPanel {
 
         dbManager.openConnection();
         int                                    i         = 0;
-        ArrayList< HashMap< String, Object > > container = dbManager.SELECTLastNGameSavings( 4 );
-        while (i < 4) {
+        ArrayList< HashMap< String, Object > > container = dbManager.SELECTLastNGameSavings( Constants.NR_OF_AVAILABLE_GAME_SAVINGS );
+        while (i < container.size()) {
             savings.add(
                     container.get( i )
             );
@@ -153,7 +153,20 @@ public class LoadGameMenu extends JPanel {
     }
 
     public void initializeFunctionality() {
-
+        for (int i = 0; i < savings.size(); i++) {
+            int finalI = i;
+            loadGameButtons[i].addActionListener( new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    mainFrameReference.getPanelSwitcher().show(
+                            mainFrameReference.getMainPanelContainer(),
+                            "GAME_PANEL"
+                    );
+                    mainFrameReference.getGamePanel().gameSetup( savings.get( finalI ), mainFrameReference );
+                    mainFrameReference.getGamePanel().startGame();
+                }
+            } );
+        }
 
         backToMyMenuBtn.addActionListener( new ActionListener() {
             @Override

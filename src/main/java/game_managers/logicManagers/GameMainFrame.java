@@ -132,4 +132,10 @@ public class GameMainFrame extends JFrame {
     public DBManager getDbManager() {
         return dbManager;
     }
+
+    public void initalizeGame(HashMap< String, Object > dataSet) {
+        if (dataSet != null) {
+            this.gamePanel = new GamePanel( this );
+        }
+    }
 }

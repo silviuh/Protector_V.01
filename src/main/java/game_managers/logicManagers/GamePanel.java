@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.HashMap;
 
 public class GamePanel extends JPanel {
 
@@ -49,18 +50,28 @@ public class GamePanel extends JPanel {
     private Long      lastTime        = 0L;
     private float     fpsRate         = 0f;
 
-    public GamePanel(GameMainFrame frame) {
-        setLayout( null );
-        initializeVariables();
-        initializeGame();
-        initializeLayout();
-
+    public void gameSetup(HashMap< String, Object > dataSet, GameMainFrame frame) {
+        if (dataSet == null) {
+            setLayout( null );
+            initializeVariables();
+            // initializeGame();
+            initializeLayout();
+        } else {
+            setLayout( null );
+            initializeVariablesFromUpdate( dataSet );
+            // initializeGame();
+            initializeLayout();
+        }
         this.gameFrame = frame;
         this.gameFrame.addKeyListener( this.keyHandlerManager );
 
         Mouse mouse = new Mouse( this );
         addMouseListener( mouse );
         addMouseMotionListener( mouse );
+    }
+
+    public GamePanel(GameMainFrame frame) {
+        initializeGame();
     }
 
     public AccelerationManager getAccelerationManager() {
@@ -179,7 +190,6 @@ public class GamePanel extends JPanel {
         }
 
         this.clockManager = ClockManager.getInstance();
-
         this.player = Player.getInstance(
                 40,
                 40,
@@ -209,6 +219,49 @@ public class GamePanel extends JPanel {
 
         // !
     }
+
+    private void initializeVariablesFromUpdate(HashMap< String, Object > dataSet) {
+        try {
+            textFont = Font.createFont( Font.TRUETYPE_FONT, new FileInputStream( new File( Constants.KENVECTOR_FUTURE_THIN_URL ) ) ).deriveFont( 20.0f );
+        } catch ( FileNotFoundException e ) {
+            e.printStackTrace();
+        } catch ( FontFormatException e ) {
+            e.printStackTrace();
+        } catch ( IOException e ) {
+            e.printStackTrace();
+        }
+
+        this.clockManager = ClockManager.getInstance();
+        this.player = Player.getInstance(
+                ( Integer ) dataSet.get( "LIFE" ),
+                40,
+                ( Integer ) dataSet.get( "MONEY" ),
+                clockManager
+        );
+
+        clockManager.addClock( UIConsole.getUpdateClock() );
+        EnemyFactory.setClockManager( clockManager );
+        GameTowerFactory.setClockManager( clockManager );
+        ProjectileFactory.setClockManager( clockManager );
+
+        this.keyHandlerManager = new KeyHandlerManager( this );
+
+        // !load map from db by level
+        this.mapManager = MapManager.getInstance( Constants.LEVEL_1_MAP_CONFIG_TXT );
+        Player.setFortressX( this.mapManager.getAllyKeepCoordinates().getxCoord() );
+        Player.setFortressY( this.mapManager.getAllyKeepCoordinates().getyCoord() );
+
+        this.handHolder = new Constants.HandHolder();
+        this.uItowersManager = UItowersManager.getInstance( 1 );
+        this.towerManager = TowerManager.getInstance( mapManager );
+        this.enemyManager = EnemyManager.getInstance( mapManager );
+        this.waveManager = WaveManager.getInstance( mapManager, enemyManager, clockManager );
+        GameTowerFactory.setEnemyManager( enemyManager );
+        this.mouseIcon = MouseIcon.generateMouseIcon();
+        this.gameSpeed = Constants.GAME_SPEED;
+        // !
+    }
+
 
     public synchronized void startGame() {
         this.stateManager.setCurrentState( Constants.StateID.PLAYING );

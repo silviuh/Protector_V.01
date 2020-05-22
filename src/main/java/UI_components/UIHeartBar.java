@@ -19,9 +19,9 @@ public class UIHeartBar {
     private int   y;
 
     public UIHeartBar(int initialCounter, ImageIcon foregroundIcon, ImageIcon backgroundIcon, int width,
-                      int height, int x, int y) {
+                      int height, int x, int y, int currentNrOfLifes) {
         this.initialNumberOfLifes = initialCounter;
-        this.currentNrOfLifes = initialCounter;
+        this.currentNrOfLifes = currentNrOfLifes;
         this.heartForeground = foregroundIcon.getImage();
         this.heartBackground = backgroundIcon.getImage();
         this.width = width;

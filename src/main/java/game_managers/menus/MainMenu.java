@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class MainMenu extends JPanel {
@@ -170,6 +171,7 @@ public class MainMenu extends JPanel {
                         mainFrameReference.getMainPanelContainer(),
                         "GAME_PANEL"
                 );
+                mainFrameReference.getGamePanel().gameSetup( null, mainFrameReference );
                 mainFrameReference.getGamePanel().startGame();
             }
         } );

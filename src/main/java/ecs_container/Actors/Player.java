@@ -56,7 +56,8 @@ public class Player {
                 Constants.HEART_BAR_WIDTH,
                 Constants.HEART_BAR_HEIGHT,
                 Constants.HEART_BAR_X,
-                Constants.HEART_BAR_Y
+                Constants.HEART_BAR_Y,
+                nrOfLives
         );
 
         uiDollarSign = new UIDollarSign(
@@ -194,7 +195,7 @@ public class Player {
         return 0;
     }
 
-    public static float getCurrentAmountOfMoney() {
+    public static int getCurrentAmountOfMoney() {
         return deposit;
     }
 

@@ -132,7 +132,7 @@ public class DBManager {
                     40,
                     800,
                     1,
-                    ( float ) 255.5
+                    255
             );
             INSERTIntoGameSavings(
                     "ala",
@@ -140,7 +140,7 @@ public class DBManager {
                     40,
                     2000,
                     1,
-                    ( float ) 255.5
+                    300
             );
             INSERTIntoGameSavings(
                     "c",
@@ -148,7 +148,7 @@ public class DBManager {
                     40,
                     30,
                     1,
-                    ( float ) 255.5
+                    400
             );
             INSERTIntoGameSavings(
                     "e",
@@ -156,7 +156,7 @@ public class DBManager {
                     40,
                     80,
                     1,
-                    ( float ) 255.5
+                    20
             );
             INSERTIntoGameSavings(
                     "m",
@@ -164,7 +164,7 @@ public class DBManager {
                     40,
                     400,
                     1,
-                    ( float ) 255.5
+                    900
             );
 
             SELECTLastNGameSavings( 3 );
@@ -315,7 +315,7 @@ public class DBManager {
     }
 
     public void INSERTIntoGameSavings(String serializedEnemies, String serializedTowers, int currentLife,
-                                      int currentScore, int currentLevel, float currentMoney) throws SQLException {
+                                      int currentScore, int currentLevel, int currentMoney) throws SQLException {
         DateTimeFormatter formatter   = DateTimeFormatter.ofPattern( "HH:mm:ss" );
         String            currentTime = LocalTime.now().format( formatter );
         formatter = DateTimeFormatter.ofPattern( "dd-MM-yyyy" );
@@ -331,7 +331,7 @@ public class DBManager {
         this.preparedStatement.setInt( 3, currentScore );
         this.preparedStatement.setInt( 4, currentLife );
         this.preparedStatement.setInt( 5, currentLevel );
-        this.preparedStatement.setFloat( 6, currentMoney );
+        this.preparedStatement.setInt( 6, currentMoney );
         this.preparedStatement.setString( 7, serializedEnemies );
         this.preparedStatement.setString( 8, serializedTowers );
         this.preparedStatement.executeUpdate();
@@ -355,7 +355,7 @@ public class DBManager {
             Integer currentScore = resultSet.getInt( "SCORE" );
             Integer life         = resultSet.getInt( "LIFE" );
             Integer level        = resultSet.getInt( "LEVEL" );
-            Float   money        = resultSet.getFloat( "MONEY" );
+            Integer money        = resultSet.getInt( "MONEY" );
             String  towers       = resultSet.getString( "TOWERS" );
             String  mobs         = resultSet.getString( "MOBS" );
 
@@ -393,7 +393,7 @@ public class DBManager {
             Integer                   currentScore = resultSet.getInt( "SCORE" );
             Integer                   life         = resultSet.getInt( "LIFE" );
             Integer                   level        = resultSet.getInt( "LEVEL" );
-            Float                     money        = resultSet.getFloat( "MONEY" );
+            Integer                   money        = resultSet.getInt( "MONEY" );
             String                    towers       = resultSet.getString( "TOWERS" );
             String                    mobs         = resultSet.getString( "MOBS" );
 
