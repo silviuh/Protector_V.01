@@ -103,8 +103,9 @@ public class LoadGameMenu extends JPanel {
 
         for (int i = 0; i < savings.size(); i++) {
             loadGameButtons[i] = new JButton(
-                    savings.get( i ).get( "DATE" ) + " || " + savings.get( i ).get( "CURRENT_TIME" )
+                    i + 1 + ". " + savings.get( i ).get( "DATE" ) + " | " + "[" + savings.get( i ).get( "CURRENT_TIME" ) + "]"
             );
+            loadGameButtons[i].setFont( new Font( "Monospaced", Font.BOLD | Font.ITALIC, 14 ) );
             loadGameButtons[i].setHorizontalTextPosition( SwingConstants.CENTER );
             loadGameButtons[i].setOpaque( false );
             loadGameButtons[i].setForeground( Color.YELLOW );
@@ -112,8 +113,8 @@ public class LoadGameMenu extends JPanel {
             loadGameButtons[i].setAlignmentX( Component.CENTER_ALIGNMENT );
             loadGameButtons[i].setSize( Constants.MAIN_MENU_BUTTON_WIDTH, Constants.MAIN_MENU_BUTTON_HEIGHT );
             loadGameButtons[i].setLocation(
-                    200,
-                    200 * i
+                    Constants.LOAD_GAME_BUTTON_START_X,
+                    Constants.LOAD_GAME_BUTTON_START_Y + i * Constants.LOAD_GAME_BUTTON_Y_PADDING
             );
         }
 
@@ -152,6 +153,8 @@ public class LoadGameMenu extends JPanel {
     }
 
     public void initializeFunctionality() {
+
+
         backToMyMenuBtn.addActionListener( new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

@@ -199,6 +199,9 @@ public class Constants {
 
     public static final float ONE_SECOND = ( float ) 1000000000.0;
 
+    public static final int LOAD_GAME_BUTTON_START_X   = 800;
+    public static final int LOAD_GAME_BUTTON_START_Y   = 250;
+    public static final int LOAD_GAME_BUTTON_Y_PADDING = 60;
 
     public static final int Y_AXIS_TOWER_PADDING       = 265;
     public static final int X_UI_TOWER_COORDINATE      = 1060;
@@ -437,7 +440,7 @@ public class Constants {
     public static final String BACKGROUND_IMAGE_URL     = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\bg_images\\bg_1.jpg";
     public static final String BACKGROUND_GIF_URL       = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\bg_gifs\\10.gif";
     public static final String HELP_BACKGROUND_GIF      = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\bg_gifs\\12.gif";
-    public static final String LOAD_GAME_BACKGROUND_GIF = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\bg_gifs\\6.gif";
+    public static final String LOAD_GAME_BACKGROUND_GIF = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\bg_gifs\\18.gif";
 
     public static final String HEALTH_BAR_FOREGROUND_URL = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\health_bars\\ZmsIMFg.png";
     public static final String HEALTH_BAR_BACKGROUND_URL = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\health_bars\\3kNOcPH.png";
