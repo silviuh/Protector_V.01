@@ -433,10 +433,11 @@ public class Constants {
     public static final String HEARTH_BAR_BACKGROUND_URL = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\UI_assets\\heart_background.png";
     public static final String DOLLAR_SIGN_URL           = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\UI_assets\\dollar.png";
 
-    public static final String GAME_ICON            = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\extra\\game_icon.png";
-    public static final String BACKGROUND_IMAGE_URL = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\bg_images\\bg_1.jpg";
-    public static final String BACKGROUND_GIF_URL   = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\bg_gifs\\10.gif";
-    public static final String HELP_BACKGROUND_GIF  = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\bg_gifs\\12.gif";
+    public static final String GAME_ICON                = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\extra\\game_icon.png";
+    public static final String BACKGROUND_IMAGE_URL     = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\bg_images\\bg_1.jpg";
+    public static final String BACKGROUND_GIF_URL       = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\bg_gifs\\10.gif";
+    public static final String HELP_BACKGROUND_GIF      = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\bg_gifs\\12.gif";
+    public static final String LOAD_GAME_BACKGROUND_GIF = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\bg_gifs\\6.gif";
 
     public static final String HEALTH_BAR_FOREGROUND_URL = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\health_bars\\ZmsIMFg.png";
     public static final String HEALTH_BAR_BACKGROUND_URL = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\health_bars\\3kNOcPH.png";
@@ -547,6 +548,7 @@ public class Constants {
     public static final String BACK_TO_MAIN_MENU_LABEL = "BACK TO MENU";
     public static final String SETTINGS_BTN_LABEL      = "SETTINGS";
     public static final String HIGH_SCORE_BTN_LABEL    = "HIGH SCORE";
+    public static final String LOAD_GAME_BTN_LABEL     = "LOAD GAME";
     public static final String EXIT_GAME_LABEL         = "EXIT";
 
 

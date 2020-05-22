@@ -409,13 +409,6 @@ public class DBManager {
             container.add( pack );
         }
 
-        for (HashMap< String, Object > pack : container) {
-            System.out.println();
-            for (Map.Entry< String, Object > entry : pack.entrySet()) {
-                System.out.println( entry.getKey() + ":  " + entry.getValue() );
-            }
-        }
-
         resultSet.close();
         return container;
     }

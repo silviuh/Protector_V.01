@@ -26,6 +26,7 @@ public class LoadGameMenu extends JPanel {
     private static volatile LoadGameMenu                           loadGameMenu;
     private static          ReentrantLock                          singletonLock;
     private                 ArrayList< Font >                      fonts;
+    private                 JButton[]                              loadGameButtons;
     private                 JButton                                backToMyMenuBtn;
     private                 JButton                                exitBtn;
     private                 GameMainFrame                          mainFrameReference;
@@ -63,7 +64,7 @@ public class LoadGameMenu extends JPanel {
 
     public void initializeVariables() throws IOException, FontFormatException, SQLException, ClassNotFoundException {
 
-        animatedGif = Toolkit.getDefaultToolkit().createImage( Constants.HELP_BACKGROUND_GIF );
+        animatedGif = Toolkit.getDefaultToolkit().createImage( Constants.LOAD_GAME_BACKGROUND_GIF );
         fonts = new ArrayList< Font >();
         File            fontSource    = new File( Constants.KENVECTOR_FUTURE_THIN_URL );
         FileInputStream in            = new FileInputStream( fontSource );
@@ -76,28 +77,46 @@ public class LoadGameMenu extends JPanel {
         fonts.add( titleFont );
         fonts.add( titleFont32Pt );
 
-        DBManager                              dbManager = mainFrameReference.getDbManager();
+        DBManager dbManager = mainFrameReference.getDbManager();
+        savings = new ArrayList< HashMap< String, Object > >( Constants.NR_OF_AVAILABLE_GAME_SAVINGS );
 
         dbManager.openConnection();
         int                                    i         = 0;
         ArrayList< HashMap< String, Object > > container = dbManager.SELECTLastNGameSavings( 4 );
-        while (i < Constants.NR_OF_AVAILABLE_GAME_SAVINGS) {
+        while (i < 4) {
             savings.add(
                     container.get( i )
             );
             i++;
         }
         dbManager.closeConnection();
-
     }
 
     public void initializeLayout() {
+        loadGameButtons = new JButton[savings.size()];
         int backToMenuX = 150;
         int backToMenuY = screenSize.height - 180;
         int exitX       = screenSize.width - 350;
         int exitY       = screenSize.height - 180;
 
         this.setLayout( null );
+
+        for (int i = 0; i < savings.size(); i++) {
+            loadGameButtons[i] = new JButton(
+                    savings.get( i ).get( "DATE" ) + " || " + savings.get( i ).get( "CURRENT_TIME" )
+            );
+            loadGameButtons[i].setHorizontalTextPosition( SwingConstants.CENTER );
+            loadGameButtons[i].setOpaque( false );
+            loadGameButtons[i].setForeground( Color.YELLOW );
+            loadGameButtons[i].setBackground( Color.gray );
+            loadGameButtons[i].setAlignmentX( Component.CENTER_ALIGNMENT );
+            loadGameButtons[i].setSize( Constants.MAIN_MENU_BUTTON_WIDTH, Constants.MAIN_MENU_BUTTON_HEIGHT );
+            loadGameButtons[i].setLocation(
+                    200,
+                    200 * i
+            );
+        }
+
         backToMyMenuBtn = new JButton(
                 Constants.BACK_TO_MAIN_MENU_LABEL,
                 new ImageIcon( Constants.MENU_BUTTON_ICON_URL )
@@ -150,9 +169,11 @@ public class LoadGameMenu extends JPanel {
             }
         } );
 
+        for (int i = 0; i < loadGameButtons.length; i++) {
+            add( loadGameButtons[i] );
+        }
         add( backToMyMenuBtn );
         add( exitBtn );
-        add( textLabel );
     }
 
     @Override

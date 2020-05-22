@@ -4,6 +4,7 @@ import Constants.Constants;
 import game_managers.db.DBManager;
 import game_managers.menus.HelpMenu;
 import game_managers.menus.InGameMenu;
+import game_managers.menus.LoadGameMenu;
 import game_managers.menus.MainMenu;
 
 import javax.imageio.ImageIO;
@@ -15,12 +16,13 @@ import java.io.IOException;
 import java.util.HashMap;
 
 public class GameMainFrame extends JFrame {
-    private JPanel     mainPanelContainer = null;
-    private GamePanel  gamePanel          = null;
-    private MainMenu   mainMenuPanel      = null;
-    private HelpMenu   helpMenu           = null;
-    private InGameMenu inGameMenu         = null;
-    private CardLayout panelSwitcher      = null;
+    private JPanel       mainPanelContainer = null;
+    private GamePanel    gamePanel          = null;
+    private MainMenu     mainMenuPanel      = null;
+    private HelpMenu     helpMenu           = null;
+    private LoadGameMenu loadGameMenu       = null;
+    private InGameMenu   inGameMenu         = null;
+    private CardLayout   panelSwitcher      = null;
 
     private DBManager dbManager = null;
 
@@ -37,6 +39,7 @@ public class GameMainFrame extends JFrame {
         gamePanel = new GamePanel( this );
         mainMenuPanel = new MainMenu( this );
         helpMenu = new HelpMenu( this );
+        loadGameMenu = new LoadGameMenu( this );
         panelSwitcher = new CardLayout();
         panels = new HashMap< String, JPanel >();
         screenDimension = Toolkit.getDefaultToolkit().getScreenSize();
@@ -51,6 +54,10 @@ public class GameMainFrame extends JFrame {
         panels.put(
                 "HELP_PANEL",
                 helpMenu
+        );
+        panels.put(
+                "LOAD_GAME_PANEL",
+                loadGameMenu
         );
         panels.put(
                 "GAME_PANEL",
@@ -80,6 +87,10 @@ public class GameMainFrame extends JFrame {
         mainPanelContainer.add(
                 panels.get( "HELP_PANEL" ),
                 "HELP_PANEL"
+        );
+        mainPanelContainer.add(
+                panels.get( "LOAD_GAME_PANEL" ),
+                "LOAD_GAME_PANEL"
         );
         mainPanelContainer.add(
                 panels.get( "GAME_PANEL" ),

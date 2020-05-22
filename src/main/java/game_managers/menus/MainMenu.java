@@ -19,9 +19,10 @@ public class MainMenu extends JPanel {
     private                 JButton           playGameBtn;
     private                 JButton           helpBtn;
     private                 JButton           highScoreBtn;
-    private JButton       exitBtn;
-    private GameMainFrame mainFrameReference;
-    private Image         animatedGif = null;
+    private                 JButton           loadGameBtn;
+    private                 JButton           exitBtn;
+    private                 GameMainFrame     mainFrameReference;
+    private                 Image             animatedGif = null;
 
     Dimension screenSize;
     int       screenWidth;
@@ -125,6 +126,23 @@ public class MainMenu extends JPanel {
         );
 
 
+        loadGameBtn = new JButton(
+                Constants.LOAD_GAME_BTN_LABEL,
+                new ImageIcon( Constants.MENU_BUTTON_ICON_URL )
+        );
+        loadGameBtn.setHorizontalTextPosition( SwingConstants.CENTER );
+        loadGameBtn.setOpaque( true );
+        loadGameBtn.setForeground( Color.BLACK );
+        loadGameBtn.setBackground( Color.gray );
+        loadGameBtn.setText( Constants.LOAD_GAME_BTN_LABEL );
+        loadGameBtn.setAlignmentX( Component.CENTER_ALIGNMENT );
+        loadGameBtn.setSize( Constants.MAIN_MENU_BUTTON_WIDTH, Constants.MAIN_MENU_BUTTON_HEIGHT );
+        loadGameBtn.setLocation(
+                screenWidth - Constants.MAIN_MENU_BUTTON_WIDTH / 2,
+                screenHeight - Constants.MENU_CENTER_Y_SPACING + Constants.MAIN_MENU_BUTTON_PADDING * 3
+        );
+
+
         exitBtn = new JButton(
                 Constants.EXIT_GAME_LABEL,
                 new ImageIcon( Constants.MENU_BUTTON_ICON_URL )
@@ -138,7 +156,7 @@ public class MainMenu extends JPanel {
         exitBtn.setSize( Constants.MAIN_MENU_BUTTON_WIDTH, Constants.MAIN_MENU_BUTTON_HEIGHT );
         exitBtn.setLocation(
                 screenWidth - Constants.MAIN_MENU_BUTTON_WIDTH / 2,
-                screenHeight - Constants.MENU_CENTER_Y_SPACING + Constants.MAIN_MENU_BUTTON_PADDING * 3
+                screenHeight - Constants.MENU_CENTER_Y_SPACING + Constants.MAIN_MENU_BUTTON_PADDING * 4
         );
 
 
@@ -166,11 +184,23 @@ public class MainMenu extends JPanel {
             }
         } );
 
-
         highScoreBtn.addActionListener( new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                mainFrameReference.getPanelSwitcher().show(
+                        mainFrameReference.getMainPanelContainer(),
+                        "HELP_PANEL"
+                );
+            }
+        } );
 
+        loadGameBtn.addActionListener( new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                mainFrameReference.getPanelSwitcher().show(
+                        mainFrameReference.getMainPanelContainer(),
+                        "LOAD_GAME_PANEL"
+                );
             }
         } );
 
@@ -184,8 +214,9 @@ public class MainMenu extends JPanel {
 
 
         add( playGameBtn );
-        add( highScoreBtn );
         add( helpBtn );
+        add( highScoreBtn );
+        add( loadGameBtn );
         add( exitBtn );
     }
 
