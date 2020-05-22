@@ -35,6 +35,7 @@ public class Groot extends Enemy{
     public void setInactive() {
         super.setInactive();
         Player.addMoney( Constants.GROOT_MONEY_INCREASE_ON_DEATH );
+        Player.modifyScore( Constants.GROOT_SCORE_INCREASE );
     }
 
 }

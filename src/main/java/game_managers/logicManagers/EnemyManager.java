@@ -5,6 +5,7 @@ import ecs_container.Actors.Player;
 import ecs_container.Actors.enemies.Enemy;
 import factories.EnemyFactory;
 import graphic_context.MapManager;
+import graphic_context.Tile;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -167,16 +168,18 @@ public class EnemyManager {
 
         for (int i = 0; i < enemiesTokens.length; i++) {
             if (enemiesTokens[i].length() > 1) {
-                String[] values = enemiesTokens[i].split( " " );
-                addEnemy(
-                        EnemyFactory.createDeserializedInstance(
-                                mapManager.getTileByCoordinates( Integer.parseInt( values[2] ), Integer.parseInt( values[3] ) ),
-                                // Constants.enemyType.values()[getEnemyByClassName( values[0] )],
-                                Constants.enemyType.values()[getEnemyByClassName( values[0] )],
-                                Double.parseDouble( values[1] )
-                        ),
-                        "GENERIC_NAME"
-                );
+                String[] values               = enemiesTokens[i].split( " " );
+                Tile     formerEnemyStartTile = mapManager.getTileByCoordinates( Integer.parseInt( values[2] ), Integer.parseInt( values[3] ) );
+                if (formerEnemyStartTile != null) {
+                    addEnemy(
+                            EnemyFactory.createDeserializedInstance(
+                                    formerEnemyStartTile,
+                                    Constants.enemyType.values()[getEnemyByClassName( values[0] )],
+                                    Double.parseDouble( values[1] )
+                            ),
+                            "GENERIC_NAME"
+                    );
+                }
             }
         }
     }
@@ -233,5 +236,15 @@ public class EnemyManager {
         return results;
     }
 
+    public int numberOfActiveEnemies() {
+        int nrOfActiveEnemies = 0;
+        for (ArrayList< Enemy > enemyList : container.values()) {
+            for (Enemy enemy : enemyList) {
+                if (enemy.isActive())
+                    nrOfActiveEnemies++;
+            }
+        }
+        return nrOfActiveEnemies;
+    }
 
 }

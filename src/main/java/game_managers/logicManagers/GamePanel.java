@@ -54,12 +54,10 @@ public class GamePanel extends JPanel {
         if (dataSet == null) {
             setLayout( null );
             initializeVariables();
-            // initializeGame();
             initializeLayout();
         } else {
             setLayout( null );
             initializeVariablesFromUpdate( dataSet );
-            // initializeGame();
             initializeLayout();
         }
         this.gameFrame = frame;
@@ -191,8 +189,8 @@ public class GamePanel extends JPanel {
 
         this.clockManager = ClockManager.getInstance();
         this.player = Player.getInstance(
-                40,
-                40,
+                Constants.INITIAL_NUMBER_OF_LIVES,
+                Constants.INITIAL_NUMBER_OF_LIVES,
                 400,
                 clockManager
         );
@@ -234,7 +232,7 @@ public class GamePanel extends JPanel {
         this.clockManager = ClockManager.getInstance();
         this.player = Player.getInstance(
                 ( Integer ) dataSet.get( "LIFE" ),
-                40,
+                Constants.INITIAL_NUMBER_OF_LIVES,
                 ( Integer ) dataSet.get( "MONEY" ),
                 clockManager
         );
@@ -253,13 +251,19 @@ public class GamePanel extends JPanel {
 
         this.handHolder = new Constants.HandHolder();
         this.uItowersManager = UItowersManager.getInstance( 1 );
-        this.towerManager = TowerManager.getInstance( mapManager );
+
+
         this.enemyManager = EnemyManager.getInstance( mapManager );
-        this.waveManager = WaveManager.getInstance( mapManager, enemyManager, clockManager );
+        this.enemyManager.deserializeEnemies( ( String ) dataSet.get( "MOBS" ) );
+
         GameTowerFactory.setEnemyManager( enemyManager );
+        this.towerManager = TowerManager.getInstance( mapManager );
+        this.towerManager.deserializeTowers( ( String ) dataSet.get( "TOWERS" ) );
+
+        this.waveManager = WaveManager.getInstance( mapManager, enemyManager, clockManager );
+
         this.mouseIcon = MouseIcon.generateMouseIcon();
         this.gameSpeed = Constants.GAME_SPEED;
-        // !
     }
 
 
@@ -285,10 +289,13 @@ public class GamePanel extends JPanel {
         enemyManager.update();
         UIConsole.update();
 
+        /*
         if (toDeleteDesTowers == false) {
             towerManager.deserializeTowers( "|CannonTower 588 168 3 CANNON_TOWER|CraneTower 798 168 1 ARCANE_TOWER|ZombieTower 294 168 2 CRANE_TOWER" );
             toDeleteDesTowers = true;
         }
+
+         */
     }
 
     public void drawUI(Graphics g) {
@@ -351,6 +358,15 @@ public class GamePanel extends JPanel {
         } catch ( FontFormatException | IOException e ) {
             e.printStackTrace();
         }
+
+        g.setColor( Constants.dollarSign );
+        g.drawString(
+                "SCORE: " + String.valueOf( ( int ) Player.getScore() ),
+                Constants.SCORE_X,
+                Constants.SCORE_Y
+        );
+
+        g.setColor( Constants.dollarSign );
         g.drawString(
                 "[FPS] RATE: " + String.valueOf( ( int ) fpsRate ),
                 Constants.FPS_RATE_X + Constants.FPS_RATE_X_PADDING,

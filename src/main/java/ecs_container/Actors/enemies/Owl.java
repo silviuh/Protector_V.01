@@ -37,6 +37,7 @@ public class Owl extends Enemy {
     public void setInactive() {
         super.setInactive();
         Player.addMoney( Constants.OWL_MONEY_INCREASE_ON_DEATH );
+        Player.modifyScore( Constants.OWL_SCORE_INCREASE );
     }
 
 }

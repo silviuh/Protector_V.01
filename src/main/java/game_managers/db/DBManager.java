@@ -127,48 +127,45 @@ public class DBManager {
 
 
             INSERTIntoGameSavings(
-                    "enemies",
-                    "towers",
+                    "|Devil 40.0 126 168|Owl 80.0 42 42|Slime 40.0 84 42|Sonic 90.0 42 84",
+                    "|CraneTower 588 168 3 CRANE_TOWER|CraneTower 798 168 1 CRANE_TOWER|CraneTower 294 168 2 CRANE_TOWER",
                     40,
                     800,
                     1,
                     255
             );
             INSERTIntoGameSavings(
-                    "ala",
-                    "bala",
+                    "|Slime 40.0 126 168|Slime 80.0 42 42|Slime 40.0 84 42|Sonic 90.0 42 84",
+                    "|CannonTower 588 168 3 CANNON_TOWER|CannonTower 798 168 1 CANNON_TOWER|CannonTower 294 168 2 CANNON_TOWER",
                     40,
                     2000,
                     1,
                     300
             );
             INSERTIntoGameSavings(
-                    "c",
-                    "d",
+                    "|Owl 40.0 126 168|Owl 80.0 42 42|Owl 40.0 84 42|Owl 90.0 42 84",
+                    "|CannonTower 588 168 3 CANNON_TOWER|CraneTower 798 168 1 ARCANE_TOWER|ZombieTower 294 168 2 CRANE_TOWER",
                     40,
                     30,
                     1,
                     400
             );
             INSERTIntoGameSavings(
-                    "e",
-                    "f",
+                    "|Devil 40.0 126 168|Devil 80.0 42 42|Devil 40.0 84 42|Devil 90.0 42 84",
+                    "|CannonTower 588 168 3 CANNON_TOWER|CraneTower 798 168 1 ARCANE_TOWER|ZombieTower 294 168 2 CRANE_TOWER",
                     40,
                     80,
                     1,
                     20
             );
             INSERTIntoGameSavings(
-                    "m",
-                    "n",
+                    "|Sonic 40.0 126 168|Sonic 80.0 42 42|Sonic 40.0 84 42|Sonic 90.0 42 84",
+                    "|CannonTower 588 168 3 CANNON_TOWER|CraneTower 798 168 1 ARCANE_TOWER|ZombieTower 294 168 2 CRANE_TOWER",
                     40,
                     400,
                     1,
                     900
             );
-
-            SELECTLastNGameSavings( 3 );
-
         } catch ( ClassNotFoundException | SQLException throwables ) {
             throwables.printStackTrace();
         } finally {
@@ -332,8 +329,8 @@ public class DBManager {
         this.preparedStatement.setInt( 4, currentLife );
         this.preparedStatement.setInt( 5, currentLevel );
         this.preparedStatement.setInt( 6, currentMoney );
-        this.preparedStatement.setString( 7, serializedEnemies );
-        this.preparedStatement.setString( 8, serializedTowers );
+        this.preparedStatement.setString( 7, serializedTowers );
+        this.preparedStatement.setString( 8, serializedEnemies );
         this.preparedStatement.executeUpdate();
     }
 

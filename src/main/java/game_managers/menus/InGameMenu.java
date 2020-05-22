@@ -124,8 +124,8 @@ public class InGameMenu {
                             gamePanel.getEnemyManager().serializeEnemies(),
                             gamePanel.getTowerManager().serializeTowers(),
                             Player.getLives(),
-                            Player.getCurrentScore(),
-                            0, // !
+                            Player.getScore(),
+                            1, // !
                             Player.getCurrentAmountOfMoney()
                     );
                     mainFrame.getDbManager().closeConnection();

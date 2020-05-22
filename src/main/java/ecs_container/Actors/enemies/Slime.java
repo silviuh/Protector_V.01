@@ -37,6 +37,7 @@ public class Slime extends Enemy {
     public void setInactive() {
         super.setInactive();
         Player.addMoney( Constants.SLIME_MONEY_INCREASE_ON_DEATH );
+        Player.modifyScore( Constants.SLIME_SCORE_INCREASE );
     }
 
 }

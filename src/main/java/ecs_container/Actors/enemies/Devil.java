@@ -37,6 +37,7 @@ public class Devil extends Enemy {
     public void setInactive() {
         super.setInactive();
         Player.addMoney( Constants.DEVIL_MONEY_INCREASE_ON_DEATH );
+        Player.modifyScore( Constants.DEVIL_SCORE_INCREASE );
     }
 
 }

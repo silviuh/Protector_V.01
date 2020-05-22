@@ -1,5 +1,7 @@
 package Constants;
 
+import ecs_container.Actors.Player;
+
 import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
@@ -243,6 +245,9 @@ public class Constants {
     public static final int FPS_RATE_X         = DOLLAR_SIGN_X + FPS_RATE_X_PADDING;
     public static final int FPS_RATE_Y         = DOLLAR_SIGN_Y + 250;
 
+    public static final int SCORE_X = 30;
+    public static final int SCORE_Y = 40;
+
     public static final int IN_GAME_MENU_X      = 1075;
     public static final int IN_GAME_MENU_Y      = 0;
     public static final int IN_GAME_MENU_WIDTH  = 1500;
@@ -313,7 +318,7 @@ public class Constants {
     public static final int CRANE_UPGRADE_COST  = 15;
     public static final int ARCANE_UPGRADE_COST = 20;
 
-    public static final int NR_OF_AVAILABLE_GAME_SAVINGS = 10;
+    public static final int NR_OF_AVAILABLE_GAME_SAVINGS = 12;
 
     public static final int DEVIL_MONEY_INCREASE_ON_DEATH = 15;
     public static final int OWL_MONEY_INCREASE_ON_DEATH   = 25;
@@ -388,11 +393,18 @@ public class Constants {
     public static int CRANE_TOWER_ENEMIES_AFFECTED  = 1;
     public static int ARCANE_TOWER_ENEMIES_AFFECTED = 1;
 
+    public static int INITIAL_NUMBER_OF_LIVES = 40;
     public static int LIVES_TAKEN_BY_GROOT = -1;
     public static int LIVES_TAKEN_BY_OWL   = -2;
     public static int LIVES_TAKEN_BY_DEVIL = -1;
     public static int LIVES_TAKEN_BY_SONIC = -3;
     public static int LIVES_TAKEN_BY_SLIME = -1;
+
+    public static int DEVIL_SCORE_INCREASE = 20;
+    public static int SONIC_SCORE_INCREASE = 50;
+    public static int GROOT_SCORE_INCREASE = 30;
+    public static int OWL_SCORE_INCREASE = 40;
+    public static int SLIME_SCORE_INCREASE = 15;
 
     public static int UI_CONSOLE_CAPACITY        = 11;
     public static int BUY_HISTORY_CAPACITY       = 10;

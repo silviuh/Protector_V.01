@@ -11,11 +11,13 @@ import javax.swing.*;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class Player {
+    public static  int           currentLevel;
     public static  UIHeartBar    uiHeartBar;
     public static  UIDollarSign  uiDollarSign;
     public static  UIConsole     uiConsole;
     private static Player        player;
     private static ReentrantLock singletonLock;
+    private static int           score;
     private static int           lives;
     private static int           initialNumberOfLives;
     private static int           deposit;
@@ -69,20 +71,9 @@ public class Player {
                 Constants.DOLLAR_SIGN_Y
         );
 
-        /*
-        uiConsole = new UIConsole(
-                new ImageIcon( Constants.UI_CONSOLE_BG ),
-                Constants.CONSOLE_WIDTH,
-                Constants.CONSOLE_HEIGHT,
-                Constants.CONSOLE_X,
-                Constants.CONSOLE_Y,
-                ClockFactory.createInstance(
-                        Constants.clockType.UI_CONSOLE
-                )
-        );
-        */
+        currentLevel = 1;
+        score = 0;
     }
-
 
     public static boolean modifyLives(int amount) {
         if (lives + amount <= Constants.MAX_LIVES_AMOUNT_LEVEL_1) {
@@ -91,6 +82,18 @@ public class Player {
             return true;
         }
         return false;
+    }
+
+    public static void modifyCurrentLevel(int amount) {
+        currentLevel += amount;
+    }
+
+    public static void modifyScore(int amount) {
+        score += amount;
+    }
+
+    public static int getScore() {
+        return score;
     }
 
     public static boolean tryToBuyTower(Constants.towerType towerType) {
@@ -190,14 +193,11 @@ public class Player {
         return Player.uiHeartBar.getCurrentNrOfLifes();
     }
 
-    public static int getCurrentScore() {
-        // !
-        return 0;
-    }
-
     public static int getCurrentAmountOfMoney() {
         return deposit;
     }
 
-
+    public static int getCurrentLevel() {
+        return currentLevel;
+    }
 }
