@@ -125,22 +125,49 @@ public class DBManager {
             }
              */
 
-            /*
+
             INSERTIntoGameSavings(
                     "enemies",
                     "towers",
+                    40,
+                    800,
+                    1,
+                    ( float ) 255.5
+            );
+            INSERTIntoGameSavings(
+                    "ala",
+                    "bala",
                     40,
                     2000,
                     1,
                     ( float ) 255.5
             );
-
-            SELECTGameSavings(
-                    "05:00:24",
-                    "19-05-2020"
+            INSERTIntoGameSavings(
+                    "c",
+                    "d",
+                    40,
+                    30,
+                    1,
+                    ( float ) 255.5
             );
-             */
+            INSERTIntoGameSavings(
+                    "e",
+                    "f",
+                    40,
+                    80,
+                    1,
+                    ( float ) 255.5
+            );
+            INSERTIntoGameSavings(
+                    "m",
+                    "n",
+                    40,
+                    400,
+                    1,
+                    ( float ) 255.5
+            );
 
+            SELECTLastNGameSavings( 3 );
 
         } catch ( ClassNotFoundException | SQLException throwables ) {
             throwables.printStackTrace();
@@ -311,7 +338,7 @@ public class DBManager {
     }
 
     // <String, ?>
-    public HashMap< String, Object > SELECTGameSavings(String time, String date) throws SQLException {
+    public HashMap< String, Object > SELECTGameSavingsByTimeAndDate(String time, String date) throws SQLException {
         HashMap< String, Object > containerPackage = new HashMap< String, Object >();
 
         // SELECT * FROM GameSavings WHERE CURRENT_TIME = ?, DATE = ?;
@@ -348,5 +375,48 @@ public class DBManager {
 
         resultSet.close();
         return containerPackage;
+    }
+
+    public ArrayList< HashMap< String, Object > > SELECTLastNGameSavings(int n) throws SQLException {
+        ArrayList< HashMap< String, Object > > container = new ArrayList<>();
+        this.preparedStatement = connection.prepareStatement(
+                "SELECT * FROM GameSavings ORDER BY DATE, CURRENT_TIME DESC LIMIT ?"
+        );
+        // "SELECT * FROM GameSavings ORDER BY id DESC LIMIT ?;"
+        this.preparedStatement.setInt( 1, n );
+        ResultSet resultSet = this.preparedStatement.executeQuery();
+
+        while (resultSet.next()) {
+            HashMap< String, Object > pack         = new HashMap< String, Object >();
+            String                    currentTime  = resultSet.getString( "CURRENT_TIME" );
+            String                    currentDate  = resultSet.getString( "DATE" );
+            Integer                   currentScore = resultSet.getInt( "SCORE" );
+            Integer                   life         = resultSet.getInt( "LIFE" );
+            Integer                   level        = resultSet.getInt( "LEVEL" );
+            Float                     money        = resultSet.getFloat( "MONEY" );
+            String                    towers       = resultSet.getString( "TOWERS" );
+            String                    mobs         = resultSet.getString( "MOBS" );
+
+            pack.put( "CURRENT_TIME", currentTime );
+            pack.put( "DATE", currentDate );
+            pack.put( "SCORE", currentScore );
+            pack.put( "LIFE", life );
+            pack.put( "LEVEL", level );
+            pack.put( "MONEY", money );
+            pack.put( "TOWERS", towers );
+            pack.put( "MOBS", mobs );
+
+            container.add( pack );
+        }
+
+        for (HashMap< String, Object > pack : container) {
+            System.out.println();
+            for (Map.Entry< String, Object > entry : pack.entrySet()) {
+                System.out.println( entry.getKey() + ":  " + entry.getValue() );
+            }
+        }
+
+        resultSet.close();
+        return container;
     }
 }

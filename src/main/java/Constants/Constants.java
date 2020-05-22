@@ -310,6 +310,8 @@ public class Constants {
     public static final int CRANE_UPGRADE_COST  = 15;
     public static final int ARCANE_UPGRADE_COST = 20;
 
+    public static final int NR_OF_AVAILABLE_GAME_SAVINGS = 5;
+
     public static final int DEVIL_MONEY_INCREASE_ON_DEATH = 15;
     public static final int OWL_MONEY_INCREASE_ON_DEATH   = 25;
     public static final int SONIC_MONEY_INCREASE_ON_DEATH = 60;
