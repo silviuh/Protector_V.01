@@ -3,6 +3,7 @@ package game_managers.menus;
 import Constants.Constants;
 import game_managers.logicManagers.GameMainFrame;
 
+import javax.print.DocFlavor;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -21,15 +22,15 @@ public class HighScoreMenu extends JPanel {
     int       screenWidth;
     int       screenHeight;
 
-    private static volatile HighScoreMenu     highScoreMenu;
-    private static          ReentrantLock     singletonLock;
-    private                 ArrayList< Font > fonts;
-    private                 JButton           backToMyMenuBtn;
-    private                 JButton           exitBtn;
-    private                 GameMainFrame     mainFrameReference;
-    private                 Image             animatedGif = null;
-    private                 JLabel            textLabel   = null;
-
+    private static          ArrayList< Integer > scores;
+    private static          JLabel[]             scoreLabels;
+    private static volatile HighScoreMenu        highScoreMenu;
+    private static          ReentrantLock        singletonLock;
+    private                 ArrayList< Font >    fonts;
+    private                 JButton              backToMyMenuBtn;
+    private                 JButton              exitBtn;
+    private                 GameMainFrame        mainFrameReference;
+    private                 Image                animatedGif = null;
 
     public HighScoreMenu(GameMainFrame mainFrameReference) {
         this.mainFrameReference = mainFrameReference;
@@ -60,6 +61,7 @@ public class HighScoreMenu extends JPanel {
     }
 
     public void initializeVariables() throws IOException, FontFormatException {
+        scores = new ArrayList<>( Constants.MAX_NUMBER_OF_SCORES_IN_LEADERBORD );
         animatedGif = Toolkit.getDefaultToolkit().createImage( Constants.HELP_BACKGROUND_GIF );
         fonts = new ArrayList< Font >();
         File            fontSource    = new File( Constants.KENVECTOR_FUTURE_THIN_URL );
@@ -72,7 +74,6 @@ public class HighScoreMenu extends JPanel {
         screenHeight = screenSize.height / 2;
         fonts.add( titleFont );
         fonts.add( titleFont32Pt );
-
     }
 
     public void initializeLayout() {
@@ -136,19 +137,6 @@ public class HighScoreMenu extends JPanel {
 
         add( backToMyMenuBtn );
         add( exitBtn );
-        add( textLabel );
-    }
-
-    private String readHelpText(String filePath) {
-        String content = "";
-
-        try {
-            content = new String( Files.readAllBytes( Paths.get( filePath ) ) );
-        } catch ( IOException e ) {
-            e.printStackTrace();
-        }
-
-        return content;
     }
 
     @Override

@@ -288,6 +288,8 @@ public class Constants {
 
     public static final int NR_OF_DIRECTIONS = 4;
 
+    public static final int MAX_NUMBER_OF_SCORES_IN_LEADERBORD = 10;
+
     public static final int     MAX_LIVES_AMOUNT_LEVEL_1      = 40;
     public static final int     MAX_LEVEL                     = 3;
     public static final Integer GAME_SPEED                    = 50;
@@ -574,7 +576,7 @@ public class Constants {
     public static final String HELP_BTN_LABEL          = "HELP";
     public static final String BACK_TO_MAIN_MENU_LABEL = "BACK TO MENU";
     public static final String SETTINGS_BTN_LABEL      = "SETTINGS";
-    public static final String HIGH_SCORE_BTN_LABEL    = "HIGH SCORE";
+    public static final String HIGH_SCORE_BTN_LABEL    = "LEADERBOARD";
     public static final String LOAD_GAME_BTN_LABEL     = "LOAD GAME";
     public static final String EXIT_GAME_LABEL         = "EXIT";
 

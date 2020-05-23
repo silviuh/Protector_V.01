@@ -2,6 +2,7 @@ package game_managers.menus;
 
 import Constants.Constants;
 import ecs_container.Actors.Player;
+import game_managers.db.DBManager;
 import game_managers.logicManagers.AccelerationManager;
 import game_managers.logicManagers.GameMainFrame;
 import game_managers.logicManagers.GamePanel;
@@ -162,6 +163,14 @@ public class InGameMenu {
                         options[0]
                 );
                 if (userInput == 0) {
+                    DBManager dbManager = mainFrame.getDbManager();
+                    try {
+                        dbManager.INSERTIntoHighScores( Player.getScore() );
+                    } catch ( SQLException throwables ) {
+                        throwables.printStackTrace();
+                    } catch ( ClassNotFoundException classNotFoundException ) {
+                        classNotFoundException.printStackTrace();
+                    }
                     stateManager.setCurrentState( Constants.StateID.DESTROYED );
                 }
                 return;
