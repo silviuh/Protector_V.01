@@ -9,6 +9,7 @@ import graphic_context.SpriteSheet;
 import org.apache.commons.io.IOUtils;
 
 import javax.swing.*;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -57,9 +58,11 @@ public class DBManager {
     }
 
     public void openConnection() throws ClassNotFoundException, SQLException {
-        Class.forName( DBManager.DB_SERVER );
-        this.connection = DriverManager.getConnection( DBManager.DB_NAME );
-        this.connection.setAutoCommit( false );
+        if (connection == null || connection.isClosed()) {
+            Class.forName( DBManager.DB_SERVER );
+            this.connection = DriverManager.getConnection( DBManager.DB_NAME );
+            this.connection.setAutoCommit( false );
+        }
     }
 
     public void closeConnection() throws SQLException {
@@ -69,34 +72,37 @@ public class DBManager {
 
     private void initDataBase() throws SQLException {
         try {
-            Class.forName( DBManager.DB_SERVER );
-            this.connection = DriverManager.getConnection( DBManager.DB_NAME );
-            this.connection.setAutoCommit( false );
+            boolean wasCreated = false;
+            File    dbFile     = new File( Constants.DB_URL );
+            if (dbFile.exists())
+                wasCreated = true;
 
+            openConnection();
             this.statement = connection.createStatement();
-            createTable( "MapFiles" );
-            createTable( "HighScores" );
-            createTable( "GameSavings" );
 
-            /*
-            INSERTIntoMapFiles(
-                    "C:\\Users\\silviu\\IdeaProjects\\Protector_Maven\\src\\main\\java\\config_files\\level_1.txt",
-                    1,
-                    200
-            );
-             */
-            // SELECTFileContent( 1 );
+            if (!wasCreated) {
+                createTable( "MapFiles" );
+                createTable( "HighScores" );
+                createTable( "GameSavings" );
 
-            /*
-             INSERTIntoMapFiles(
-                    "C:\\Users\\silviu\\IdeaProjects\\Protector_Maven\\src\\main\\java\\config_files\\level_1.txt",
-                    2
-            );
-             INSERTIntoMapFiles(
-                    "C:\\Users\\silviu\\IdeaProjects\\Protector_Maven\\src\\main\\java\\config_files\\level_1.txt",
-                    3
-            );
-             */
+                INSERTIntoMapFiles(
+                        "C:\\Users\\silviu\\IdeaProjects\\Protector_Maven\\src\\main\\java\\config_files\\level_1.txt",
+                        1,
+                        200
+                );
+
+                INSERTIntoMapFiles(
+                        "C:\\Users\\silviu\\IdeaProjects\\Protector_Maven\\src\\main\\java\\config_files\\level_2.txt",
+                        2,
+                        300
+                );
+
+                INSERTIntoMapFiles(
+                        "C:\\Users\\silviu\\IdeaProjects\\Protector_Maven\\src\\main\\java\\config_files\\level_3.txt",
+                        3,
+                        400
+                );
+
             /*
             INSERTIntoHighScores( 200 );
             INSERTIntoHighScores( 400 );
@@ -107,8 +113,6 @@ public class DBManager {
             INSERTIntoHighScores( 250 );
             SELECTHighScores( 4 );
         */
-
-
 
             /*
             ArrayList< Enemy > enemies = new ArrayList<>();
@@ -125,7 +129,7 @@ public class DBManager {
             }
              */
 
-
+            /*
             INSERTIntoGameSavings(
                     "|Devil 40.0 126 168|Owl 80.0 42 42|Slime 40.0 84 42|Sonic 90.0 42 84",
                     "|CraneTower 588 168 3 CRANE_TOWER|CraneTower 798 168 1 CRANE_TOWER|CraneTower 294 168 2 CRANE_TOWER",
@@ -166,16 +170,18 @@ public class DBManager {
                     1,
                     900
             );
+             */
+            } else {
+                System.out.println( "DataBase was already created..." );
+            }
         } catch ( ClassNotFoundException | SQLException throwables ) {
             throwables.printStackTrace();
         } finally {
             this.statement.close();
-            this.connection.commit();
-            this.connection.close();
+            closeConnection();
         }
         System.out.println( "DBManager was initialized successfully..." );
     }
-
 
     private void createTable(String tableName) throws SQLException {
         switch (tableName) {
@@ -223,7 +229,8 @@ public class DBManager {
         this.preparedStatement.close();
     }
 
-    public void INSERTIntoMapFiles(String fileName, int levelNumber, int numberOfMonsters) throws SQLException {
+    public void INSERTIntoMapFiles(String fileName, int levelNumber, int numberOfMonsters) throws SQLException, ClassNotFoundException {
+        openConnection();
         String fileContent = null;
 
         if (fileName != null) {
@@ -238,28 +245,52 @@ public class DBManager {
             } catch ( IOException e ) {
                 e.printStackTrace();
             }
+        } else {
+            closeConnection();
+            return;
         }
 
-        this.preparedStatement = connection.prepareStatement(
-                "INSERT INTO MapFiles " +
-                        "(LEVELNUMBER, NAME, CONTENT, NR_OF_MONSTERS_PER_LEVEL) VALUES(?, ?, ?, ?);"
-        );
-        this.preparedStatement.setInt( 1, levelNumber );
-        this.preparedStatement.setString( 2, fileName );
-        this.preparedStatement.setString( 3, fileContent );
-        this.preparedStatement.setInt( 4, numberOfMonsters );
-        this.preparedStatement.executeUpdate();
+        if (connection != null && fileContent != null) {
+            try {
+                this.preparedStatement = connection.prepareStatement(
+                        "INSERT INTO MapFiles " +
+                                "(LEVELNUMBER, NAME, CONTENT, NR_OF_MONSTERS_PER_LEVEL) VALUES(?, ?, ?, ?);"
+                );
+                this.preparedStatement.setInt( 1, levelNumber );
+                this.preparedStatement.setString( 2, fileName );
+                this.preparedStatement.setString( 3, fileContent );
+                this.preparedStatement.setInt( 4, numberOfMonsters );
+                this.preparedStatement.executeUpdate();
+            } finally {
+                this.preparedStatement.close();
+            }
+        }
+
+        // closeConnection();
     }
 
-    public String SELECTFileContent(int levelNumber) throws SQLException {
-        this.preparedStatement = connection.prepareStatement(
-                "SELECT CONTENT FROM MapFiles WHERE LEVELNUMBER  = ?;"
-        );
-        this.preparedStatement.setInt( 1, levelNumber );
-        ResultSet resultSet = this.preparedStatement.executeQuery();
-        resultSet.next();
+    public String SELECTFileContent(int levelNumber) throws SQLException, ClassNotFoundException {
+        openConnection();
+        ResultSet resultSet   = null;
+        String    fileContent = null;
 
-        return resultSet.getString( "CONTENT" );
+        try {
+            this.preparedStatement = connection.prepareStatement(
+                    "SELECT CONTENT FROM MapFiles WHERE LEVELNUMBER  = ?;"
+            );
+            this.preparedStatement.setInt( 1, levelNumber );
+            resultSet = this.preparedStatement.executeQuery();
+            resultSet.next();
+            fileContent = resultSet.getString( "CONTENT" );
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            this.preparedStatement.close();
+        }
+
+        closeConnection();
+        return fileContent;
     }
 
     public int SELECTNR_OF_MONSTERS_PER_LEVEL(int levelNumber) throws SQLException {
@@ -273,140 +304,183 @@ public class DBManager {
         return resultSet.getInt( "NR_OF_MONSTERS_PER_LEVEL" );
     }
 
-    public void INSERTIntoHighScores(int highScore) throws SQLException {
+    public void INSERTIntoHighScores(int highScore) throws SQLException, ClassNotFoundException {
+        openConnection();
+
         DateTimeFormatter formatter   = DateTimeFormatter.ofPattern( "HH:mm:ss" );
         String            currentTime = LocalTime.now().format( formatter );
         formatter = DateTimeFormatter.ofPattern( "dd-MM-yyyy" );
         String currentDate = LocalDate.now().format( formatter );
 
-        this.preparedStatement = connection.prepareStatement(
-                "INSERT INTO HighScores " +
-                        "(CURRENT_TIME, DATE, SCORE) VALUES(?, ?, ?);"
-        );
-        this.preparedStatement.setString( 1, currentTime );
-        this.preparedStatement.setString( 2, currentDate );
-        this.preparedStatement.setInt( 3, highScore );
-        this.preparedStatement.executeUpdate();
+        try {
+            this.preparedStatement = connection.prepareStatement(
+                    "INSERT INTO HighScores " +
+                            "(CURRENT_TIME, DATE, SCORE) VALUES(?, ?, ?);"
+            );
+            this.preparedStatement.setString( 1, currentTime );
+            this.preparedStatement.setString( 2, currentDate );
+            this.preparedStatement.setInt( 3, highScore );
+            this.preparedStatement.executeUpdate();
+        } finally {
+            this.preparedStatement.close();
+        }
+
+        closeConnection();
     }
 
-    public ArrayList< Integer > SELECTHighScores(int lastNrOfScores) throws SQLException {
-        ArrayList< Integer > scores = new ArrayList<>();
+    public ArrayList< Integer > SELECTHighScores(int lastNrOfScores) throws SQLException, ClassNotFoundException {
+        openConnection();
+        ArrayList< Integer > scores    = new ArrayList<>();
+        ResultSet            resultSet = null;
 
-        this.preparedStatement = connection.prepareStatement(
-                "SELECT SCORE FROM HighScores ORDER BY SCORE DESC LIMIT ?"
-        );
-        this.preparedStatement.setInt( 1, lastNrOfScores );
-        ResultSet resultSet = this.preparedStatement.executeQuery();
+        try {
+            this.preparedStatement = connection.prepareStatement(
+                    "SELECT SCORE FROM HighScores ORDER BY SCORE DESC LIMIT ?"
+            );
+            this.preparedStatement.setInt( 1, lastNrOfScores );
+            resultSet = this.preparedStatement.executeQuery();
 
-        while (resultSet.next()) {
-            int currentScore = resultSet.getInt( "SCORE" );
-            scores.add( currentScore );
+            while (resultSet.next()) {
+                int currentScore = resultSet.getInt( "SCORE" );
+                scores.add( currentScore );
+            }
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            this.preparedStatement.close();
         }
 
         for (Integer score : scores) {
             System.out.println( "SCORE: " + score );
         }
 
-        resultSet.close();
+        closeConnection();
         return scores;
     }
 
     public void INSERTIntoGameSavings(String serializedEnemies, String serializedTowers, int currentLife,
-                                      int currentScore, int currentLevel, int currentMoney) throws SQLException {
+                                      int currentScore, int currentLevel, int currentMoney) throws SQLException, ClassNotFoundException {
+        openConnection();
+
         DateTimeFormatter formatter   = DateTimeFormatter.ofPattern( "HH:mm:ss" );
         String            currentTime = LocalTime.now().format( formatter );
         formatter = DateTimeFormatter.ofPattern( "dd-MM-yyyy" );
         String currentDate = LocalDate.now().format( formatter );
 
-        this.preparedStatement = connection.prepareStatement(
-                "INSERT INTO GameSavings " +
-                        "(CURRENT_TIME, DATE, SCORE, LIFE, LEVEL, MONEY, TOWERS, MOBS) VALUES(?, ?, ?, ?, ?, ?, ?, ?);"
-        );
+        try {
+            this.preparedStatement = connection.prepareStatement(
+                    "INSERT INTO GameSavings " +
+                            "(CURRENT_TIME, DATE, SCORE, LIFE, LEVEL, MONEY, TOWERS, MOBS) VALUES(?, ?, ?, ?, ?, ?, ?, ?);"
+            );
+            this.preparedStatement.setString( 1, currentTime );
+            this.preparedStatement.setString( 2, currentDate );
+            this.preparedStatement.setInt( 3, currentScore );
+            this.preparedStatement.setInt( 4, currentLife );
+            this.preparedStatement.setInt( 5, currentLevel );
+            this.preparedStatement.setInt( 6, currentMoney );
+            this.preparedStatement.setString( 7, serializedTowers );
+            this.preparedStatement.setString( 8, serializedEnemies );
+            this.preparedStatement.executeUpdate();
+        } finally {
+            this.preparedStatement.close();
+        }
 
-        this.preparedStatement.setString( 1, currentTime );
-        this.preparedStatement.setString( 2, currentDate );
-        this.preparedStatement.setInt( 3, currentScore );
-        this.preparedStatement.setInt( 4, currentLife );
-        this.preparedStatement.setInt( 5, currentLevel );
-        this.preparedStatement.setInt( 6, currentMoney );
-        this.preparedStatement.setString( 7, serializedTowers );
-        this.preparedStatement.setString( 8, serializedEnemies );
-        this.preparedStatement.executeUpdate();
+        closeConnection();
     }
 
     // <String, ?>
-    public HashMap< String, Object > SELECTGameSavingsByTimeAndDate(String time, String date) throws SQLException {
+    public HashMap< String, Object > SELECTGameSavingsByTimeAndDate(String time, String date) throws SQLException, ClassNotFoundException {
+        openConnection();
+        ResultSet                 resultSet        = null;
         HashMap< String, Object > containerPackage = new HashMap< String, Object >();
 
         // SELECT * FROM GameSavings WHERE CURRENT_TIME = ?, DATE = ?;
-        this.preparedStatement = connection.prepareStatement(
-                "SELECT * FROM GameSavings WHERE (CURRENT_TIME = ? AND DATE = ?);"
-        );
-        this.preparedStatement.setString( 1, time );
-        this.preparedStatement.setString( 2, date );
-        ResultSet resultSet = this.preparedStatement.executeQuery();
+        try {
+            this.preparedStatement = connection.prepareStatement(
+                    "SELECT * FROM GameSavings WHERE (CURRENT_TIME = ? AND DATE = ?);"
+            );
+            this.preparedStatement.setString( 1, time );
+            this.preparedStatement.setString( 2, date );
+            resultSet = this.preparedStatement.executeQuery();
 
-        while (resultSet.next()) {
-            String  currentTime  = resultSet.getString( "CURRENT_TIME" );
-            String  currentDate  = resultSet.getString( "DATE" );
-            Integer currentScore = resultSet.getInt( "SCORE" );
-            Integer life         = resultSet.getInt( "LIFE" );
-            Integer level        = resultSet.getInt( "LEVEL" );
-            Integer money        = resultSet.getInt( "MONEY" );
-            String  towers       = resultSet.getString( "TOWERS" );
-            String  mobs         = resultSet.getString( "MOBS" );
+            while (resultSet.next()) {
+                String  currentTime  = resultSet.getString( "CURRENT_TIME" );
+                String  currentDate  = resultSet.getString( "DATE" );
+                Integer currentScore = resultSet.getInt( "SCORE" );
+                Integer life         = resultSet.getInt( "LIFE" );
+                Integer level        = resultSet.getInt( "LEVEL" );
+                Integer money        = resultSet.getInt( "MONEY" );
+                String  towers       = resultSet.getString( "TOWERS" );
+                String  mobs         = resultSet.getString( "MOBS" );
 
-            containerPackage.put( "CURRENT_TIME", currentTime );
-            containerPackage.put( "DATE", currentDate );
-            containerPackage.put( "SCORE", currentScore );
-            containerPackage.put( "LIFE", life );
-            containerPackage.put( "LEVEL", level );
-            containerPackage.put( "MONEY", money );
-            containerPackage.put( "TOWERS", towers );
-            containerPackage.put( "MOBS", mobs );
+                containerPackage.put( "CURRENT_TIME", currentTime );
+                containerPackage.put( "DATE", currentDate );
+                containerPackage.put( "SCORE", currentScore );
+                containerPackage.put( "LIFE", life );
+                containerPackage.put( "LEVEL", level );
+                containerPackage.put( "MONEY", money );
+                containerPackage.put( "TOWERS", towers );
+                containerPackage.put( "MOBS", mobs );
+            }
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            this.preparedStatement.close();
         }
 
         for (Map.Entry< String, Object > entry : containerPackage.entrySet()) {
             System.out.println( entry.getKey() + ":  " + entry.getValue() );
         }
 
-        resultSet.close();
+        closeConnection();
         return containerPackage;
     }
 
-    public ArrayList< HashMap< String, Object > > SELECTLastNGameSavings(int n) throws SQLException {
+    public ArrayList< HashMap< String, Object > > SELECTLastNGameSavings(int n) throws SQLException, ClassNotFoundException {
+        openConnection();
         ArrayList< HashMap< String, Object > > container = new ArrayList<>();
-        this.preparedStatement = connection.prepareStatement(
-                "SELECT * FROM GameSavings ORDER BY DATE, CURRENT_TIME DESC LIMIT ?"
-        );
-        // "SELECT * FROM GameSavings ORDER BY id DESC LIMIT ?;"
-        this.preparedStatement.setInt( 1, n );
-        ResultSet resultSet = this.preparedStatement.executeQuery();
+        ResultSet                              resultSet = null;
 
-        while (resultSet.next()) {
-            HashMap< String, Object > pack         = new HashMap< String, Object >();
-            String                    currentTime  = resultSet.getString( "CURRENT_TIME" );
-            String                    currentDate  = resultSet.getString( "DATE" );
-            Integer                   currentScore = resultSet.getInt( "SCORE" );
-            Integer                   life         = resultSet.getInt( "LIFE" );
-            Integer                   level        = resultSet.getInt( "LEVEL" );
-            Integer                   money        = resultSet.getInt( "MONEY" );
-            String                    towers       = resultSet.getString( "TOWERS" );
-            String                    mobs         = resultSet.getString( "MOBS" );
+        try {
+            this.preparedStatement = connection.prepareStatement(
+                    "SELECT * FROM GameSavings ORDER BY DATE, CURRENT_TIME DESC LIMIT ?"
+            );
+            // "SELECT * FROM GameSavings ORDER BY id DESC LIMIT ?;"
+            this.preparedStatement.setInt( 1, n );
+            resultSet = this.preparedStatement.executeQuery();
 
-            pack.put( "CURRENT_TIME", currentTime );
-            pack.put( "DATE", currentDate );
-            pack.put( "SCORE", currentScore );
-            pack.put( "LIFE", life );
-            pack.put( "LEVEL", level );
-            pack.put( "MONEY", money );
-            pack.put( "TOWERS", towers );
-            pack.put( "MOBS", mobs );
+            while (resultSet.next()) {
+                HashMap< String, Object > pack         = new HashMap< String, Object >();
+                String                    currentTime  = resultSet.getString( "CURRENT_TIME" );
+                String                    currentDate  = resultSet.getString( "DATE" );
+                Integer                   currentScore = resultSet.getInt( "SCORE" );
+                Integer                   life         = resultSet.getInt( "LIFE" );
+                Integer                   level        = resultSet.getInt( "LEVEL" );
+                Integer                   money        = resultSet.getInt( "MONEY" );
+                String                    towers       = resultSet.getString( "TOWERS" );
+                String                    mobs         = resultSet.getString( "MOBS" );
 
-            container.add( pack );
+                pack.put( "CURRENT_TIME", currentTime );
+                pack.put( "DATE", currentDate );
+                pack.put( "SCORE", currentScore );
+                pack.put( "LIFE", life );
+                pack.put( "LEVEL", level );
+                pack.put( "MONEY", money );
+                pack.put( "TOWERS", towers );
+                pack.put( "MOBS", mobs );
+
+                container.add( pack );
+            }
+        } finally {
+            if (resultSet != null) {
+                resultSet.close();
+            }
+            preparedStatement.close();
         }
 
-        resultSet.close();
+        closeConnection();
         return container;
     }
 }

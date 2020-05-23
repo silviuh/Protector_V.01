@@ -63,7 +63,6 @@ public class LoadGameMenu extends JPanel {
     }
 
     public void initializeVariables() throws IOException, FontFormatException, SQLException, ClassNotFoundException {
-
         animatedGif = Toolkit.getDefaultToolkit().createImage( Constants.LOAD_GAME_BACKGROUND_GIF );
         fonts = new ArrayList< Font >();
         File            fontSource    = new File( Constants.KENVECTOR_FUTURE_THIN_URL );
@@ -80,7 +79,6 @@ public class LoadGameMenu extends JPanel {
         DBManager dbManager = mainFrameReference.getDbManager();
         savings = new ArrayList< HashMap< String, Object > >( Constants.NR_OF_AVAILABLE_GAME_SAVINGS );
 
-        dbManager.openConnection();
         int                                    i         = 0;
         ArrayList< HashMap< String, Object > > container = dbManager.SELECTLastNGameSavings( Constants.NR_OF_AVAILABLE_GAME_SAVINGS );
         while (i < container.size()) {
@@ -89,7 +87,6 @@ public class LoadGameMenu extends JPanel {
             );
             i++;
         }
-        dbManager.closeConnection();
     }
 
     public void initializeLayout() {
@@ -162,7 +159,13 @@ public class LoadGameMenu extends JPanel {
                             mainFrameReference.getMainPanelContainer(),
                             "GAME_PANEL"
                     );
-                    mainFrameReference.getGamePanel().gameSetup( savings.get( finalI ), mainFrameReference );
+                    try {
+                        mainFrameReference.getGamePanel().gameSetup( savings.get( finalI ), mainFrameReference );
+                    } catch ( SQLException throwables ) {
+                        throwables.printStackTrace();
+                    } catch ( ClassNotFoundException classNotFoundException ) {
+                        classNotFoundException.printStackTrace();
+                    }
                     mainFrameReference.getGamePanel().startGame();
                 }
             } );

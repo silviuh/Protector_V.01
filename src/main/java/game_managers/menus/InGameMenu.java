@@ -119,16 +119,14 @@ public class InGameMenu {
             public void actionPerformed(ActionEvent e) {
                 GamePanel gamePanel = mainFrame.getGamePanel();
                 try {
-                    mainFrame.getDbManager().openConnection();
                     mainFrame.getDbManager().INSERTIntoGameSavings(
                             gamePanel.getEnemyManager().serializeEnemies(),
                             gamePanel.getTowerManager().serializeTowers(),
                             Player.getLives(),
                             Player.getScore(),
-                            1, // !
+                            Player.getCurrentLevel(), // !
                             Player.getCurrentAmountOfMoney()
                     );
-                    mainFrame.getDbManager().closeConnection();
                 } catch ( SQLException | ClassNotFoundException throwables ) {
                     throwables.printStackTrace();
                 }

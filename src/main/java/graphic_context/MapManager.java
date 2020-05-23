@@ -2,12 +2,14 @@ package graphic_context;
 
 import Constants.Constants;
 import factories.ImageFactory;
+import game_managers.db.DBManager;
 
 import javax.swing.*;
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
@@ -15,6 +17,7 @@ import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class MapManager {
+    private                 DBManager                   dbManager;
     private                 Constants.PairOfCoordinates allyKeepCoordinates = null;
     private                 int                         enemyStartingPoint  = -1;
     private static volatile MapManager                  mapManager;
@@ -23,6 +26,47 @@ public class MapManager {
     private                 List< Tile >                tiles;
     private                 JPanel                      mainFrameObserver;
     private                 int                         tileSize;
+
+    public void loadMapFromDB(int currentLevel) throws SQLException, ClassNotFoundException {
+        int currentTile = 0;
+        dbManager.openConnection();
+        String mapContent = dbManager.SELECTFileContent( currentLevel );
+
+        String[] charTileList = mapContent.split( "\\s+" );
+        for (String tileString : charTileList) {
+            Constants.Image requiredImage = (
+                    Constants.Image.values()[
+                            Integer.parseInt( tileString )
+                            ]
+            );
+
+            if (Integer.parseInt( tileString ) == Constants.ALLY_KEEP_TILE_CODE) {
+                allyKeepCoordinates = new Constants.PairOfCoordinates(
+                        Constants.TILE_SIZE * ( currentTile / Constants.NR_OF_TILES_PER_WIDTH ),
+                        Constants.TILE_SIZE * ( currentTile % Constants.NR_OF_TILES_PER_WIDTH )
+                );
+            }
+
+            if (Integer.parseInt( tileString ) == Constants.ENEMY_KEEP_TILE_CODE) {
+                enemyStartingPoint = currentTile;
+            }
+
+            this.tiles.add(
+                    TileFactory.createTile(
+                            SpriteFactory.createSprite(
+                                    ImageFactory.createImage( requiredImage ).getImage()
+                            ),
+                            requiredImage.property
+                    )
+            );
+            currentTile++;
+        }
+        setTileCoordinates();
+    }
+
+    public void deleteContainer() {
+        this.tiles.clear();
+    }
 
     public class Pair {
         private int xCoord;
@@ -59,21 +103,23 @@ public class MapManager {
         this.tiles = tiles;
     }
 
-    private MapManager(int SIZE, int tileSize, String levelFilePath) {
+    private MapManager(int SIZE, int tileSize, DBManager dbManager) {
         this.SIZE = SIZE;
         tiles = new ArrayList< Tile >( SIZE * SIZE );
         this.tileSize = tileSize;
+        this.dbManager = dbManager;
+    }
 
+    public void loadMapFromTextFile(String levelFilePath) {
         try {
             loadConfigFromTextFile( levelFilePath );
         } catch ( IOException e ) {
             e.printStackTrace();
         }
-        // createSampleMap();
         setTileCoordinates();
     }
 
-    public static MapManager getInstance(String levelFilePath) {
+    public static MapManager getInstance(DBManager dbManager) {
         singletonLock = new ReentrantLock();
         if (mapManager == null) {
             try {
@@ -81,7 +127,7 @@ public class MapManager {
                 mapManager = new MapManager(
                         Constants.MAP_SIZE,
                         Constants.TILE_SIZE,
-                        levelFilePath
+                        dbManager
                 );
             } finally {
                 singletonLock.unlock();

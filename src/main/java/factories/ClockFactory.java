@@ -80,6 +80,22 @@ public class ClockFactory {
                 break;
             }
 
+            case WAVE_2: {
+                clock = new Clock(
+                        1,
+                        Constants.WAVE_2_UPDATE_FRAME_DURATION
+                );
+                break;
+            }
+
+            case WAVE_3: {
+                clock = new Clock(
+                        1,
+                        Constants.WAVE_3_UPDATE_FRAME_DURATION
+                );
+                break;
+            }
+
             case CRANE: {
                 clock = new Clock(
                         1,

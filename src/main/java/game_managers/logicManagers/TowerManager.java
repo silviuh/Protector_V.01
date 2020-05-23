@@ -226,4 +226,8 @@ public class TowerManager {
             }
         }
     }
+
+    public void deleteContainer() {
+        this.container.clear();
+    }
 }

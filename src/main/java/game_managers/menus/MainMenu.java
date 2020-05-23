@@ -8,6 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.locks.ReentrantLock;
@@ -171,7 +172,13 @@ public class MainMenu extends JPanel {
                         mainFrameReference.getMainPanelContainer(),
                         "GAME_PANEL"
                 );
-                mainFrameReference.getGamePanel().gameSetup( null, mainFrameReference );
+                try {
+                    mainFrameReference.getGamePanel().gameSetup( null, mainFrameReference );
+                } catch ( SQLException throwables ) {
+                    throwables.printStackTrace();
+                } catch ( ClassNotFoundException classNotFoundException ) {
+                    classNotFoundException.printStackTrace();
+                }
                 mainFrameReference.getGamePanel().startGame();
             }
         } );

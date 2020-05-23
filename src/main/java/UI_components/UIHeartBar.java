@@ -57,6 +57,10 @@ public class UIHeartBar {
 
     }
 
+    public int getInitialNumberOfLifes() {
+        return initialNumberOfLifes;
+    }
+
     public int getCurrentNrOfLifes() {
         return currentNrOfLifes;
     }

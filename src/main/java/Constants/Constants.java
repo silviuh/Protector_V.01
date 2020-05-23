@@ -185,7 +185,9 @@ public class Constants {
         PROJECTILE_TYPE_ARCANE,
         PROJECTILE_TYPE_CRANE,
         PROJECTILE_TYPE_CANNON,
-        UI_CONSOLE
+        UI_CONSOLE,
+        WAVE_2,
+        WAVE_3
     }
 
     public static final String TITLE = "Tower Defence v.02";
@@ -245,8 +247,11 @@ public class Constants {
     public static final int FPS_RATE_X         = DOLLAR_SIGN_X + FPS_RATE_X_PADDING;
     public static final int FPS_RATE_Y         = DOLLAR_SIGN_Y + 250;
 
-    public static final int SCORE_X = 30;
+    public static final int SCORE_X = 0;
     public static final int SCORE_Y = 40;
+
+    public static final int LEVEL_X = 790;
+    public static final int LEVEL_Y = 40;
 
     public static final int IN_GAME_MENU_X      = 1075;
     public static final int IN_GAME_MENU_Y      = 0;
@@ -284,6 +289,7 @@ public class Constants {
     public static final int NR_OF_DIRECTIONS = 4;
 
     public static final int     MAX_LIVES_AMOUNT_LEVEL_1      = 40;
+    public static final int     MAX_LEVEL                     = 3;
     public static final Integer GAME_SPEED                    = 50;
     public static final int     ENEMY_1_UPDATE_FRAME_DURATION = 600;
     public static final int     ENEMY_2_UPDATE_FRAME_DURATION = 500;
@@ -306,6 +312,8 @@ public class Constants {
     public static final int PROJECTILE_CANNON_UPDATE_FRAME_DURATION = 80;
 
     public static final int WAVE_1_UPDATE_FRAME_DURATION  = 1000;
+    public static final int WAVE_2_UPDATE_FRAME_DURATION  = 800;
+    public static final int WAVE_3_UPDATE_FRAME_DURATION  = 600;
     public static final int CONSOLE_UPDATE_FRAME_DURATION = 1000;
 
 
@@ -394,16 +402,16 @@ public class Constants {
     public static int ARCANE_TOWER_ENEMIES_AFFECTED = 1;
 
     public static int INITIAL_NUMBER_OF_LIVES = 40;
-    public static int LIVES_TAKEN_BY_GROOT = -1;
-    public static int LIVES_TAKEN_BY_OWL   = -2;
-    public static int LIVES_TAKEN_BY_DEVIL = -1;
-    public static int LIVES_TAKEN_BY_SONIC = -3;
-    public static int LIVES_TAKEN_BY_SLIME = -1;
+    public static int LIVES_TAKEN_BY_GROOT    = -1;
+    public static int LIVES_TAKEN_BY_OWL      = -2;
+    public static int LIVES_TAKEN_BY_DEVIL    = -1;
+    public static int LIVES_TAKEN_BY_SONIC    = -3;
+    public static int LIVES_TAKEN_BY_SLIME    = -1;
 
     public static int DEVIL_SCORE_INCREASE = 20;
     public static int SONIC_SCORE_INCREASE = 50;
     public static int GROOT_SCORE_INCREASE = 30;
-    public static int OWL_SCORE_INCREASE = 40;
+    public static int OWL_SCORE_INCREASE   = 40;
     public static int SLIME_SCORE_INCREASE = 15;
 
     public static int UI_CONSOLE_CAPACITY        = 11;
@@ -427,6 +435,7 @@ public class Constants {
     public static final String UPGRADE_TEXT = "UPGRADE TOWER";
     public static final String SELL_TEXT    = "SELL TOWER";
 
+    public static final String DB_URL                    = "C:\\Users\\silviu\\IdeaProjects\\Protector_Maven\\ProtectorDB.db";
     public static final String KENVECTOR_FUTURE_THIN_URL = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\fonts\\kenvector_future_thin.ttf";
     public static final String KENVECTOR_FUTURE_URL      = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\fonts\\kenvector_future.ttf";
     public static final String UBUNTU_FONT_BOLD          = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\fonts\\Ubuntu-R.ttf";
@@ -551,7 +560,10 @@ public class Constants {
 
 
     public static final String LEVEL_1_MAP_CONFIG_TXT = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\config_files\\level_1.txt";
-    public static final String HELP_TEXT_CONFIG_TXT   = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\config_files\\help_menu.txt";
+    public static final String LEVEL_2_MAP_CONFIG_TXT = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\config_files\\level_2.txt";
+    public static final String LEVEL_3_MAP_CONFIG_TXT = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\config_files\\level_3.txt";
+
+    public static final String HELP_TEXT_CONFIG_TXT = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\config_files\\help_menu.txt";
 
     public static final String WOOD_BG_URL = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\wood_bg_4.jpg";
 

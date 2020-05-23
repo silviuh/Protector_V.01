@@ -247,4 +247,7 @@ public class EnemyManager {
         return nrOfActiveEnemies;
     }
 
+    public void deleteContainer() {
+        this.container.clear();
+    }
 }

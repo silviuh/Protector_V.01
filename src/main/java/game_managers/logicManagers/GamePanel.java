@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.HashMap;
 
 public class GamePanel extends JPanel {
@@ -50,7 +51,9 @@ public class GamePanel extends JPanel {
     private Long      lastTime        = 0L;
     private float     fpsRate         = 0f;
 
-    public void gameSetup(HashMap< String, Object > dataSet, GameMainFrame frame) {
+    public void gameSetup(HashMap< String, Object > dataSet, GameMainFrame frame) throws SQLException, ClassNotFoundException {
+        this.gameFrame = frame;
+
         if (dataSet == null) {
             setLayout( null );
             initializeVariables();
@@ -60,9 +63,8 @@ public class GamePanel extends JPanel {
             initializeVariablesFromUpdate( dataSet );
             initializeLayout();
         }
-        this.gameFrame = frame;
-        this.gameFrame.addKeyListener( this.keyHandlerManager );
 
+        this.gameFrame.addKeyListener( this.keyHandlerManager );
         Mouse mouse = new Mouse( this );
         addMouseListener( mouse );
         addMouseMotionListener( mouse );
@@ -174,7 +176,7 @@ public class GamePanel extends JPanel {
         lastTime = System.nanoTime();
     }
 
-    private void initializeVariables() {
+    private void initializeVariables() throws SQLException, ClassNotFoundException {
         try {
             textFont = Font.createFont( Font.TRUETYPE_FONT, new FileInputStream( new File( Constants.KENVECTOR_FUTURE_THIN_URL ) ) ).deriveFont( 20.0f );
         } catch ( FileNotFoundException e ) {
@@ -202,7 +204,10 @@ public class GamePanel extends JPanel {
 
         this.keyHandlerManager = new KeyHandlerManager( this );
 
-        this.mapManager = MapManager.getInstance( Constants.LEVEL_1_MAP_CONFIG_TXT );
+        this.mapManager = MapManager.getInstance( gameFrame.getDbManager() );
+        // this.mapManager.loadMapFromTextFile( Constants.LEVEL_1_MAP_CONFIG_TXT );
+        this.mapManager.loadMapFromDB( 1 );
+
         Player.setFortressX( this.mapManager.getAllyKeepCoordinates().getxCoord() );
         Player.setFortressY( this.mapManager.getAllyKeepCoordinates().getyCoord() );
 
@@ -210,15 +215,20 @@ public class GamePanel extends JPanel {
         this.uItowersManager = UItowersManager.getInstance( 1 );
         this.towerManager = TowerManager.getInstance( mapManager );
         this.enemyManager = EnemyManager.getInstance( mapManager );
-        this.waveManager = WaveManager.getInstance( mapManager, enemyManager, clockManager );
+        this.waveManager = WaveManager.getInstance(
+                mapManager,
+                towerManager,
+                enemyManager,
+                clockManager,
+                1
+        );
+
         GameTowerFactory.setEnemyManager( enemyManager );
         this.mouseIcon = MouseIcon.generateMouseIcon();
         this.gameSpeed = Constants.GAME_SPEED;
-
-        // !
     }
 
-    private void initializeVariablesFromUpdate(HashMap< String, Object > dataSet) {
+    private void initializeVariablesFromUpdate(HashMap< String, Object > dataSet) throws SQLException, ClassNotFoundException {
         try {
             textFont = Font.createFont( Font.TRUETYPE_FONT, new FileInputStream( new File( Constants.KENVECTOR_FUTURE_THIN_URL ) ) ).deriveFont( 20.0f );
         } catch ( FileNotFoundException e ) {
@@ -245,13 +255,17 @@ public class GamePanel extends JPanel {
         this.keyHandlerManager = new KeyHandlerManager( this );
 
         // !load map from db by level
-        this.mapManager = MapManager.getInstance( Constants.LEVEL_1_MAP_CONFIG_TXT );
+        this.mapManager = MapManager.getInstance( gameFrame.getDbManager() );
+        // this.mapManager.loadMapFromTextFile( Constants.LEVEL_2_MAP_CONFIG_TXT );
+        this.mapManager.loadMapFromDB(
+                ( Integer ) dataSet.get( "LEVEL" )
+        );
+
         Player.setFortressX( this.mapManager.getAllyKeepCoordinates().getxCoord() );
         Player.setFortressY( this.mapManager.getAllyKeepCoordinates().getyCoord() );
 
         this.handHolder = new Constants.HandHolder();
         this.uItowersManager = UItowersManager.getInstance( 1 );
-
 
         this.enemyManager = EnemyManager.getInstance( mapManager );
         this.enemyManager.deserializeEnemies( ( String ) dataSet.get( "MOBS" ) );
@@ -260,7 +274,13 @@ public class GamePanel extends JPanel {
         this.towerManager = TowerManager.getInstance( mapManager );
         this.towerManager.deserializeTowers( ( String ) dataSet.get( "TOWERS" ) );
 
-        this.waveManager = WaveManager.getInstance( mapManager, enemyManager, clockManager );
+        this.waveManager = WaveManager.getInstance(
+                mapManager,
+                towerManager,
+                enemyManager,
+                clockManager,
+                ( Integer ) dataSet.get( "LEVEL" )
+        );
 
         this.mouseIcon = MouseIcon.generateMouseIcon();
         this.gameSpeed = Constants.GAME_SPEED;
@@ -278,23 +298,31 @@ public class GamePanel extends JPanel {
 
     public void performLoopOperations() {
         lastTime = System.nanoTime();
-        update();
+        try {
+            update();
+        } catch ( SQLException throwables ) {
+            throwables.printStackTrace();
+        } catch ( ClassNotFoundException e ) {
+            e.printStackTrace();
+        }
         repaint();
     }
 
-    public void update() {
+    public void update() throws SQLException, ClassNotFoundException {
         clockManager.update();
         waveManager.update();
         towerManager.update();
         enemyManager.update();
-        UIConsole.update();
 
+        if (enemyManager.numberOfActiveEnemies() == 0) {
+            waveManager.loadNextLevel();
+        }
+        UIConsole.update();
         /*
         if (toDeleteDesTowers == false) {
             towerManager.deserializeTowers( "|CannonTower 588 168 3 CANNON_TOWER|CraneTower 798 168 1 ARCANE_TOWER|ZombieTower 294 168 2 CRANE_TOWER" );
             toDeleteDesTowers = true;
         }
-
          */
     }
 
@@ -364,6 +392,13 @@ public class GamePanel extends JPanel {
                 "SCORE: " + String.valueOf( ( int ) Player.getScore() ),
                 Constants.SCORE_X,
                 Constants.SCORE_Y
+        );
+
+        g.setColor( Constants.dollarSign );
+        g.drawString(
+                "LEVEL: " + String.valueOf( ( int ) Player.getCurrentLevel() ),
+                Constants.LEVEL_X,
+                Constants.LEVEL_Y
         );
 
         g.setColor( Constants.dollarSign );

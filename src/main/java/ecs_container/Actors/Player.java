@@ -200,4 +200,12 @@ public class Player {
     public static int getCurrentLevel() {
         return currentLevel;
     }
+
+    public static void resetLife() {
+        Player.lives = uiHeartBar.getInitialNumberOfLifes();
+    }
+
+    public static void setCurrentLevel(int currentLevel) {
+        Player.currentLevel = currentLevel;
+    }
 }
