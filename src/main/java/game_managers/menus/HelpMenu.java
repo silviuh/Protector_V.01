@@ -68,7 +68,7 @@ public class HelpMenu extends JPanel {
         formattedHelpText = rawText.replace(
                 "\n", "<br>"
         );
-        formattedHelpText = "<html><font size='5'>" +
+        formattedHelpText = "<html><font size='6'>" +
                 formattedHelpText +
                 "</font></html>";
 
@@ -103,7 +103,7 @@ public class HelpMenu extends JPanel {
                 Constants.TEXT_SIZE,
                 Constants.TEXT_SIZE
         );
-        textLabel.setForeground( Constants.dollarSign );
+        textLabel.setForeground( Color.WHITE );
 
         backToMyMenuBtn = new JButton(
                 Constants.BACK_TO_MAIN_MENU_LABEL,
@@ -193,7 +193,7 @@ public class HelpMenu extends JPanel {
         int yCreator = ( screenHeight / 2 - Constants.MENU_CENTER_Y_SPACING + 100 );
 
         g.setFont( fonts.get( 1 ) );
-        g.setColor( Color.WHITE );
+        g.setColor( Constants.dollarSign );
 
         g.drawString(
                 title,

@@ -231,7 +231,7 @@ public class Constants {
     public static final int TITLE_PADDING_FROM_BUTTONS = 12;
     public static final int TEXT_SIZE                  = 600;
     public static final int TEXT_X_PADDING             = 250;
-    public static final int TEXT_Y_PADDING             = 200;
+    public static final int TEXT_Y_PADDING             = 300;
     public static final int BOARD_WIDTH                = 1050;
     public static final int BOARD_HEIGHT               = 1050;
     public static final int UI_WOOD_WIDTH              = 255;
@@ -581,7 +581,7 @@ public class Constants {
     public static final String LEVEL_2_MAP_CONFIG_TXT = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\config_files\\level_2.txt";
     public static final String LEVEL_3_MAP_CONFIG_TXT = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\config_files\\level_3.txt";
 
-    public static final String HELP_TEXT_CONFIG_TXT = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\config_files\\help_menu.txt";
+    public static final String HELP_TEXT_CONFIG_TXT = "C:\\Users\\silviu\\IdeaProjects\\Protector_Maven\\src\\main\\java\\config_files\\help_menu.txt";
 
     public static final String WOOD_BG_URL = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\wood_bg_4.jpg";
 
