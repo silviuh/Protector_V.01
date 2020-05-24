@@ -151,8 +151,6 @@ public abstract class Tower {
 
     public void render(Graphics graphicsContext) {
         if (drawRange) {
-            // int circleRadius = 2 * Constants.TILE_SIZE;
-
             graphicsContext.setColor( this.outerCircleColor );
             graphicsContext.drawOval(
                     ( getxPos() ) + Constants.TILE_SIZE / 2 - this.range,

@@ -7,9 +7,9 @@ public class TowerBehaviour {
     public int                  enemiesAffected;
     public int                  damage;
 
-    public int modifierIncreaseDamage     = 1;    //how much range and attack increase by when upgraded
-    public int modifierIncreaseInRange    = 1;    //how much range and attack increase by when upgraded
-    public int modifierDecreaseInCooldown = 1;    //how much range and attack increase by when upgraded
+    public int modifierIncreaseDamage     = 1;
+    public int modifierIncreaseInRange    = 1;
+    public int modifierDecreaseInCooldown = 1;
 
     public double refundValue;
     public int    currentLevel = 1;
@@ -17,7 +17,7 @@ public class TowerBehaviour {
     public double upgradeCost;
 
     public TowerBehaviour(Constants.attackType attackType, int damage,
-                          int modifierIncreaseDamage,    //how much range and attack increase by when upgraded
+                          int modifierIncreaseDamage,
                           int modifierDecreaseInCooldown,
                           int modifierIncreaseInRange,
                           double givenUpgradeCost,
@@ -35,5 +35,5 @@ public class TowerBehaviour {
         this.maxLevel = maxLevel;
         this.refundValue = refundValue;
     }
-    // to be continued...
+
 }

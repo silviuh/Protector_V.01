@@ -58,6 +58,12 @@ public class DBManager {
     }
 
     public void openConnection() throws ClassNotFoundException, SQLException {
+        Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
+                "." +
+                new Exception().getStackTrace()[1].getMethodName() +
+                "()!"
+        );
+
         if (connection == null || connection.isClosed()) {
             Class.forName( DBManager.DB_SERVER );
             this.connection = DriverManager.getConnection( DBManager.DB_NAME );
@@ -66,11 +72,23 @@ public class DBManager {
     }
 
     public void closeConnection() throws SQLException {
+        Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
+                "." +
+                new Exception().getStackTrace()[1].getMethodName() +
+                "()!"
+        );
+
         this.connection.commit();
         this.connection.close();
     }
 
     private void initDataBase() throws SQLException {
+        Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
+                "." +
+                new Exception().getStackTrace()[1].getMethodName() +
+                "()!"
+        );
+
         try {
             boolean wasCreated = false;
             File    dbFile     = new File( Constants.DB_URL );
@@ -113,22 +131,6 @@ public class DBManager {
             INSERTIntoHighScores( 250 );
             SELECTHighScores( 4 );
         */
-
-            /*
-            ArrayList< Enemy > enemies = new ArrayList<>();
-            int                i       = 0;
-            while (i < 100) {
-                Constants.enemyType currentEnemyType = Constants.enemyType.values()[new Random().nextInt( ( int ) Constants.enemyType.values().length )];
-                enemies.add(
-                        EnemyFactory.createInstance(
-                                null, // 11
-                                currentEnemyType
-                        )
-                );
-                i++;
-            }
-             */
-
             /*
             INSERTIntoGameSavings(
                     "|Devil 40.0 126 168|Owl 80.0 42 42|Slime 40.0 84 42|Sonic 90.0 42 84",
@@ -385,13 +387,11 @@ public class DBManager {
         closeConnection();
     }
 
-    // <String, ?>
     public HashMap< String, Object > SELECTGameSavingsByTimeAndDate(String time, String date) throws SQLException, ClassNotFoundException {
         openConnection();
         ResultSet                 resultSet        = null;
         HashMap< String, Object > containerPackage = new HashMap< String, Object >();
 
-        // SELECT * FROM GameSavings WHERE CURRENT_TIME = ?, DATE = ?;
         try {
             this.preparedStatement = connection.prepareStatement(
                     "SELECT * FROM GameSavings WHERE (CURRENT_TIME = ? AND DATE = ?);"

@@ -41,9 +41,7 @@ public class EnemyManager {
 
 
     public void addEnemy(Enemy enemy, String enemyName) {
-        if (container.get( enemyName ) == null) {
-            container.put( enemyName, new ArrayList< Enemy >() );
-        }
+        container.computeIfAbsent( enemyName, k -> new ArrayList< Enemy >() );
         container.get( enemyName ).add( enemy );
     }
 
@@ -145,6 +143,12 @@ public class EnemyManager {
     }
 
     public String serializeEnemies() {
+        Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
+                "." +
+                new Exception().getStackTrace()[1].getMethodName() +
+                "()!"
+        );
+
         StringBuilder result = new StringBuilder();
 
         for (ArrayList< Enemy > enemyList : container.values()) {
@@ -154,8 +158,8 @@ public class EnemyManager {
                             "|" +
                                     ( enemy.getClass().getSimpleName() ) + " " +
                                     enemy.getHealth() + " " +
-                                    new Integer( enemy.getX() ).toString() + " " +
-                                    new Integer( enemy.getY() ).toString()
+                                    Integer.toString( enemy.getX() ) + " " +
+                                    Integer.toString( enemy.getY() )
                     );
                 }
             }
@@ -164,11 +168,17 @@ public class EnemyManager {
     }
 
     public void deserializeEnemies(String serializedContainer) {
+        Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
+                "." +
+                new Exception().getStackTrace()[1].getMethodName() +
+                "()!"
+        );
+
         String[] enemiesTokens = serializedContainer.split( "\\|" );
 
-        for (int i = 0; i < enemiesTokens.length; i++) {
-            if (enemiesTokens[i].length() > 1) {
-                String[] values               = enemiesTokens[i].split( " " );
+        for (String enemiesToken : enemiesTokens) {
+            if (enemiesToken.length() > 1) {
+                String[] values               = enemiesToken.split( " " );
                 Tile     formerEnemyStartTile = mapManager.getTileByCoordinates( Integer.parseInt( values[2] ), Integer.parseInt( values[3] ) );
                 if (formerEnemyStartTile != null) {
                     addEnemy(

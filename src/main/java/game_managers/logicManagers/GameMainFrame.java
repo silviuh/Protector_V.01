@@ -33,6 +33,7 @@ public class GameMainFrame extends JFrame {
 
     public GameMainFrame(DBManager dbManager) {
         this.dbManager = dbManager;
+
         mainPanelContainer = new JPanel();
         gamePanel = new GamePanel( this );
         mainMenuPanel = new MainMenu( this );
@@ -76,6 +77,12 @@ public class GameMainFrame extends JFrame {
     }
 
     public void initializeLayout() throws IOException {
+        Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
+                "." +
+                new Exception().getStackTrace()[1].getMethodName() +
+                "()!"
+        );
+
         mainPanelContainer.setLayout( panelSwitcher );
         this.setTitle( Constants.TITLE );
         this.setExtendedState( MAXIMIZED_BOTH );
@@ -105,7 +112,6 @@ public class GameMainFrame extends JFrame {
                 "GAME_PANEL"
         );
 
-
         inGameMenu = InGameMenu.getInstance(
                 this,
                 gamePanel.getStateManager(),
@@ -114,12 +120,9 @@ public class GameMainFrame extends JFrame {
 
         add( mainPanelContainer );
 
-        // this.setSize( screenDimension.width, screenDimension.height );
         this.setExtendedState( JFrame.MAXIMIZED_BOTH );
         this.setResizable( true );
         this.setUndecorated( true );
-        // GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice().setFullScreenWindow(this);
-        // this.pack();
         this.setIconImage( ImageIO.read( new File( Constants.GAME_ICON ) ) );
         this.setVisible( true );
     }

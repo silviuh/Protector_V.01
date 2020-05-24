@@ -61,10 +61,7 @@ public class Projectile extends Entity {
                 this.setInactive();
             }
         }
-        // doing damage and eventually set inactive
     }
-
-    // public boolean collides
 
     public void render(Graphics g) {
         if (isActive()) {

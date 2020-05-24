@@ -34,18 +34,6 @@ public abstract class Enemy extends Mob {
                 sprites
         );
 
-        /*
-        super(
-                200,
-                200,
-                height,
-                width,
-                sprites
-        );
-
-         */
-
-
         this.startTile = startTile;
         this.health = 100;
         this.initialHealth = health;
@@ -54,11 +42,8 @@ public abstract class Enemy extends Mob {
         this.enemyGotHit = false;
         this.clock = clock;
 
-        // !!!!
         this.lastX = startTile.getX();
         this.lastY = startTile.getY();
-        // this.lastX = 200;
-        // this.lastY = 200;
     }
 
     public Enemy(Tile startTile, ArrayList< SpriteSheet > sprites, Clock clock, int livesTaken) {
@@ -150,7 +135,6 @@ public abstract class Enemy extends Mob {
             this.currentSpriteNumber++;
             if (currentSpriteNumber == this.sprites.size())
                 currentSpriteNumber = 0;
-
         }
     }
 

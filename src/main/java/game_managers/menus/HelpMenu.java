@@ -29,9 +29,9 @@ public class HelpMenu extends JPanel {
     private                 String            title;
     private                 String            creator;
     private                 JButton           backToMyMenuBtn;
-    private JButton       exitBtn;
-    private GameMainFrame mainFrameReference;
-    private Image         animatedGif = null;
+    private                 JButton           exitBtn;
+    private                 GameMainFrame     mainFrameReference;
+    private                 Image             animatedGif = null;
     private                 JLabel            textLabel   = null;
 
 
@@ -68,7 +68,7 @@ public class HelpMenu extends JPanel {
         formattedHelpText = rawText.replace(
                 "\n", "<br>"
         );
-        formattedHelpText = "<html><font size='9'>" +
+        formattedHelpText = "<html><font size='5'>" +
                 formattedHelpText +
                 "</font></html>";
 
@@ -103,7 +103,7 @@ public class HelpMenu extends JPanel {
                 Constants.TEXT_SIZE,
                 Constants.TEXT_SIZE
         );
-        textLabel.setForeground( Color.white );
+        textLabel.setForeground( Constants.dollarSign );
 
         backToMyMenuBtn = new JButton(
                 Constants.BACK_TO_MAIN_MENU_LABEL,

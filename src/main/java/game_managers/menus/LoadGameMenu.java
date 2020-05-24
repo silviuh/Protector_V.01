@@ -161,10 +161,8 @@ public class LoadGameMenu extends JPanel {
                     );
                     try {
                         mainFrameReference.getGamePanel().gameSetup( savings.get( finalI ), mainFrameReference );
-                    } catch ( SQLException throwables ) {
+                    } catch ( SQLException | ClassNotFoundException throwables ) {
                         throwables.printStackTrace();
-                    } catch ( ClassNotFoundException classNotFoundException ) {
-                        classNotFoundException.printStackTrace();
                     }
                     mainFrameReference.getGamePanel().startGame();
                 }
@@ -188,8 +186,8 @@ public class LoadGameMenu extends JPanel {
             }
         } );
 
-        for (int i = 0; i < loadGameButtons.length; i++) {
-            add( loadGameButtons[i] );
+        for (JButton loadGameButton : loadGameButtons) {
+            add( loadGameButton );
         }
         add( backToMyMenuBtn );
         add( exitBtn );

@@ -12,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class InGameMenu {
                 new ImageIcon( Constants.INCREASE_GAME_SPEED_1_URL )
         );
         currentMenuItem.setAccelerator( KeyStroke.getKeyStroke(
-                KeyEvent.VK_2, ActionEvent.ALT_MASK ) );
+                KeyEvent.VK_2, InputEvent.ALT_MASK ) );
         currentMenuItem.setOpaque( true );
         currentMenuItem.setBackground( Color.WHITE );
         currentMenuItem.addActionListener( new ActionListener() {
@@ -67,7 +68,6 @@ public class InGameMenu {
             }
         } );
         submenu.add( currentMenuItem );
-
 
         currentMenuItem = new JMenuItem(
                 "Decrease Speed",
@@ -85,9 +85,7 @@ public class InGameMenu {
         } );
         submenu.add( currentMenuItem );
 
-
         menu.add( submenu );
-
 
         currentMenuItem = new JMenuItem(
                 "Pause",
@@ -107,7 +105,6 @@ public class InGameMenu {
         currentMenuItem.setOpaque( true );
         currentMenuItem.setBackground( Color.WHITE );
         menuItems.add( currentMenuItem );
-
 
         currentMenuItem = new JMenuItem(
                 "Save Game",
@@ -138,7 +135,6 @@ public class InGameMenu {
         currentMenuItem.setBackground( Color.WHITE );
         menuItems.add( currentMenuItem );
 
-
         currentMenuItem = new JMenuItem(
                 "Exit",
                 new ImageIcon( Constants.EXIT_BUTTON_1_URL )
@@ -147,7 +143,6 @@ public class InGameMenu {
         currentMenuItem.addActionListener( new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Object[] possibilities = { "Yes", "No" };
                 Object[] options = {
                         "Yes, please",
                         "No way!"
@@ -167,20 +162,16 @@ public class InGameMenu {
                     DBManager dbManager = mainFrame.getDbManager();
                     try {
                         dbManager.INSERTIntoHighScores( Player.getScore() );
-                    } catch ( SQLException throwables ) {
+                    } catch ( SQLException | ClassNotFoundException throwables ) {
                         throwables.printStackTrace();
-                    } catch ( ClassNotFoundException classNotFoundException ) {
-                        classNotFoundException.printStackTrace();
                     }
                     stateManager.setCurrentState( Constants.StateID.DESTROYED );
                 }
-                return;
             }
         } );
         currentMenuItem.setOpaque( true );
         currentMenuItem.setBackground( Color.WHITE );
         menuItems.add( currentMenuItem );
-
 
         for (JMenuItem item : menuItems) {
             menu.add( item );

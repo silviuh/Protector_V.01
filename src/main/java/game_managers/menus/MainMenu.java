@@ -168,16 +168,20 @@ public class MainMenu extends JPanel {
         playGameBtn.addActionListener( new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
+                        "." +
+                        new Exception().getStackTrace()[1].getMethodName() +
+                        "()!"
+                );
+
                 mainFrameReference.getPanelSwitcher().show(
                         mainFrameReference.getMainPanelContainer(),
                         "GAME_PANEL"
                 );
                 try {
                     mainFrameReference.getGamePanel().gameSetup( null, mainFrameReference );
-                } catch ( SQLException throwables ) {
+                } catch ( SQLException | ClassNotFoundException throwables ) {
                     throwables.printStackTrace();
-                } catch ( ClassNotFoundException classNotFoundException ) {
-                    classNotFoundException.printStackTrace();
                 }
                 mainFrameReference.getGamePanel().startGame();
             }
@@ -186,6 +190,12 @@ public class MainMenu extends JPanel {
         helpBtn.addActionListener( new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
+                        "." +
+                        new Exception().getStackTrace()[1].getMethodName() +
+                        "()!"
+                );
+
                 mainFrameReference.getPanelSwitcher().show(
                         mainFrameReference.getMainPanelContainer(),
                         "HELP_PANEL"
@@ -196,6 +206,12 @@ public class MainMenu extends JPanel {
         highScoreBtn.addActionListener( new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
+                        "." +
+                        new Exception().getStackTrace()[1].getMethodName() +
+                        "()!"
+                );
+
                 mainFrameReference.getPanelSwitcher().show(
                         mainFrameReference.getMainPanelContainer(),
                         "HIGH_SCORES_PANEL"
@@ -206,6 +222,12 @@ public class MainMenu extends JPanel {
         loadGameBtn.addActionListener( new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
+                        "." +
+                        new Exception().getStackTrace()[1].getMethodName() +
+                        "()!"
+                );
+
                 mainFrameReference.getPanelSwitcher().show(
                         mainFrameReference.getMainPanelContainer(),
                         "LOAD_GAME_PANEL"

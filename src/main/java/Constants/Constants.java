@@ -1,6 +1,7 @@
 package Constants;
 
 import ecs_container.Actors.Player;
+import utilities.GameLogger;
 
 import java.awt.*;
 import java.io.File;
@@ -11,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Constants {
+    public static final GameLogger gameLogger = new GameLogger();
 
     public static class PairOfCoordinates {
         private int xCoord;
@@ -411,9 +413,10 @@ public class Constants {
     public static int CRANE_TOWER_ENEMIES_AFFECTED  = 1;
     public static int ARCANE_TOWER_ENEMIES_AFFECTED = 1;
 
-    public static int NUMBER_OF_ENEMIES_LEVEL_1 = 50;
-    public static int NUMBER_OF_ENEMIES_LEVEL_2 = 75;
-    public static int NUMBER_OF_ENEMIES_LEVEL_3 = 100;
+    public static final int NUMBER_OF_LEVELS          = 3;
+    public static       int NUMBER_OF_ENEMIES_LEVEL_1 = 75;
+    public static       int NUMBER_OF_ENEMIES_LEVEL_2 = 100;
+    public static       int NUMBER_OF_ENEMIES_LEVEL_3 = 200;
 
     public static int INITIAL_NUMBER_OF_LIVES = 40;
     public static int LIVES_TAKEN_BY_GROOT    = -1;
@@ -449,6 +452,7 @@ public class Constants {
     public static final String UPGRADE_TEXT = "UPGRADE TOWER";
     public static final String SELL_TEXT    = "SELL TOWER";
 
+    public static final String LOG_FILE_URL              = "C:\\Users\\silviu\\IdeaProjects\\Protector_Maven\\src\\main\\java\\utilities\\logging_files\\dump";
     public static final String DB_URL                    = "C:\\Users\\silviu\\IdeaProjects\\Protector_Maven\\ProtectorDB.db";
     public static final String KENVECTOR_FUTURE_THIN_URL = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\fonts\\kenvector_future_thin.ttf";
     public static final String KENVECTOR_FUTURE_URL      = "C:\\Users\\silviu\\IdeaProjects\\Tower_Defence_v02\\src\\assets\\fonts\\kenvector_future.ttf";

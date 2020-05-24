@@ -11,11 +11,9 @@ import javax.swing.*;
 
 public class ProjectileFactory {
     private static ClockManager clockManager;
-
     public static void setClockManager(ClockManager clockManager) {
         ProjectileFactory.clockManager = clockManager;
     }
-
     private ProjectileFactory() {
 
 

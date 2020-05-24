@@ -8,13 +8,6 @@ import utilities.Clock;
 
 public class EnemyFactory {
     private static ClockManager clockManager;
-
-    /*
-    public static void setClockManager(ClockManager clockManager) {
-        EnemyFactory.clockManager = clockManager;
-    }
-
-     */
     private EnemyFactory() {
 
 

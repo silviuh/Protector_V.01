@@ -5,7 +5,6 @@ import Constants.Constants;
 import javax.swing.*;
 
 public class ImageFactory {
-
     public static ImageIcon createImage(Constants.Image image) {
 
         ImageIcon imageIcon = null;

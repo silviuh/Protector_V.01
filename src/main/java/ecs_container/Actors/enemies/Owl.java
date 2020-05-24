@@ -9,7 +9,6 @@ import utilities.Clock;
 import java.util.ArrayList;
 
 public class Owl extends Enemy {
-
     public Owl(){
         super();
     }

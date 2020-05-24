@@ -17,9 +17,9 @@ import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
 
 public class WaveManager {
+    private                 boolean                     spawnEnemies = true;
     private                 int                         currentLevel;
     private                 int                         maxLevel;
-    private                 boolean                     deleteFlagValue = false;
     private static volatile WaveManager                 waveManager;
     private                 EnemyManager                enemyManager;
     private                 TowerManager                towerManager;
@@ -29,10 +29,8 @@ public class WaveManager {
     private                 HashMap< Integer, Clock >   wavesClocks;
     private                 HashMap< Integer, Integer > levelConfigurations;
 
-    private long                totalNrOfEnemies        = 0;
-    private long                currentNrOfEnemies      = 0;
-    private long                totalNumberOfEnemyTypes = Constants.enemyType.values().length;
-    private Constants.enemyType currentEnemyType;
+    private       long currentNrOfEnemies      = 0;
+    private final long totalNumberOfEnemyTypes = Constants.enemyType.values().length;
 
     private WaveManager(MapManager mapManager, EnemyManager enemyManager, TowerManager towerManager, ClockManager clockManager, int level) {
         this.mapManager = mapManager;
@@ -46,8 +44,7 @@ public class WaveManager {
     }
 
     public void initialize() {
-        levelConfigurations = new HashMap<>( 3 );
-        // !
+        levelConfigurations = new HashMap<>( Constants.NUMBER_OF_LEVELS );
         levelConfigurations.put( 1, Constants.NUMBER_OF_ENEMIES_LEVEL_1 );
         levelConfigurations.put( 2, Constants.NUMBER_OF_ENEMIES_LEVEL_2 );
         levelConfigurations.put( 3, Constants.NUMBER_OF_ENEMIES_LEVEL_3 );
@@ -92,12 +89,23 @@ public class WaveManager {
     }
 
     public void loadNextLevel() throws SQLException, ClassNotFoundException {
+        Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
+                "." +
+                new Exception().getStackTrace()[1].getMethodName() +
+                "()!"
+        );
         currentLevel++;
+
         if (currentLevel == maxLevel + 1) {
+            Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
+                    "." +
+                    new Exception().getStackTrace()[1].getMethodName() +
+                    "()!"
+            );
             System.out.println( "YOU WON" );
-            System.exit( 0 );
-            // !
         } else {
+            if (!spawnEnemies)
+                spawnEnemies = true;
             Player.setCurrentLevel( currentLevel );
             Player.resetLife();
 
@@ -125,33 +133,30 @@ public class WaveManager {
     }
 
     public void update() {
-        if (currentLevel < Constants.MAX_LEVEL + 1) {
-            if (currentNrOfEnemies < levelConfigurations.get( currentLevel )) {
-                currentEnemyType = Constants.enemyType.values()[new Random().nextInt( ( int ) totalNumberOfEnemyTypes - 1 )]; // -1 as we don't want the undefined type too
-                if (wavesClocks.get( currentLevel ).mayUpate()) {
-                    // System.out.println( "Enemy created..." );
-                    enemyManager.addEnemy(
-                            EnemyFactory.createInstance(
-                                    mapManager.getTile( mapManager.getEnemyStartingPoint() ), // 11
-                                    currentEnemyType
-                            ),
-                            "ENEMY_1"
-                    );
-                    currentNrOfEnemies++;
+        if (spawnEnemies) {
+            if (currentLevel < Constants.MAX_LEVEL + 1) {
+                if (currentNrOfEnemies < levelConfigurations.get( currentLevel )) {
+                    Constants.enemyType currentEnemyType = Constants.enemyType.values()[new Random().nextInt( ( int ) totalNumberOfEnemyTypes - 1 )]; // -1 as we don't want the undefined type too
+                    if (wavesClocks.get( currentLevel ).mayUpate()) {
+                        enemyManager.addEnemy(
+                                EnemyFactory.createInstance(
+                                        mapManager.getTile( mapManager.getEnemyStartingPoint() ), // 11
+                                        currentEnemyType
+                                ),
+                                "ENEMY_1"
+                        );
+                        currentNrOfEnemies++;
+                    }
                 }
             }
         }
-        /*
-        if (deleteFlagValue == false) {
-            enemyManager.deserializeEnemies(
-                    "|Devil 40.0 126 168|Owl 80.0 42 42|Slime 40.0 84 42|Sonic 90.0 42 84"
-            );
-            deleteFlagValue = true;
-        }
-         */
     }
 
     public void setLevel(int level) {
         this.currentLevel = level;
+    }
+
+    public void setSpawnEnemies(boolean spawnEnemies) {
+        this.spawnEnemies = spawnEnemies;
     }
 }

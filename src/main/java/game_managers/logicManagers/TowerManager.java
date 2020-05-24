@@ -39,10 +39,7 @@ public class TowerManager {
 
 
     public void addTower(Tower tower, String towerName) {
-        if (container.get( towerName ) == null) {
-            container.put( towerName, new ArrayList< Tower >() );
-        }
-
+        container.computeIfAbsent( towerName, k -> new ArrayList< Tower >() );
         container.get( towerName ).add( tower );
     }
 
@@ -188,6 +185,12 @@ public class TowerManager {
 
 
     public String serializeTowers() {
+        Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
+                "." +
+                new Exception().getStackTrace()[1].getMethodName() +
+                "()!"
+        );
+
         StringBuilder result = new StringBuilder();
 
         for (ArrayList< Tower > towerList : container.values()) {
@@ -196,9 +199,9 @@ public class TowerManager {
                     result.append(
                             "|" +
                                     ( tower.getClass().getSimpleName() ) + " " +
-                                    new Integer( tower.getxPos() ).toString() + " " +
-                                    new Integer( tower.getyPos() ).toString() + " " +
-                                    new Integer( tower.getLevel() ).toString() + " " +
+                                    Integer.toString( tower.getxPos() ) + " " +
+                                    Integer.toString( tower.getyPos() ) + " " +
+                                    Integer.toString( tower.getLevel() ) + " " +
                                     getTowerUINameByClasssName( tower.getClass().getSimpleName() )
                     );
                 }
@@ -209,11 +212,17 @@ public class TowerManager {
     }
 
     public void deserializeTowers(String serializedContainer) {
+        Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
+                "." +
+                new Exception().getStackTrace()[1].getMethodName() +
+                "()!"
+        );
+
         String[] towersTokens = serializedContainer.split( "\\|" );
 
-        for (int i = 0; i < towersTokens.length; i++) {
-            if (towersTokens[i].length() > 1) {
-                String[] values = towersTokens[i].split( " " );
+        for (String towersToken : towersTokens) {
+            if (towersToken.length() > 1) {
+                String[] values = towersToken.split( " " );
                 addTower(
                         GameTowerFactory.createDeserializedInstance(
                                 Integer.parseInt( values[1] ),

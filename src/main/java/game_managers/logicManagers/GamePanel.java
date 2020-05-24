@@ -11,6 +11,7 @@ import events.KeyHandlerManager;
 import factories.EnemyFactory;
 import factories.GameTowerFactory;
 import factories.ProjectileFactory;
+import game_managers.db.DBManager;
 import graphic_context.MapManager;
 import graphic_context.MouseIcon;
 
@@ -24,14 +25,9 @@ import java.sql.SQLException;
 import java.util.HashMap;
 
 public class GamePanel extends JPanel {
-
-    private boolean              toDeleteDesTowers = false;
-    private ImageIcon            backgroundImage;
-    private Font                 textFont;
-    private Timer                timer;
-    private Thread               gameThread;
-    private GameMainFrame        gameFrame;
-    private Constants.HandHolder handHolder;
+    private Font          textFont;
+    private Timer         timer;
+    private GameMainFrame gameFrame;
 
     private Player              player              = null;
     private WaveManager         waveManager         = null;
@@ -45,11 +41,9 @@ public class GamePanel extends JPanel {
     private ClockManager        clockManager        = null;
 
     private MouseIcon mouseIcon;
-    private boolean   gameIsPaused    = true;
-    private long      gameSpeed       = 0;
-    private Long      updatesPerFrame = 0L;
-    private Long      lastTime        = 0L;
-    private float     fpsRate         = 0f;
+    private long      gameSpeed = 0;
+    private Long      lastTime  = 0L;
+    private float     fpsRate   = 0f;
 
     public void gameSetup(HashMap< String, Object > dataSet, GameMainFrame frame) throws SQLException, ClassNotFoundException {
         this.gameFrame = frame;
@@ -177,15 +171,15 @@ public class GamePanel extends JPanel {
     }
 
     private void initializeVariables() throws SQLException, ClassNotFoundException {
+        Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
+                "." +
+                new Exception().getStackTrace()[1].getMethodName() +
+                "()!"
+        );
+
         try {
             textFont = Font.createFont( Font.TRUETYPE_FONT, new FileInputStream( new File( Constants.KENVECTOR_FUTURE_THIN_URL ) ) ).deriveFont( 20.0f );
-        } catch ( FileNotFoundException e ) {
-
-
-            e.printStackTrace();
-        } catch ( FontFormatException e ) {
-            e.printStackTrace();
-        } catch ( IOException e ) {
+        } catch ( IOException | FontFormatException e ) {
             e.printStackTrace();
         }
 
@@ -211,7 +205,6 @@ public class GamePanel extends JPanel {
         Player.setFortressX( this.mapManager.getAllyKeepCoordinates().getxCoord() );
         Player.setFortressY( this.mapManager.getAllyKeepCoordinates().getyCoord() );
 
-        this.handHolder = new Constants.HandHolder();
         this.uItowersManager = UItowersManager.getInstance( 1 );
         this.towerManager = TowerManager.getInstance( mapManager );
         this.enemyManager = EnemyManager.getInstance( mapManager );
@@ -229,13 +222,15 @@ public class GamePanel extends JPanel {
     }
 
     private void initializeVariablesFromUpdate(HashMap< String, Object > dataSet) throws SQLException, ClassNotFoundException {
+        Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
+                "." +
+                new Exception().getStackTrace()[1].getMethodName() +
+                "()!"
+        );
+
         try {
             textFont = Font.createFont( Font.TRUETYPE_FONT, new FileInputStream( new File( Constants.KENVECTOR_FUTURE_THIN_URL ) ) ).deriveFont( 20.0f );
-        } catch ( FileNotFoundException e ) {
-            e.printStackTrace();
-        } catch ( FontFormatException e ) {
-            e.printStackTrace();
-        } catch ( IOException e ) {
+        } catch ( FontFormatException | IOException e ) {
             e.printStackTrace();
         }
 
@@ -257,7 +252,6 @@ public class GamePanel extends JPanel {
 
         this.keyHandlerManager = new KeyHandlerManager( this );
 
-        // !load map from db by level
         this.mapManager = MapManager.getInstance( gameFrame.getDbManager() );
         // this.mapManager.loadMapFromTextFile( Constants.LEVEL_2_MAP_CONFIG_TXT );
         this.mapManager.loadMapFromDB(
@@ -267,9 +261,7 @@ public class GamePanel extends JPanel {
         Player.setFortressX( this.mapManager.getAllyKeepCoordinates().getxCoord() );
         Player.setFortressY( this.mapManager.getAllyKeepCoordinates().getyCoord() );
 
-        this.handHolder = new Constants.HandHolder();
         this.uItowersManager = UItowersManager.getInstance( 1 );
-
         this.enemyManager = EnemyManager.getInstance( mapManager );
         this.enemyManager.deserializeEnemies( ( String ) dataSet.get( "MOBS" ) );
 
@@ -284,6 +276,7 @@ public class GamePanel extends JPanel {
                 clockManager,
                 ( Integer ) dataSet.get( "LEVEL" )
         );
+        this.waveManager.setSpawnEnemies( false );
 
         this.mouseIcon = MouseIcon.generateMouseIcon();
         this.gameSpeed = Constants.GAME_SPEED;
@@ -291,6 +284,12 @@ public class GamePanel extends JPanel {
 
 
     public synchronized void startGame() {
+        Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
+                "." +
+                new Exception().getStackTrace()[1].getMethodName() +
+                "()!"
+        );
+
         this.stateManager.setCurrentState( Constants.StateID.PLAYING );
         this.timer.start();
     }
@@ -303,10 +302,8 @@ public class GamePanel extends JPanel {
         lastTime = System.nanoTime();
         try {
             update();
-        } catch ( SQLException throwables ) {
+        } catch ( SQLException | ClassNotFoundException throwables ) {
             throwables.printStackTrace();
-        } catch ( ClassNotFoundException e ) {
-            e.printStackTrace();
         }
         repaint();
     }
@@ -319,14 +316,70 @@ public class GamePanel extends JPanel {
 
         if (enemyManager.numberOfActiveEnemies() == 0) {
             waveManager.loadNextLevel();
+
+            if (waveManager.getCurrentLevel() == Constants.MAX_LEVEL + 1) {
+                this.stateManager.setCurrentState( Constants.StateID.PAUSED );
+
+                Object[] options = {
+                        "Yes, please",
+                };
+                int userInput = JOptionPane.showOptionDialog(
+                        this,
+                        "Do you want to exit?",
+                        "YOU HAVE WON THE GAME",
+                        JOptionPane.YES_NO_OPTION,
+                        JOptionPane.QUESTION_MESSAGE,
+                        new ImageIcon( Constants.QUESTION_MARK_URL ),
+                        options,
+                        options[0]
+                );
+                if (userInput == 0) {
+                    DBManager dbManager = gameFrame.getDbManager();
+                    try {
+                        dbManager.INSERTIntoHighScores( Player.getScore() );
+                    } catch ( SQLException | ClassNotFoundException throwables ) {
+                        throwables.printStackTrace();
+                    }
+                    stateManager.setCurrentState( Constants.StateID.DESTROYED );
+                }
+            }
         }
+
         UIConsole.update();
-        /*
-        if (toDeleteDesTowers == false) {
-            towerManager.deserializeTowers( "|CannonTower 588 168 3 CANNON_TOWER|CraneTower 798 168 1 ARCANE_TOWER|ZombieTower 294 168 2 CRANE_TOWER" );
-            toDeleteDesTowers = true;
+
+        if (Player.getLives() <= 0) {
+            Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
+                    "." +
+                    new Exception().getStackTrace()[1].getMethodName() +
+                    "()!"
+            );
+
+            this.stateManager.setCurrentState( Constants.StateID.PAUSED );
+            System.out.println( "YOU HAVE LOST" );
+
+            Object[] options = {
+                    "Yes, please",
+            };
+            int userInput = JOptionPane.showOptionDialog(
+                    this,
+                    "Do you want to exit?",
+                    "YOU HAVE LOST",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    new ImageIcon( Constants.QUESTION_MARK_URL ),
+                    options,
+                    options[0]
+            );
+            if (userInput == 0) {
+                DBManager dbManager = gameFrame.getDbManager();
+                try {
+                    dbManager.INSERTIntoHighScores( Player.getScore() );
+                } catch ( SQLException | ClassNotFoundException throwables ) {
+                    throwables.printStackTrace();
+                }
+                stateManager.setCurrentState( Constants.StateID.DESTROYED );
+            }
         }
-         */
     }
 
     public void drawUI(Graphics g) {
@@ -361,6 +414,7 @@ public class GamePanel extends JPanel {
         } catch ( FontFormatException | IOException e ) {
             e.printStackTrace();
         }
+
         g.drawString(
                 Constants.UPGRADE_TEXT,
                 Constants.IN_GAME_UPGRADE_BUTTON_X + Constants.UPGRADE_TEXT_X_PADDING,

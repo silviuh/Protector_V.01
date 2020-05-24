@@ -7,7 +7,6 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public abstract class Mob extends Entity {
-
     protected ArrayList< SpriteSheet > sprites;
     protected int                      currentSpriteNumber;
     protected float                    speed;
@@ -39,12 +38,10 @@ public abstract class Mob extends Entity {
 
     @Override
     public void update() {
-
     }
 
     @Override
     public void render(Graphics graphicsContext) {
-
     }
 
     private boolean collision() {
