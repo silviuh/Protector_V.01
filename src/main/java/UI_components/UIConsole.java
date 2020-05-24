@@ -81,17 +81,6 @@ public class UIConsole {
     }
 
     public static void render(Graphics g) {
-        /*
-        try (FileInputStream fileInputStream = new FileInputStream( new File( Constants.UBUNTU_FONT_BOLD ) )) {
-            g.setFont(
-                    Font.createFont(
-                            Font.TRUETYPE_FONT,
-                            fileInputStream ).deriveFont( 18.0f )
-            );
-        } catch ( FontFormatException | IOException e ) {
-            e.printStackTrace();
-        }
-         */
         g.setFont( Constants.UBUNTU_FONT_BOLD_18 );
         g.drawRect(
                 x,

@@ -381,11 +381,11 @@ public class Constants {
     public static final int     MAX_LIVES_AMOUNT_LEVEL_1      = 40;
     public static final int     MAX_LEVEL                     = 3;
     public static final Integer GAME_SPEED                    = 50;
-    public static final int     ENEMY_1_UPDATE_FRAME_DURATION = 100; // 600
-    public static final int     ENEMY_2_UPDATE_FRAME_DURATION = 100; // 500
-    public static final int     ENEMY_3_UPDATE_FRAME_DURATION = 100; // 200
-    public static final int     ENEMY_4_UPDATE_FRAME_DURATION = 100; // 300
-    public static final int     ENEMY_5_UPDATE_FRAME_DURATION = 100; // 700
+    public static final int     ENEMY_1_UPDATE_FRAME_DURATION = 600; // 600
+    public static final int     ENEMY_2_UPDATE_FRAME_DURATION = 500; // 500
+    public static final int     ENEMY_3_UPDATE_FRAME_DURATION = 280; // 200
+    public static final int     ENEMY_4_UPDATE_FRAME_DURATION = 340; // 300
+    public static final int     ENEMY_5_UPDATE_FRAME_DURATION = 700; // 700
 
     public static final int ENEMY_6_UPDATE_FRAME_DURATION = 600;
     public static final int ENEMY_7_UPDATE_FRAME_DURATION = 700;
@@ -394,7 +394,7 @@ public class Constants {
     public static final int CANNON_UPDATE_FRAME_DURATION = 200;
     public static final int CRANE_UPDATE_FRAME_DURATION  = 200;
     public static final int ARCANE_UPDATE_FRAME_DURATION = 200;
-    public static final int ZOMBIE_UPDATE_FRAME_DURATION = 200;
+    public static final int ZOMBIE_UPDATE_FRAME_DURATION = 450;
 
     public static final int PROJECTILE_ZOMBIE_UPDATE_FRAME_DURATION = 80;
     public static final int PROJECTILE_ARCANE_UPDATE_FRAME_DURATION = 300;
@@ -492,9 +492,9 @@ public class Constants {
     public static int ARCANE_TOWER_ENEMIES_AFFECTED = 1;
 
     public static final int NUMBER_OF_LEVELS          = 3;
-    public static       int NUMBER_OF_ENEMIES_LEVEL_1 = 2; // 75
-    public static       int NUMBER_OF_ENEMIES_LEVEL_2 = 2; // 100
-    public static       int NUMBER_OF_ENEMIES_LEVEL_3 = 200;
+    public static       int NUMBER_OF_ENEMIES_LEVEL_1 = 10; // 75
+    public static       int NUMBER_OF_ENEMIES_LEVEL_2 = 10; // 100
+    public static       int NUMBER_OF_ENEMIES_LEVEL_3 = 10;
 
     public static int INITIAL_NUMBER_OF_LIVES = 40;
     public static int LIVES_TAKEN_BY_GROOT    = -1;

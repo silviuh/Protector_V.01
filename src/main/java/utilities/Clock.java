@@ -11,7 +11,6 @@ public class Clock {
     public long delta         = 0;
 
     public Clock(long multipler, long update_rate) {
-        this.multipler = 1;
         this.entityUpdateRate = update_rate;
     }
 

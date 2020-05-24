@@ -401,19 +401,6 @@ public class GamePanel extends JPanel {
                 null
         );
 
-        /*
-        try (FileInputStream fileInputStream = new FileInputStream( new File( Constants.UBUNTU_FONT_BOLD ) )) {
-            g.setFont(
-                    Font.createFont(
-                            Font.TRUETYPE_FONT,
-                            fileInputStream ).deriveFont( 40.0f )
-            );
-        } catch ( FontFormatException | IOException e ) {
-            e.printStackTrace();
-        }
-
-         */
-
         g.setFont( Constants.UBUNTU_FONT_BOLD_40 );
 
         g.drawString(
@@ -435,18 +422,6 @@ public class GamePanel extends JPanel {
         );
 
         fpsRate = ( float ) ( Constants.ONE_SECOND / ( System.nanoTime() - lastTime ) );
-
-        /*
-        try (FileInputStream fileInputStream = new FileInputStream( new File( Constants.KENVECTOR_FUTURE_THIN_URL ) )) {
-            g.setFont(
-                    Font.createFont(
-                            Font.TRUETYPE_FONT,
-                            fileInputStream ).deriveFont( 60.0f )
-            );
-        } catch ( FontFormatException | IOException e ) {
-            e.printStackTrace();
-        }
-         */
 
         g.setFont( Constants.KENVECTOR_60 );
 
