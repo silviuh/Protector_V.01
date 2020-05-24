@@ -198,7 +198,7 @@ public class MainMenu extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 mainFrameReference.getPanelSwitcher().show(
                         mainFrameReference.getMainPanelContainer(),
-                        "HELP_PANEL"
+                        "HIGH_SCORES_PANEL"
                 );
             }
         } );

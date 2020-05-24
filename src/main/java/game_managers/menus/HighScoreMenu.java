@@ -1,6 +1,7 @@
 package game_managers.menus;
 
 import Constants.Constants;
+import game_managers.db.DBManager;
 import game_managers.logicManagers.GameMainFrame;
 
 import javax.print.DocFlavor;
@@ -13,6 +14,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -37,7 +39,7 @@ public class HighScoreMenu extends JPanel {
 
         try {
             initializeVariables();
-        } catch ( IOException | FontFormatException e ) {
+        } catch ( IOException | FontFormatException | SQLException | ClassNotFoundException e ) {
             e.printStackTrace();
         }
 
@@ -60,9 +62,10 @@ public class HighScoreMenu extends JPanel {
         return highScoreMenu;
     }
 
-    public void initializeVariables() throws IOException, FontFormatException {
+    public void initializeVariables() throws IOException, FontFormatException, SQLException, ClassNotFoundException {
         scores = new ArrayList<>( Constants.MAX_NUMBER_OF_SCORES_IN_LEADERBORD );
-        animatedGif = Toolkit.getDefaultToolkit().createImage( Constants.HELP_BACKGROUND_GIF );
+
+        animatedGif = Toolkit.getDefaultToolkit().createImage( Constants.LOAD_GAME_BACKGROUND_GIF );
         fonts = new ArrayList< Font >();
         File            fontSource    = new File( Constants.KENVECTOR_FUTURE_THIN_URL );
         FileInputStream in            = new FileInputStream( fontSource );
@@ -74,13 +77,36 @@ public class HighScoreMenu extends JPanel {
         screenHeight = screenSize.height / 2;
         fonts.add( titleFont );
         fonts.add( titleFont32Pt );
+
+        DBManager dbManager = mainFrameReference.getDbManager();
+        scores = dbManager.SELECTHighScores( Constants.MAX_NUMBER_OF_SCORES_IN_LEADERBORD );
     }
 
     public void initializeLayout() {
+        scoreLabels = new JLabel[scores.size()];
         int backToMenuX = 150;
         int backToMenuY = screenSize.height - 180;
         int exitX       = screenSize.width - 350;
         int exitY       = screenSize.height - 180;
+
+        this.setLayout( null );
+
+        for (int i = 0; i < scores.size(); i++) {
+            scoreLabels[i] = new JLabel(
+                    i + 1 + ". " + "    " + scores.get( i )
+            );
+            scoreLabels[i].setFont(new Font( "Monospaced", Font.BOLD | Font.ITALIC, 40 ) );
+            scoreLabels[i].setHorizontalTextPosition( SwingConstants.CENTER );
+            scoreLabels[i].setOpaque( false );
+            scoreLabels[i].setForeground( Color.YELLOW );
+            scoreLabels[i].setBackground( Color.gray );
+            scoreLabels[i].setAlignmentX( Component.CENTER_ALIGNMENT );
+            scoreLabels[i].setSize( Constants.MAIN_MENU_BUTTON_WIDTH, Constants.MAIN_MENU_BUTTON_HEIGHT );
+            scoreLabels[i].setLocation(
+                    Constants.HIGH_SCORES_MENU_START_X,
+                    Constants.HIGH_SCORES_MENU_START_Y + i * Constants.HIGH_SCORES_BUTTON_Y_PADDING
+            );
+        }
 
         this.setLayout( null );
         backToMyMenuBtn = new JButton(
@@ -135,6 +161,8 @@ public class HighScoreMenu extends JPanel {
             }
         } );
 
+        for (JLabel jLabel : scoreLabels)
+            add( jLabel );
         add( backToMyMenuBtn );
         add( exitBtn );
     }

@@ -351,10 +351,6 @@ public class DBManager {
             this.preparedStatement.close();
         }
 
-        for (Integer score : scores) {
-            System.out.println( "SCORE: " + score );
-        }
-
         closeConnection();
         return scores;
     }

@@ -9,6 +9,7 @@ import graphic_context.MapManager;
 import utilities.Clock;
 
 import java.awt.*;
+import java.lang.management.PlatformLoggingMXBean;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -94,10 +95,23 @@ public class WaveManager {
         currentLevel++;
         if (currentLevel == maxLevel + 1) {
             System.out.println( "YOU WON" );
+
             // !
         } else {
             Player.setCurrentLevel( currentLevel );
             Player.resetLife();
+
+            switch (currentLevel) {
+                case 2: {
+                    Player.addMoney( Constants.LEVEL_2_INCOME );
+                    break;
+                }
+                case 3: {
+                    Player.addMoney( Constants.LEVEL_3_INCOME );
+                    break;
+                }
+            }
+
             towerManager.deleteContainer();
             enemyManager.deleteContainer();
             mapManager.deleteContainer();

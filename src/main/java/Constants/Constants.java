@@ -190,7 +190,10 @@ public class Constants {
         WAVE_3
     }
 
-    public static final String TITLE = "Tower Defence v.02";
+    public static final int    LEVEL_2_INCOME = 400;
+    public static final int    LEVEL_3_INCOME = 500;
+
+    public static final String TITLE          = "Tower Defence v.02";
 
     public static final int MAP_SIZE                = 25;
     public static final int TILE_SIZE               = 42;
@@ -206,6 +209,11 @@ public class Constants {
     public static final int LOAD_GAME_BUTTON_START_X   = 800;
     public static final int LOAD_GAME_BUTTON_START_Y   = 250;
     public static final int LOAD_GAME_BUTTON_Y_PADDING = 60;
+
+    public static final int HIGH_SCORES_MENU_START_X     = 800;
+    public static final int HIGH_SCORES_MENU_START_Y     = 120;
+    public static final int HIGH_SCORES_BUTTON_Y_PADDING = 80;
+
 
     public static final int Y_AXIS_TOWER_PADDING       = 265;
     public static final int X_UI_TOWER_COORDINATE      = 1060;
@@ -250,7 +258,7 @@ public class Constants {
     public static final int SCORE_X = 0;
     public static final int SCORE_Y = 40;
 
-    public static final int LEVEL_X = 790;
+    public static final int LEVEL_X = 785;
     public static final int LEVEL_Y = 40;
 
     public static final int IN_GAME_MENU_X      = 1075;
