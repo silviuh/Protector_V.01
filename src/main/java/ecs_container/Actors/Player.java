@@ -96,6 +96,10 @@ public class Player {
         return score;
     }
 
+    public static void setScore(int score) {
+        Player.score = score;
+    }
+
     public static boolean tryToBuyTower(Constants.towerType towerType) {
         int cost = 0;
         switch (towerType) {

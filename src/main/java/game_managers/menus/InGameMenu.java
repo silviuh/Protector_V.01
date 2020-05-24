@@ -120,6 +120,7 @@ public class InGameMenu {
             public void actionPerformed(ActionEvent e) {
                 GamePanel gamePanel = mainFrame.getGamePanel();
                 try {
+                    mainFrame.getDbManager().INSERTIntoHighScores( Player.getScore() );
                     mainFrame.getDbManager().INSERTIntoGameSavings(
                             gamePanel.getEnemyManager().serializeEnemies(),
                             gamePanel.getTowerManager().serializeTowers(),

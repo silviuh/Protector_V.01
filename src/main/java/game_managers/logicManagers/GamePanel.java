@@ -248,6 +248,7 @@ public class GamePanel extends JPanel {
         );
 
         Player.setCurrentLevel( ( Integer ) dataSet.get( "LEVEL" ) );
+        Player.setScore( ( Integer ) dataSet.get( "SCORE" ) );
 
         clockManager.addClock( UIConsole.getUpdateClock() );
         EnemyFactory.setClockManager( clockManager );

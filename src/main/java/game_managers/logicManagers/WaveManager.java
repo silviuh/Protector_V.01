@@ -48,9 +48,9 @@ public class WaveManager {
     public void initialize() {
         levelConfigurations = new HashMap<>( 3 );
         // !
-        levelConfigurations.put( 1, 2 );
-        levelConfigurations.put( 2, 2 );
-        levelConfigurations.put( 3, 2 );
+        levelConfigurations.put( 1, Constants.NUMBER_OF_ENEMIES_LEVEL_1 );
+        levelConfigurations.put( 2, Constants.NUMBER_OF_ENEMIES_LEVEL_2 );
+        levelConfigurations.put( 3, Constants.NUMBER_OF_ENEMIES_LEVEL_3 );
 
         wavesClocks = new HashMap< Integer, Clock >();
         Clock clockWave1 = ClockFactory.createInstance( Constants.clockType.WAVE_1 );
@@ -95,7 +95,7 @@ public class WaveManager {
         currentLevel++;
         if (currentLevel == maxLevel + 1) {
             System.out.println( "YOU WON" );
-
+            System.exit( 0 );
             // !
         } else {
             Player.setCurrentLevel( currentLevel );

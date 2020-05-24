@@ -51,7 +51,7 @@ public class UIDollarSign {
             e.printStackTrace();
         }
         g.drawString(
-                "[CASH]: + " + Integer.toString( ( int ) counter ),
+                "[CASH]: " + Integer.toString( ( int ) counter ),
                 x + Constants.DOLLAR_SIGN_X_PADDING,
                 y + Constants.DOLLAR_SIGN_Y_PADDING
         );

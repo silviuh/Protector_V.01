@@ -190,10 +190,10 @@ public class Constants {
         WAVE_3
     }
 
-    public static final int    LEVEL_2_INCOME = 400;
-    public static final int    LEVEL_3_INCOME = 500;
+    public static final int LEVEL_2_INCOME = 400;
+    public static final int LEVEL_3_INCOME = 500;
 
-    public static final String TITLE          = "Tower Defence v.02";
+    public static final String TITLE = "Tower Defence v.02";
 
     public static final int MAP_SIZE                = 25;
     public static final int TILE_SIZE               = 42;
@@ -207,7 +207,7 @@ public class Constants {
     public static final float ONE_SECOND = ( float ) 1000000000.0;
 
     public static final int LOAD_GAME_BUTTON_START_X   = 800;
-    public static final int LOAD_GAME_BUTTON_START_Y   = 250;
+    public static final int LOAD_GAME_BUTTON_START_Y   = 50;
     public static final int LOAD_GAME_BUTTON_Y_PADDING = 60;
 
     public static final int HIGH_SCORES_MENU_START_X     = 800;
@@ -336,7 +336,7 @@ public class Constants {
     public static final int CRANE_UPGRADE_COST  = 15;
     public static final int ARCANE_UPGRADE_COST = 20;
 
-    public static final int NR_OF_AVAILABLE_GAME_SAVINGS = 12;
+    public static final int NR_OF_AVAILABLE_GAME_SAVINGS = 14;
 
     public static final int DEVIL_MONEY_INCREASE_ON_DEATH = 15;
     public static final int OWL_MONEY_INCREASE_ON_DEATH   = 25;
@@ -410,6 +410,10 @@ public class Constants {
     public static int ZOMBIE_TOWER_ENEMIES_AFFECTED = 1;
     public static int CRANE_TOWER_ENEMIES_AFFECTED  = 1;
     public static int ARCANE_TOWER_ENEMIES_AFFECTED = 1;
+
+    public static int NUMBER_OF_ENEMIES_LEVEL_1 = 50;
+    public static int NUMBER_OF_ENEMIES_LEVEL_2 = 75;
+    public static int NUMBER_OF_ENEMIES_LEVEL_3 = 100;
 
     public static int INITIAL_NUMBER_OF_LIVES = 40;
     public static int LIVES_TAKEN_BY_GROOT    = -1;
