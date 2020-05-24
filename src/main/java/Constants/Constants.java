@@ -492,9 +492,9 @@ public class Constants {
     public static int ARCANE_TOWER_ENEMIES_AFFECTED = 1;
 
     public static final int NUMBER_OF_LEVELS          = 3;
-    public static       int NUMBER_OF_ENEMIES_LEVEL_1 = 10; // 75
-    public static       int NUMBER_OF_ENEMIES_LEVEL_2 = 10; // 100
-    public static       int NUMBER_OF_ENEMIES_LEVEL_3 = 10;
+    public static       int NUMBER_OF_ENEMIES_LEVEL_1 = 75; // 75
+    public static       int NUMBER_OF_ENEMIES_LEVEL_2 = 100; // 100
+    public static       int NUMBER_OF_ENEMIES_LEVEL_3 = 150;
 
     public static int INITIAL_NUMBER_OF_LIVES = 40;
     public static int LIVES_TAKEN_BY_GROOT    = -1;

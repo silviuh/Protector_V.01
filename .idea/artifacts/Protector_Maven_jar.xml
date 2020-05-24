@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Protector_Maven:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Protector_Maven_jar</output-path>
+    <root id="archive" name="Protector_Maven.jar">
+      <element id="module-output" name="Protector_Maven" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/../../../../SQL_LITE/jar_files/sqlite-jdbc-3.8.11.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.6/gson-2.8.6.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/commons-io/commons-io/2.5/commons-io-2.5.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
