@@ -124,6 +124,8 @@ public class WaveManager {
             enemyManager.deleteContainer();
             mapManager.deleteContainer();
             mapManager.loadMapFromDB( currentLevel );
+            Player.setFortressX( mapManager.getAllyKeepCoordinates().getyCoord() ); // inverse coordinates with regard to the plane position
+            Player.setFortressY( mapManager.getAllyKeepCoordinates().getxCoord() );
             currentNrOfEnemies = 0;
         }
     }

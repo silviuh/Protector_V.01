@@ -231,18 +231,12 @@ public class DBManager {
         this.preparedStatement.close();
     }
 
-    public void INSERTIntoMapFiles(String fileName, int levelNumber, int numberOfMonsters) throws SQLException, ClassNotFoundException {
+    public void INSERTIntoMapFiles(String fileName, int levelNumber, int numberOfMonsters) throws SQLException, ClassNotFoundException{
         openConnection();
         String fileContent = null;
 
         if (fileName != null) {
-            FileInputStream fileInputStream = null;
-            try {
-                fileInputStream = new FileInputStream( fileName );
-            } catch ( FileNotFoundException e ) {
-                e.printStackTrace();
-            }
-            try {
+            try (FileInputStream fileInputStream = new FileInputStream( fileName )) {
                 fileContent = IOUtils.toString( fileInputStream, "UTF-8" );
             } catch ( IOException e ) {
                 e.printStackTrace();

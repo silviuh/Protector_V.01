@@ -4,6 +4,7 @@ import ecs_container.Actors.Player;
 import utilities.GameLogger;
 
 import java.awt.*;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,6 +14,83 @@ import java.util.Map;
 
 public class Constants {
     public static final GameLogger gameLogger = new GameLogger();
+    public static       Font       KENVECTOR;
+    public static       Font       KENVECTOR_60;
+    public static       Font       KENVECTOR_18;
+    public static       Font       KENVECTOR_20;
+    public static       Font       KENVECTOR_40;
+    public static       Font       UBUNTU_FONT_BOLD_40;
+    public static       Font       UBUNTU_FONT_BOLD_18;
+    public static       Font       UBUNTU_FONT_BOLD_60;
+
+    static {
+        try (FileInputStream fileInputStream = new FileInputStream( new File( Constants.UBUNTU_FONT_BOLD ) )) {
+            UBUNTU_FONT_BOLD_40 =
+                    Font.createFont(
+                            Font.TRUETYPE_FONT,
+                            fileInputStream ).deriveFont( 40.0f );
+        } catch ( FontFormatException | IOException e ) {
+            e.printStackTrace();
+        }
+
+        try (FileInputStream fileInputStream = new FileInputStream( new File( Constants.UBUNTU_FONT_BOLD ) )) {
+            UBUNTU_FONT_BOLD_60 =
+                    Font.createFont(
+                            Font.TRUETYPE_FONT,
+                            fileInputStream ).deriveFont( 60.0f );
+        } catch ( FontFormatException | IOException e ) {
+            e.printStackTrace();
+        }
+
+        try (FileInputStream fileInputStream = new FileInputStream( new File( Constants.UBUNTU_FONT_BOLD ) )) {
+            UBUNTU_FONT_BOLD_18 =
+                    Font.createFont(
+                            Font.TRUETYPE_FONT,
+                            fileInputStream ).deriveFont( 18.0f );
+        } catch ( FontFormatException | IOException e ) {
+            e.printStackTrace();
+        }
+
+        try (FileInputStream fileInputStream = new FileInputStream( new File( Constants.KENVECTOR_FUTURE_THIN_URL ) )) {
+            KENVECTOR_60 = Font.createFont(
+                    Font.TRUETYPE_FONT,
+                    fileInputStream ).deriveFont( 60.0f );
+        } catch ( FontFormatException | IOException e ) {
+            e.printStackTrace();
+        }
+
+        try (FileInputStream fileInputStream = new FileInputStream( new File( Constants.KENVECTOR_FUTURE_THIN_URL ) )) {
+            KENVECTOR_40 = Font.createFont(
+                    Font.TRUETYPE_FONT,
+                    fileInputStream ).deriveFont( 40.0f );
+        } catch ( FontFormatException | IOException e ) {
+            e.printStackTrace();
+        }
+
+        try (FileInputStream fileInputStream = new FileInputStream( new File( Constants.KENVECTOR_FUTURE_THIN_URL ) )) {
+            KENVECTOR_18 = Font.createFont(
+                    Font.TRUETYPE_FONT,
+                    fileInputStream ).deriveFont( 18.0f );
+        } catch ( FontFormatException | IOException e ) {
+            e.printStackTrace();
+        }
+
+        try (FileInputStream fileInputStream = new FileInputStream( new File( Constants.KENVECTOR_FUTURE_THIN_URL ) )) {
+            KENVECTOR_20 = Font.createFont(
+                    Font.TRUETYPE_FONT,
+                    fileInputStream ).deriveFont( 20.0f );
+        } catch ( FontFormatException | IOException e ) {
+            e.printStackTrace();
+        }
+
+        try (FileInputStream fileInputStream = new FileInputStream( new File( Constants.KENVECTOR_FUTURE_THIN_URL ) )) {
+            KENVECTOR = Font.createFont(
+                    Font.TRUETYPE_FONT,
+                    fileInputStream );
+        } catch ( FontFormatException | IOException e ) {
+            e.printStackTrace();
+        }
+    }
 
     public static class PairOfCoordinates {
         private int xCoord;
@@ -303,11 +381,11 @@ public class Constants {
     public static final int     MAX_LIVES_AMOUNT_LEVEL_1      = 40;
     public static final int     MAX_LEVEL                     = 3;
     public static final Integer GAME_SPEED                    = 50;
-    public static final int     ENEMY_1_UPDATE_FRAME_DURATION = 600;
-    public static final int     ENEMY_2_UPDATE_FRAME_DURATION = 500;
-    public static final int     ENEMY_3_UPDATE_FRAME_DURATION = 200;
-    public static final int     ENEMY_4_UPDATE_FRAME_DURATION = 300;
-    public static final int     ENEMY_5_UPDATE_FRAME_DURATION = 700;
+    public static final int     ENEMY_1_UPDATE_FRAME_DURATION = 100; // 600
+    public static final int     ENEMY_2_UPDATE_FRAME_DURATION = 100; // 500
+    public static final int     ENEMY_3_UPDATE_FRAME_DURATION = 100; // 200
+    public static final int     ENEMY_4_UPDATE_FRAME_DURATION = 100; // 300
+    public static final int     ENEMY_5_UPDATE_FRAME_DURATION = 100; // 700
 
     public static final int ENEMY_6_UPDATE_FRAME_DURATION = 600;
     public static final int ENEMY_7_UPDATE_FRAME_DURATION = 700;
@@ -414,8 +492,8 @@ public class Constants {
     public static int ARCANE_TOWER_ENEMIES_AFFECTED = 1;
 
     public static final int NUMBER_OF_LEVELS          = 3;
-    public static       int NUMBER_OF_ENEMIES_LEVEL_1 = 75;
-    public static       int NUMBER_OF_ENEMIES_LEVEL_2 = 100;
+    public static       int NUMBER_OF_ENEMIES_LEVEL_1 = 2; // 75
+    public static       int NUMBER_OF_ENEMIES_LEVEL_2 = 2; // 100
     public static       int NUMBER_OF_ENEMIES_LEVEL_3 = 200;
 
     public static int INITIAL_NUMBER_OF_LIVES = 40;

@@ -74,9 +74,7 @@ public class HelpMenu extends JPanel {
 
         animatedGif = Toolkit.getDefaultToolkit().createImage( Constants.HELP_BACKGROUND_GIF );
         fonts = new ArrayList< Font >();
-        File            fontSource    = new File( Constants.KENVECTOR_FUTURE_THIN_URL );
-        FileInputStream in            = new FileInputStream( fontSource );
-        Font            titleFont     = Font.createFont( Font.TRUETYPE_FONT, in );
+        Font            titleFont     = Constants.KENVECTOR;
         Font            titleFont32Pt = titleFont.deriveFont( 64f );
 
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();

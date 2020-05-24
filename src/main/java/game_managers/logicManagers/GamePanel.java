@@ -21,6 +21,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 
@@ -165,7 +166,11 @@ public class GamePanel extends JPanel {
         this.towerManager.render( g );
         this.enemyManager.render( g );
 
-        drawUI( g );
+        try {
+            drawUI( g );
+        } catch ( IOException e ) {
+            e.printStackTrace();
+        }
         Toolkit.getDefaultToolkit().sync();
         lastTime = System.nanoTime();
     }
@@ -177,11 +182,7 @@ public class GamePanel extends JPanel {
                 "()!"
         );
 
-        try {
-            textFont = Font.createFont( Font.TRUETYPE_FONT, new FileInputStream( new File( Constants.KENVECTOR_FUTURE_THIN_URL ) ) ).deriveFont( 20.0f );
-        } catch ( IOException | FontFormatException e ) {
-            e.printStackTrace();
-        }
+        textFont = Constants.KENVECTOR_20;
 
         this.clockManager = ClockManager.getInstance();
         this.player = Player.getInstance(
@@ -228,11 +229,7 @@ public class GamePanel extends JPanel {
                 "()!"
         );
 
-        try {
-            textFont = Font.createFont( Font.TRUETYPE_FONT, new FileInputStream( new File( Constants.KENVECTOR_FUTURE_THIN_URL ) ) ).deriveFont( 20.0f );
-        } catch ( FontFormatException | IOException e ) {
-            e.printStackTrace();
-        }
+        textFont = Constants.KENVECTOR_20;
 
         this.clockManager = ClockManager.getInstance();
         this.player = Player.getInstance(
@@ -382,11 +379,11 @@ public class GamePanel extends JPanel {
         }
     }
 
-    public void drawUI(Graphics g) {
+    public void drawUI(Graphics g) throws IOException {
+
         Player.uiHeartBar.render( g );
         Player.uiDollarSign.render( g );
         UIConsole.render( g );
-
         g.drawImage(
                 new ImageIcon( Constants.IN_GAME_UPGRADE_BUTTON_URL ).getImage(),
                 Constants.IN_GAME_UPGRADE_BUTTON_X,
@@ -395,7 +392,6 @@ public class GamePanel extends JPanel {
                 Constants.IN_GAME_UPGRADE_BUTTON_HEIGHT,
                 null
         );
-
         g.drawImage(
                 new ImageIcon( Constants.SELL_BUTTON_URL ).getImage(),
                 Constants.IN_GAME_SELL_BUTTON_X,
@@ -405,15 +401,20 @@ public class GamePanel extends JPanel {
                 null
         );
 
-        try {
+        /*
+        try (FileInputStream fileInputStream = new FileInputStream( new File( Constants.UBUNTU_FONT_BOLD ) )) {
             g.setFont(
                     Font.createFont(
                             Font.TRUETYPE_FONT,
-                            new FileInputStream( new File( Constants.UBUNTU_FONT_BOLD ) ) ).deriveFont( 40.0f )
+                            fileInputStream ).deriveFont( 40.0f )
             );
         } catch ( FontFormatException | IOException e ) {
             e.printStackTrace();
         }
+
+         */
+
+        g.setFont( Constants.UBUNTU_FONT_BOLD_40 );
 
         g.drawString(
                 Constants.UPGRADE_TEXT,
@@ -434,15 +435,20 @@ public class GamePanel extends JPanel {
         );
 
         fpsRate = ( float ) ( Constants.ONE_SECOND / ( System.nanoTime() - lastTime ) );
-        try {
+
+        /*
+        try (FileInputStream fileInputStream = new FileInputStream( new File( Constants.KENVECTOR_FUTURE_THIN_URL ) )) {
             g.setFont(
                     Font.createFont(
                             Font.TRUETYPE_FONT,
-                            new FileInputStream( new File( Constants.KENVECTOR_FUTURE_THIN_URL ) ) ).deriveFont( 60.0f )
+                            fileInputStream ).deriveFont( 60.0f )
             );
         } catch ( FontFormatException | IOException e ) {
             e.printStackTrace();
         }
+         */
+
+        g.setFont( Constants.KENVECTOR_60 );
 
         g.setColor( Constants.dollarSign );
         g.drawString(

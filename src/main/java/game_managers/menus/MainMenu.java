@@ -62,10 +62,9 @@ public class MainMenu extends JPanel {
     public void initializeVariables() throws IOException, FontFormatException {
         animatedGif = Toolkit.getDefaultToolkit().createImage( Constants.BACKGROUND_GIF_URL );
         fonts = new ArrayList< Font >();
-        File            fontSource    = new File( Constants.KENVECTOR_FUTURE_THIN_URL );
-        FileInputStream in            = new FileInputStream( fontSource );
-        Font            titleFont     = Font.createFont( Font.TRUETYPE_FONT, in );
-        Font            titleFont32Pt = titleFont.deriveFont( 64f );
+        Font titleFont     = Constants.KENVECTOR;
+        Font titleFont32Pt = titleFont.deriveFont( 64f );
+
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         screenWidth = screenSize.width / 2;
         screenHeight = screenSize.height / 2;

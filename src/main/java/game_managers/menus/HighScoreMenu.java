@@ -67,10 +67,8 @@ public class HighScoreMenu extends JPanel {
 
         animatedGif = Toolkit.getDefaultToolkit().createImage( Constants.LOAD_GAME_BACKGROUND_GIF );
         fonts = new ArrayList< Font >();
-        File            fontSource    = new File( Constants.KENVECTOR_FUTURE_THIN_URL );
-        FileInputStream in            = new FileInputStream( fontSource );
-        Font            titleFont     = Font.createFont( Font.TRUETYPE_FONT, in );
-        Font            titleFont32Pt = titleFont.deriveFont( 64f );
+        Font titleFont     = Constants.KENVECTOR;
+        Font titleFont32Pt = titleFont.deriveFont( 64f );
 
         screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         screenWidth = screenSize.width / 2;
@@ -95,7 +93,7 @@ public class HighScoreMenu extends JPanel {
             scoreLabels[i] = new JLabel(
                     i + 1 + ". " + "    " + scores.get( i )
             );
-            scoreLabels[i].setFont(new Font( "Monospaced", Font.BOLD | Font.ITALIC, 40 ) );
+            scoreLabels[i].setFont( new Font( "Monospaced", Font.BOLD | Font.ITALIC, 40 ) );
             scoreLabels[i].setHorizontalTextPosition( SwingConstants.CENTER );
             scoreLabels[i].setOpaque( false );
             scoreLabels[i].setForeground( Color.YELLOW );

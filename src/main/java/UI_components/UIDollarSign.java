@@ -41,15 +41,19 @@ public class UIDollarSign {
 
         g.setColor( Constants.dollarSign );
 
-        try {
+        /*
+        try (FileInputStream fileInputStream = new FileInputStream( new File( Constants.KENVECTOR_FUTURE_THIN_URL ) )) {
             g.setFont(
                     Font.createFont(
                             Font.TRUETYPE_FONT,
-                            new FileInputStream( new File( Constants.KENVECTOR_FUTURE_THIN_URL ) ) ).deriveFont( 60.0f )
+                            fileInputStream ).deriveFont( 60.0f )
             );
         } catch ( FontFormatException | IOException e ) {
             e.printStackTrace();
         }
+         */
+        g.setFont( Constants.KENVECTOR_60 );
+
         g.drawString(
                 "[CASH]: " + Integer.toString( ( int ) counter ),
                 x + Constants.DOLLAR_SIGN_X_PADDING,
