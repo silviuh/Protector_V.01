@@ -418,11 +418,12 @@ public class Constants {
 
     public static final int NR_OF_AVAILABLE_GAME_SAVINGS = 14;
 
-    public static final int DEVIL_MONEY_INCREASE_ON_DEATH = 15;
-    public static final int OWL_MONEY_INCREASE_ON_DEATH   = 25;
-    public static final int SONIC_MONEY_INCREASE_ON_DEATH = 60;
-    public static final int SLIME_MONEY_INCREASE_ON_DEATH = 10;
-    public static final int GROOT_MONEY_INCREASE_ON_DEATH = 20;
+    public static final int INITIAL_DEPOSIT               = 400;
+    public static final int DEVIL_MONEY_INCREASE_ON_DEATH = 5;
+    public static final int OWL_MONEY_INCREASE_ON_DEATH   = 10;
+    public static final int SONIC_MONEY_INCREASE_ON_DEATH = 20;
+    public static final int SLIME_MONEY_INCREASE_ON_DEATH = 3;
+    public static final int GROOT_MONEY_INCREASE_ON_DEATH = 7;
 
     public static final Color UIConsole_bg_color = new Color( 255, 176, 231, 55 );
     public static final Color dollarSign         = new Color( 255, 230, 140 );
@@ -494,7 +495,7 @@ public class Constants {
     public static final int NUMBER_OF_LEVELS          = 3;
     public static       int NUMBER_OF_ENEMIES_LEVEL_1 = 75; // 75
     public static       int NUMBER_OF_ENEMIES_LEVEL_2 = 100; // 100
-    public static       int NUMBER_OF_ENEMIES_LEVEL_3 = 150;
+    public static       int NUMBER_OF_ENEMIES_LEVEL_3 = 125; // 150
 
     public static int INITIAL_NUMBER_OF_LIVES = 40;
     public static int LIVES_TAKEN_BY_GROOT    = -1;

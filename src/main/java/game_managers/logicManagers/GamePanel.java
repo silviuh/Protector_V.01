@@ -188,7 +188,7 @@ public class GamePanel extends JPanel {
         this.player = Player.getInstance(
                 Constants.INITIAL_NUMBER_OF_LIVES,
                 Constants.INITIAL_NUMBER_OF_LIVES,
-                400,
+                Constants.INITIAL_DEPOSIT,
                 clockManager
         );
 
@@ -210,6 +210,7 @@ public class GamePanel extends JPanel {
         this.towerManager = TowerManager.getInstance( mapManager );
         this.enemyManager = EnemyManager.getInstance( mapManager );
         this.waveManager = WaveManager.getInstance(
+                this,
                 mapManager,
                 towerManager,
                 enemyManager,
@@ -267,6 +268,7 @@ public class GamePanel extends JPanel {
         this.towerManager.deserializeTowers( ( String ) dataSet.get( "TOWERS" ) );
 
         this.waveManager = WaveManager.getInstance(
+                this,
                 mapManager,
                 towerManager,
                 enemyManager,
@@ -313,33 +315,6 @@ public class GamePanel extends JPanel {
 
         if (enemyManager.numberOfActiveEnemies() == 0) {
             waveManager.loadNextLevel();
-
-            if (waveManager.getCurrentLevel() == Constants.MAX_LEVEL + 1) {
-                this.stateManager.setCurrentState( Constants.StateID.PAUSED );
-
-                Object[] options = {
-                        "Yes, please",
-                };
-                int userInput = JOptionPane.showOptionDialog(
-                        this,
-                        "Do you want to exit?",
-                        "YOU HAVE WON THE GAME",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE,
-                        new ImageIcon( Constants.QUESTION_MARK_URL ),
-                        options,
-                        options[0]
-                );
-                if (userInput == 0) {
-                    DBManager dbManager = gameFrame.getDbManager();
-                    try {
-                        dbManager.INSERTIntoHighScores( Player.getScore() );
-                    } catch ( SQLException | ClassNotFoundException throwables ) {
-                        throwables.printStackTrace();
-                    }
-                    stateManager.setCurrentState( Constants.StateID.DESTROYED );
-                }
-            }
         }
 
         UIConsole.update();
@@ -445,6 +420,10 @@ public class GamePanel extends JPanel {
                 Constants.FPS_RATE_X + Constants.FPS_RATE_X_PADDING,
                 Constants.FPS_RATE_Y + Constants.FPS_RATE_Y_PADDING
         );
+    }
+
+    public GameMainFrame getGameFrame() {
+        return gameFrame;
     }
 
     public EnemyManager getEnemyManager() {

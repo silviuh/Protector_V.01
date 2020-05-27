@@ -5,9 +5,11 @@ import ecs_container.Actors.Player;
 import ecs_container.towers.Tower;
 import factories.ClockFactory;
 import factories.EnemyFactory;
+import game_managers.db.DBManager;
 import graphic_context.MapManager;
 import utilities.Clock;
 
+import javax.swing.*;
 import java.awt.*;
 import java.lang.management.PlatformLoggingMXBean;
 import java.sql.SQLException;
@@ -20,6 +22,7 @@ public class WaveManager {
     private                 boolean                     spawnEnemies = true;
     private                 int                         currentLevel;
     private                 int                         maxLevel;
+    private                 GamePanel                   gamePanel;
     private static volatile WaveManager                 waveManager;
     private                 EnemyManager                enemyManager;
     private                 TowerManager                towerManager;
@@ -32,7 +35,9 @@ public class WaveManager {
     private       long currentNrOfEnemies      = 0;
     private final long totalNumberOfEnemyTypes = Constants.enemyType.values().length;
 
-    private WaveManager(MapManager mapManager, EnemyManager enemyManager, TowerManager towerManager, ClockManager clockManager, int level) {
+    private WaveManager(GamePanel gamePanel, MapManager mapManager, EnemyManager enemyManager,
+                        TowerManager towerManager, ClockManager clockManager, int level) {
+        this.gamePanel = gamePanel;
         this.mapManager = mapManager;
         this.enemyManager = enemyManager;
         this.towerManager = towerManager;
@@ -69,12 +74,13 @@ public class WaveManager {
         clockManager.addClock( clockWave3 );
     }
 
-    public static WaveManager getInstance(MapManager mapManager, TowerManager towerManager, EnemyManager enemyManager, ClockManager clockManager, int level) {
+    public static WaveManager getInstance(GamePanel gamePanel, MapManager mapManager, TowerManager towerManager, EnemyManager enemyManager, ClockManager clockManager, int level) {
         singletonLock = new ReentrantLock();
         if (waveManager == null) {
             try {
                 singletonLock.lock();
                 waveManager = new WaveManager(
+                        gamePanel,
                         mapManager,
                         enemyManager,
                         towerManager,
@@ -95,6 +101,7 @@ public class WaveManager {
                 "()!"
         );
         currentLevel++;
+        nextLevelConfig();
 
         if (currentLevel == maxLevel + 1) {
             Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
@@ -129,6 +136,59 @@ public class WaveManager {
             currentNrOfEnemies = 0;
         }
     }
+
+    public void nextLevelConfig() {
+        int userInput = 0;
+        this.gamePanel.getStateManager().setCurrentState( Constants.StateID.PAUSED );
+        Object[] optionsForIntermediareLevels = {
+                "Yes, please",
+                "No, continue"
+        };
+
+        Object[] optionsForGameEndings = {
+                "Yes, please"
+        };
+
+        String[] titles = { "YOU HAVE WON THE GAME", "YOU HAVE REACHED LEVEL: " };
+
+        if (currentLevel == Constants.MAX_LEVEL + 1) {
+            userInput = JOptionPane.showOptionDialog(
+                    gamePanel,
+                    "Do you want to exit?",
+                    titles[0],
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    new ImageIcon( Constants.QUESTION_MARK_URL ),
+                    optionsForGameEndings,
+                    optionsForGameEndings[0]
+            );
+        } else {
+            userInput = JOptionPane.showOptionDialog(
+                    gamePanel,
+                    "Do you want to exit?",
+                    titles[1] + currentLevel,
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    new ImageIcon( Constants.QUESTION_MARK_URL ),
+                    optionsForIntermediareLevels,
+                    optionsForIntermediareLevels[0]
+            );
+        }
+
+        if (userInput == 0) {
+            DBManager dbManager = gamePanel.getGameFrame().getDbManager();
+            try {
+                dbManager.INSERTIntoHighScores( Player.getScore() );
+            } catch ( SQLException | ClassNotFoundException throwables ) {
+                throwables.printStackTrace();
+            }
+
+            gamePanel.getStateManager().setCurrentState( Constants.StateID.DESTROYED );
+        } else {
+            gamePanel.getStateManager().setCurrentState( Constants.StateID.PLAYING );
+        }
+    }
+
 
     public int getCurrentLevel() {
         return currentLevel;
