@@ -10,6 +10,9 @@ import java.awt.*;
 import java.lang.reflect.Constructor;
 import java.util.function.Consumer;
 
+/**
+ * Container class for projectiles
+ */
 public class Projectile extends Entity {
     protected int         towerRadius;
     protected double      xCoord; // for smoothness
@@ -49,6 +52,9 @@ public class Projectile extends Entity {
 
     }
 
+    /**
+     * standard way of tracking and compute direction is with the tangent formula, it has better accuracy
+     */
     public void update() {
         if (clock.mayUpate() && this.isActive()) {
             updateDirection();
@@ -57,7 +63,7 @@ public class Projectile extends Entity {
 
             if (colides( target.getX(), target.getY() )) {
                 target.takeDamage( this.damage );
-                target.setEnemyGotHit(true);
+                target.setEnemyGotHit( true );
                 this.setInactive();
             }
         }
@@ -100,6 +106,13 @@ public class Projectile extends Entity {
         this.direction = direction;
     }
 
+    /**
+     * <p> Basically, it checks if two rectangles intersect. Each of the two rectangles represent a sprite and entity.</p>
+     * <p>the aim of this method is to check whether the tower hits an enemy.</p>
+     * @param destX enemy X coordinate
+     * @param destY enemy Y coordinate
+     * @return true if the projectile hits the enemy
+     */
     public boolean colides(int destX, int destY) {
         Constants.PairOfCoordinates leftTopCorner     = new Constants.PairOfCoordinates( ( int ) this.xCoord, ( int ) this.yCoord );
         Constants.PairOfCoordinates rightTopCorner    = new Constants.PairOfCoordinates( ( int ) this.xCoord + Constants.PROJECTILE_SIZE, ( int ) this.yCoord );

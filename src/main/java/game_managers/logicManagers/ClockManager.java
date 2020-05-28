@@ -5,6 +5,9 @@ import utilities.Clock;
 import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Used to manage clocks
+ */
 public class ClockManager {
     private static ClockManager       clockManager;
     private static ReentrantLock      singletonLock;

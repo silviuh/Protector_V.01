@@ -7,6 +7,9 @@ import game_managers.logicManagers.GameStateManager;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * Observer used to perform a game loop: update + render
+ */
 public class GameLoop implements ActionListener {
 
     private GamePanel        gamePanel;

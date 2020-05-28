@@ -19,6 +19,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * InGameMenu used for speed Acceleration / Decceleration, pause, game save and exit.
+ */
 public class InGameMenu {
     private static          ReentrantLock singletonLock;
     private static volatile InGameMenu    inGameMenu;

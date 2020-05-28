@@ -12,6 +12,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 
+/**
+ * the top level container for the UI arhitecture
+ */
 public class GameMainFrame extends JFrame {
     private JPanel        mainPanelContainer = null;
     private GamePanel     gamePanel          = null;
@@ -76,6 +79,10 @@ public class GameMainFrame extends JFrame {
         }
     }
 
+    /**
+     * the games used a Panel container and a card Layout to switch between panels
+     * @throws IOException
+     */
     public void initializeLayout() throws IOException {
         Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
                 "." +

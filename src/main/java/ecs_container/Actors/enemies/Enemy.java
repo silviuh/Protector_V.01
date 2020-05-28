@@ -9,6 +9,10 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * blueprint for specialized enemies
+ * abstract class
+ */
 public abstract class Enemy extends Mob {
 
     protected boolean enemyGotHit = false;
@@ -124,6 +128,11 @@ public abstract class Enemy extends Mob {
         }
     }
 
+    /**
+     * Updates enemy coordinates and changes the current frame, giving the impression of moving
+     * @param xCoord enemy x coordinate on the board
+     * @param yCoord enemy y coordinate on the board
+     */
     public void update(int xCoord, int yCoord) {
         if (clock.mayUpate()) {
             super.update();

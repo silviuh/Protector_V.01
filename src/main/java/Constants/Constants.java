@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Class used as a container for constants
+ * constants are made static with a view of having global scope
+ */
 public class Constants {
     public static final GameLogger gameLogger = new GameLogger();
     public static       Font       KENVECTOR;

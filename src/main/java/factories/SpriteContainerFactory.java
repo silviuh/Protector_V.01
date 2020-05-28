@@ -6,6 +6,9 @@ import graphic_context.SpriteSheet;
 import javax.swing.*;
 import java.util.ArrayList;
 
+/**
+ * Factory class used for creating sprites.
+ */
 public class SpriteContainerFactory {
     private SpriteContainerFactory() {
 

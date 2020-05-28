@@ -6,6 +6,9 @@ import game_managers.logicManagers.ClockManager;
 import graphic_context.Tile;
 import utilities.Clock;
 
+/**
+ * Factory class used for creating attackBehaviours for different types of enemies.
+ */
 public class EnemyFactory {
     private static ClockManager clockManager;
     private EnemyFactory() {

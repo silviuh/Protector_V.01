@@ -18,7 +18,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
-
+/**
+ * menu used to display top n highscores
+ */
 public class HighScoreMenu extends JPanel {
     Dimension screenSize;
     int       screenWidth;
@@ -59,9 +61,17 @@ public class HighScoreMenu extends JPanel {
                 singletonLock.unlock();
             }
         }
+
         return highScoreMenu;
     }
 
+    /**
+     * The method queries the data base
+     * @throws IOException
+     * @throws FontFormatException
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public void initializeVariables() throws IOException, FontFormatException, SQLException, ClassNotFoundException {
         scores = new ArrayList<>( Constants.MAX_NUMBER_OF_SCORES_IN_LEADERBORD );
 

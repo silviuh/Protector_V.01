@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * manages the towers
+ */
 public class TowerManager {
     private static volatile TowerManager                          towerManager;
     private static          ReentrantLock                         singletonLock;
@@ -88,7 +91,6 @@ public class TowerManager {
             }
         }
     }
-
 
     public void hideVisibleRange(int towerX, int towerY) {
         for (ArrayList< Tower > towerList : container.values()) {
@@ -184,6 +186,10 @@ public class TowerManager {
     }
 
 
+    /**
+     * used to serialize towers and store the result string in the local db
+     * @return the serialized string
+     */
     public String serializeTowers() {
         Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
                 "." +
@@ -211,6 +217,10 @@ public class TowerManager {
         return result.toString();
     }
 
+    /**
+     * used to deserialize towers
+     * @param serializedContainer the serialization result string
+     */
     public void deserializeTowers(String serializedContainer) {
         Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
                 "." +

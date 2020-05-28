@@ -8,6 +8,9 @@ import utilities.Clock;
 
 import java.util.ArrayList;
 
+/**
+ * Slime class, inherits Enemy
+ */
 public class Slime extends Enemy {
 
     public Slime(){

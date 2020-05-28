@@ -7,6 +7,9 @@ import utilities.Clock;
 
 import java.awt.*;
 
+/**
+ * Specialized tower class, it used Cannon blasts.
+ */
 public class CannonTower extends Tower {
     public CannonTower(int xPos, int yPos, SpriteSheet sprite, Color innerCirclecColor, Color outerCircleColor,
                        Color textInfoColor, int range, String name, TowerBehaviour towerBehaviour,

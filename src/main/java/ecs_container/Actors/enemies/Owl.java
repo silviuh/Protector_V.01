@@ -8,6 +8,10 @@ import utilities.Clock;
 
 import java.util.ArrayList;
 
+/**
+ * Owl class, inherits Enemy
+ */
+
 public class Owl extends Enemy {
     public Owl(){
         super();

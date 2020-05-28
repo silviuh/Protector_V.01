@@ -13,6 +13,9 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * used to manage enemies
+ */
 public class EnemyManager {
     private                 MapManager                            mapManager;
     private static volatile EnemyManager                          enemyManager;
@@ -55,6 +58,9 @@ public class EnemyManager {
         }
     }
 
+    /**
+     * responsible for updating the enemies and manage their life time.
+     */
     public void update() {
         for (ArrayList< Enemy > enemyList : container.values()) {
             for (Enemy enemy : enemyList) {
@@ -85,6 +91,13 @@ public class EnemyManager {
         return enemy.getX() == Player.getFortressX() && enemy.getY() == Player.getFortressY();
     }
 
+    /**
+     * used for each enemy. it calculates the next valid position in the map
+     * <p>the enemy may move only if the candidate tile is TRAVERSABLE and does not represent a former tile from the path.</p>
+     *
+     * @param enemy forEach enemy
+     * @return
+     */
     public Constants.PairOfCoordinates calculateNextValidPosition(Enemy enemy) {
         ArrayList< Constants.PairOfCoordinates > validCandidates = new ArrayList< Constants.PairOfCoordinates >();
 
@@ -120,6 +133,14 @@ public class EnemyManager {
                 candidatePair.getyCoord() == enemy.getLastY() );
     }
 
+    /**
+     * used to provide a list of in-range enemies for a given tower
+     *
+     * @param centreX tower radius circle center X coordinate
+     * @param centreY tower radius circle center Y coordinate
+     * @param radius  tower radius
+     * @return
+     */
     public ArrayList< Enemy > provideEnemiesInRange(int centreX, int centreY, int radius) {
         ArrayList< Enemy > validCandidates = new ArrayList< Enemy >();
 
@@ -142,6 +163,10 @@ public class EnemyManager {
         return validCandidates;
     }
 
+    /**
+     * method used to serialize enemy objects and store them into a local db.
+     * @return returns the serialized result in a string form.
+     */
     public String serializeEnemies() {
         Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
                 "." +
@@ -167,6 +192,10 @@ public class EnemyManager {
         return result.toString();
     }
 
+    /**
+     * used to deserialize the string and to create enemies
+     * @param serializedContainer the string used for serialization
+     */
     public void deserializeEnemies(String serializedContainer) {
         Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
                 "." +
@@ -216,6 +245,12 @@ public class EnemyManager {
         return -1;
     }
 
+    /**
+     * provides the sprite rectangle represented by each enemy
+     * @param xCoord enemy X
+     * @param yCoord enemy Y
+     * @return returns a list with the rectangle's vertices
+     */
     static public ArrayList< Constants.PairOfCoordinates > spriteRectangleVertices(int xCoord, int yCoord) {
         ArrayList< Constants.PairOfCoordinates > results = new ArrayList< Constants.PairOfCoordinates >( 4 );
         results.add( // NW

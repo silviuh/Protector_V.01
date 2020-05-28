@@ -27,6 +27,13 @@ public class MapManager {
     private                 JPanel                      mainFrameObserver;
     private                 int                         tileSize;
 
+    /**
+     * loads the current level map from the db
+     *
+     * @param currentLevel
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public void loadMapFromDB(int currentLevel) throws SQLException, ClassNotFoundException {
         int currentTile = 0;
         dbManager.openConnection();
@@ -136,6 +143,12 @@ public class MapManager {
         return mapManager;
     }
 
+    /**
+     * loads map directly from the text file
+     *
+     * @param txtFilePath
+     * @throws IOException
+     */
     void loadConfigFromTextFile(String txtFilePath) throws IOException {
         int currentTile = 0;
         BufferedReader bufReader = new BufferedReader(
@@ -239,6 +252,13 @@ public class MapManager {
         }
     }
 
+    /**
+     * method used to try to place a tower to a given position
+     * @param desiredX tower X
+     * @param desiredY tower Y
+     * @param towerImage tower Sprite
+     * @return null if the position is invalid
+     */
     public Pair placeTower(int desiredX, int desiredY, Image towerImage) {
         int  i          = 0;
         Pair returnPair = new Pair( -1, -1 );

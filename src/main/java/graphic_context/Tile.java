@@ -5,6 +5,9 @@ import Constants.Constants;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * rendable rectangle with attached image
+ */
 public class Tile {
     public SpriteSheet sprite;
     public boolean     spriteIsOverriden = false;

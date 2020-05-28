@@ -6,6 +6,10 @@ import graphic_context.SpriteSheet;
 import java.awt.*;
 import java.util.ArrayList;
 
+/**
+ * Base class for Enemies
+ */
+
 public abstract class Mob extends Entity {
     protected ArrayList< SpriteSheet > sprites;
     protected int                      currentSpriteNumber;

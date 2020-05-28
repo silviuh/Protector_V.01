@@ -3,6 +3,9 @@ package game_managers.logicManagers;
 import javax.swing.*;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * used to increase or decrease the game speed
+ */
 public class AccelerationManager {
     private                 long                acceleration;
     private                 long                gameSpeed;

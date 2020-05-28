@@ -18,6 +18,9 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * responsible for managing levels
+ */
 public class WaveManager {
     private                 boolean                     spawnEnemies = true;
     private                 int                         currentLevel;
@@ -48,6 +51,9 @@ public class WaveManager {
         initialize();
     }
 
+    /**
+     * initialize the levelConfigurations
+     */
     public void initialize() {
         levelConfigurations = new HashMap<>( Constants.NUMBER_OF_LEVELS );
         levelConfigurations.put( 1, Constants.NUMBER_OF_ENEMIES_LEVEL_1 );
@@ -94,6 +100,11 @@ public class WaveManager {
         return waveManager;
     }
 
+    /**
+     * loads the next level if the conditions are fullfilled
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public void loadNextLevel() throws SQLException, ClassNotFoundException {
         Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
                 "." +
@@ -137,6 +148,9 @@ public class WaveManager {
         }
     }
 
+    /**
+     * displays dialog boxes according to the current progress in the game and changes the game state
+     */
     public void nextLevelConfig() {
         int userInput = 0;
         this.gamePanel.getStateManager().setCurrentState( Constants.StateID.PAUSED );
@@ -194,6 +208,9 @@ public class WaveManager {
         return currentLevel;
     }
 
+    /**
+     * used to spawn enemies according to the current level
+     */
     public void update() {
         if (spawnEnemies) {
             if (currentLevel < Constants.MAX_LEVEL + 1) {

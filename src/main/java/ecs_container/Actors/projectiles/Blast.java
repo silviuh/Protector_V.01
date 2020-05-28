@@ -5,6 +5,10 @@ import ecs_container.Actors.enemies.Enemy;
 import graphic_context.SpriteSheet;
 import utilities.Clock;
 
+/**
+ * first type of projectile
+ */
+
 public class Blast extends Projectile {
     public int                         dx;
     public int                         dy;
@@ -37,6 +41,11 @@ public class Blast extends Projectile {
         setDirection();
     }
 
+    /**
+     * <p>the projectile changes direction in accord of the enemy movement.</p>
+     * <p>there is also a tower range and a cooldown check.</p>
+     *
+     */
     @Override
     public void update() {
         if (

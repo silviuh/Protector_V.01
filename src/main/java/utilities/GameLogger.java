@@ -8,6 +8,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.logging.*;
 
+/**
+ * use to log events/errors/warnings in a dump-file.
+ */
 public class GameLogger {
     private final Logger      logger      = Logger.getLogger( GameLogger.class.getName() );
     private       FileHandler fileHandler = null;
@@ -17,6 +20,7 @@ public class GameLogger {
 
         SimpleDateFormat format = new SimpleDateFormat( "M-d_HHmmss" );
         try {
+            fileHandler = new FileHandler( format.format( Calendar.getInstance().getTime() ) + ".log" );
             fileHandler = new FileHandler( Constants.LOG_FILE_URL
                     + format.format( Calendar.getInstance().getTime() ) + ".log" );
         } catch ( Exception e ) {
@@ -43,6 +47,7 @@ public class GameLogger {
         } );
 
         logger.addHandler( fileHandler );
+        // fileHandler.close();
     }
 
     public void log(String Message) {

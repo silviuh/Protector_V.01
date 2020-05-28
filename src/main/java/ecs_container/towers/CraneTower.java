@@ -7,6 +7,9 @@ import utilities.Clock;
 
 import java.awt.*;
 
+/**
+ * Specialized tower class, it used crane trackers.
+ */
 public class CraneTower extends Tower {
     public CraneTower(int xPos, int yPos, SpriteSheet sprite, Color innerCirclecColor, Color outerCircleColor,
                       Color textInfoColor, int range, String name, TowerBehaviour towerBehaviour,

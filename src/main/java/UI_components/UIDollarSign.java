@@ -8,6 +8,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+/**
+ * used to display the current amount of in-game money.
+ */
 public class UIDollarSign {
     private float counter;
     private Image dollarImage;

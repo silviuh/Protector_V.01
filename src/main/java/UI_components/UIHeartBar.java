@@ -8,6 +8,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 
+/**
+ * used to display the current amount of in-game health.
+ */
 public class UIHeartBar {
     private int   currentNrOfLifes;
     private int   initialNumberOfLifes;

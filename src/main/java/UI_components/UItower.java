@@ -5,6 +5,9 @@ import factories.ImageFactory;
 import graphic_context.SpriteFactory;
 import graphic_context.SpriteSheet;
 
+/**
+ * used to display the towers in an UI format.
+ */
 public class UItower {
     private float               towerPrice;
     private SpriteSheet         sprite;

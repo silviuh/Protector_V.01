@@ -25,6 +25,9 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.HashMap;
 
+/**
+ * Master class for the game
+ */
 public class GamePanel extends JPanel {
     private Font          textFont;
     private Timer         timer;
@@ -46,6 +49,15 @@ public class GamePanel extends JPanel {
     private Long      lastTime  = 0L;
     private float     fpsRate   = 0f;
 
+
+    /**
+     * setUp for the game according to the player choice: dataBase load or new game.
+     *
+     * @param dataSet the dataSet result from the db query
+     * @param frame   reference to the top level Swing container
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public void gameSetup(HashMap< String, Object > dataSet, GameMainFrame frame) throws SQLException, ClassNotFoundException {
         this.gameFrame = frame;
 
@@ -175,6 +187,12 @@ public class GamePanel extends JPanel {
         lastTime = System.nanoTime();
     }
 
+    /**
+     * initialize all entities in the game
+     *
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     private void initializeVariables() throws SQLException, ClassNotFoundException {
         Constants.gameLogger.log( new Exception().getStackTrace()[1].getClassName() +
                 "." +
@@ -307,6 +325,12 @@ public class GamePanel extends JPanel {
         repaint();
     }
 
+    /**
+     * The main update function
+     *
+     * @throws SQLException
+     * @throws ClassNotFoundException
+     */
     public void update() throws SQLException, ClassNotFoundException {
         clockManager.update();
         waveManager.update();
@@ -354,6 +378,11 @@ public class GamePanel extends JPanel {
         }
     }
 
+    /**
+     * the main rendering function
+     * @param g the Swing graphic context
+     * @throws IOException
+     */
     public void drawUI(Graphics g) throws IOException {
 
         Player.uiHeartBar.render( g );

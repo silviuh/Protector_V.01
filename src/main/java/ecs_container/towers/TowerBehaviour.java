@@ -2,6 +2,10 @@ package ecs_container.towers;
 
 import Constants.Constants;
 
+/**
+ * <p>Utility class, used for keeping track of the relevant information and data a tower posses.</p>
+ * <p>It's used in the Tower constructor.</p>
+ */
 public class TowerBehaviour {
     public Constants.attackType attackType;
     public int                  enemiesAffected;

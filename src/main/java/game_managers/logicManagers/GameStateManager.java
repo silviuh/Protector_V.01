@@ -4,6 +4,9 @@ import Constants.Constants;
 
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * change game States depending on the events in the game: PAUSED, PLAY, DESTROYED etc.
+ */
 public class GameStateManager {
     private                 Constants.StateID currentState = Constants.StateID.IDLE;
     private static volatile GameStateManager  gameStateManager;

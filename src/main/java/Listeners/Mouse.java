@@ -19,6 +19,9 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.util.function.Consumer;
 
+/**
+ * Mouse Manager Class, used for handling the mouse events.
+ */
 public class Mouse implements MouseMotionListener, MouseListener {
     boolean         towerIsInHand    = false;
     boolean         upgradeIsInHand  = false;
@@ -82,6 +85,15 @@ public class Mouse implements MouseMotionListener, MouseListener {
     public void mouseMoved(MouseEvent e) {
     }
 
+    /**
+     * mouse click events handling function
+     * <p>if the mouse is right-clicked 2 times, then we might have to display a selected tower specifications.</p>
+     * <p>if the mouse is right-clicked 1 time, then the player may have bought a tower.</p>
+     * <p>if the mouse is left-clicked 1 time, then the player may have bought an upgrade or tried to sell a tower.</p>
+     * <p>all the events are displayed on the UI Console</p>
+     *
+     * @param e awt mouseEvent
+     */
     @Override
     public void mouseClicked(MouseEvent e) {
         clickCount = e.getClickCount();

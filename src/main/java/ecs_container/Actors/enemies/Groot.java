@@ -8,6 +8,9 @@ import utilities.Clock;
 
 import java.util.ArrayList;
 
+/**
+ * Devil class, inherits Enemy
+ */
 public class Groot extends Enemy{
     public Groot(){
         super();

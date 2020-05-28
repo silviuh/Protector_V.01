@@ -18,6 +18,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * load menu to print the display n game savings
+ */
 public class LoadGameMenu extends JPanel {
     Dimension screenSize;
     int       screenWidth;

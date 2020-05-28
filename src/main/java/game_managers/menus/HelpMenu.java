@@ -15,7 +15,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
-
+/**
+ * panel used to display help information for the gameplay
+ */
 public class HelpMenu extends JPanel {
     Dimension screenSize;
     int       screenWidth;

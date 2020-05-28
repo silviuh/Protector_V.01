@@ -7,6 +7,9 @@ import graphic_context.SpriteSheet;
 import java.awt.*;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Used to manage and display the UI Towers.
+ */
 public class UItowersManager {
     private static          ReentrantLock   singletonLock;
     private static volatile UItowersManager uItowersManager;
@@ -78,6 +81,12 @@ public class UItowersManager {
         return uItowersManager;
     }
 
+    /**
+     * returns a tower data when the player right-clicks the tower sprite from the towers menu
+     * @param mouseX
+     * @param mouseY
+     * @return
+     */
     public UItower getTower(int mouseX, int mouseY) {
         if (mouseX >= Constants.X_UI_TOWER_COORDINATE
                 && mouseX <= Constants.X_UI_TOWER_COORDINATE + Constants.TOWER_WIDTH) {

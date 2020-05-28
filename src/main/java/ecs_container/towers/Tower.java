@@ -12,6 +12,9 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.Random;
 
+/**
+ * Top-level hierarchy class, in the entity-component-system paradigm
+ */
 public abstract class Tower {
     public    String                   name;
     public    boolean                  drawRange       = false;
@@ -88,6 +91,10 @@ public abstract class Tower {
         this.xPos = xPos;
     }
 
+    /**
+     * <p>The tower creates projectiles if it has any enemies in range</p>
+     * <p>It is also responsible for the projectiles it creates</p>
+     */
     public void update() {
         if (clock.mayUpate()) {
             ArrayList< Enemy > enemies = enemyManagerRef.provideEnemiesInRange(
@@ -125,6 +132,10 @@ public abstract class Tower {
         }
     }
 
+    /**
+     * tower may be sold
+     * @return the refund Value for the desired tower
+     */
     public double refund() {
         this.setActive( false );
         return this.behaviour.refundValue;
@@ -134,6 +145,10 @@ public abstract class Tower {
         return this.behaviour.currentLevel;
     }
 
+    /**
+     * Tower may be upgraded using a specialized class
+     * @return Tower may be upgraded only if the current level does not reach the maximum level
+     */
     public boolean upgrade() {
         if (this.behaviour.currentLevel < this.behaviour.maxLevel) {
             this.behaviour.currentLevel++;
@@ -149,6 +164,11 @@ public abstract class Tower {
         return this.behaviour.currentLevel != this.behaviour.maxLevel;
     }
 
+    /**
+     * <p>If drawRange param is active, informations about the chosen tower are rendered on the screen. (By double clicking the tower)</p>
+     * <p>The Tower it's also responsible for the rendering of it's projectiles.</p>
+     * @param graphicsContext The Swing drawing context
+     */
     public void render(Graphics graphicsContext) {
         if (drawRange) {
             graphicsContext.setColor( this.outerCircleColor );

@@ -6,6 +6,10 @@ import ecs_container.Actors.enemies.Enemy;
 import graphic_context.SpriteSheet;
 import utilities.Clock;
 
+/**
+ * second type of projectile
+ */
+
 public class Missle extends Projectile {
 
     public Missle(double x, double y, Enemy targetEnemy, int towerDamage,

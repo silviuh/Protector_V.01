@@ -15,6 +15,9 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Simulating a GNU console, used to display informations about game events.
+ */
 public class UIConsole {
     private static ArrayList< Image >  buyHistory;
     private static Image               consoleImage;

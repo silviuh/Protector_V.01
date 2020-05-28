@@ -5,6 +5,9 @@ import Constants.Constants;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * container for java.awt Image
+ */
 public class SpriteSheet {
     private Image                  image;
     private Constants.tileProperty property;

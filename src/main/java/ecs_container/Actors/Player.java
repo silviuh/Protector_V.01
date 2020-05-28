@@ -10,6 +10,9 @@ import game_managers.logicManagers.ClockManager;
 import javax.swing.*;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * Class used to store and manage relevant in-game information
+ */
 public class Player {
     public static  int           currentLevel;
     public static  UIHeartBar    uiHeartBar;
@@ -75,6 +78,11 @@ public class Player {
         score = 0;
     }
 
+    /**
+     * used by enemies when they reach the ally castle
+     * @param amount the damage each enemy makes to the ally keep
+     * @return if the health is below 0, the Player loses the game
+     */
     public static boolean modifyLives(int amount) {
         if (lives + amount <= Constants.MAX_LIVES_AMOUNT_LEVEL_1) {
             lives += amount;
@@ -100,6 +108,11 @@ public class Player {
         Player.score = score;
     }
 
+    /**
+     * If the player has enough money for the desired tower, money is taken from the deposit
+     * @param towerType Type of the desired tower
+     * @return true if the player has enough money
+     */
     public static boolean tryToBuyTower(Constants.towerType towerType) {
         int cost = 0;
         switch (towerType) {
@@ -121,7 +134,6 @@ public class Player {
             }
         }
 
-
         if (deposit - cost >= 0) {
             deposit -= cost;
             uiDollarSign.modifyCashAmount( -cost );
@@ -131,6 +143,11 @@ public class Player {
         return false;
     }
 
+    /**
+     * If the player has enough money to upgrade the desired tower, money is taken from the deposit
+     * @param upgradeCost cost of the desired tower
+     * @return true if the player has enough money
+     */
     public static boolean tryToBuyUpgrade(float upgradeCost) {
         if (deposit - upgradeCost >= 0) {
             deposit -= upgradeCost;

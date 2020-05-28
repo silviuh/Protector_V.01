@@ -13,6 +13,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * MainMenu and top-level container for the other menus.
+ */
 public class MainMenu extends JPanel {
     private static volatile MainMenu          mainMenu;
     private static          ReentrantLock     singletonLock;
@@ -163,6 +166,9 @@ public class MainMenu extends JPanel {
 
     }
 
+    /**
+     * used to switch between menus
+     */
     public void initializeFunctionality() {
         playGameBtn.addActionListener( new ActionListener() {
             @Override

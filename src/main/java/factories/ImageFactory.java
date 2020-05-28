@@ -4,6 +4,9 @@ import Constants.Constants;
 
 import javax.swing.*;
 
+/**
+ * Factory class used for different types of images.
+ */
 public class ImageFactory {
     public static ImageIcon createImage(Constants.Image image) {
 

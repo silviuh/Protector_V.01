@@ -4,6 +4,9 @@ import Constants.Constants;
 import ecs_container.towers.TowerBehaviour;
 import utilities.Clock;
 
+/**
+ * Factory class used for creating attackBehaviours for different types of towers
+ */
 public class AttackBehaviours {
     private AttackBehaviours() {
 

@@ -5,6 +5,9 @@ import ecs_container.Actors.enemies.Enemy;
 import graphic_context.SpriteSheet;
 import utilities.Clock;
 
+/**
+ * Derivate class from Blast projectile
+ */
 public class ArcaneBlast extends Blast {
 
     public ArcaneBlast(double x, double y, Enemy targetEnemy, int towerDamage,

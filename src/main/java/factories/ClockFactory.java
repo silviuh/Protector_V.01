@@ -4,6 +4,9 @@ import Constants.Constants;
 import ecs_container.towers.ArcaneTower;
 import utilities.Clock;
 
+/**
+ * Factory class used for creating timing clocks for different types of entities.
+ */
 public class ClockFactory {
 
     private ClockFactory() {

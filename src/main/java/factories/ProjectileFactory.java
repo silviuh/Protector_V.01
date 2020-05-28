@@ -9,6 +9,9 @@ import utilities.Clock;
 
 import javax.swing.*;
 
+/**
+ * Factory class used for creating different types of projectiles.
+ */
 public class ProjectileFactory {
     private static ClockManager clockManager;
     public static void setClockManager(ClockManager clockManager) {

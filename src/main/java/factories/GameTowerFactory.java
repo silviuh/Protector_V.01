@@ -7,6 +7,9 @@ import game_managers.logicManagers.EnemyManager;
 import graphic_context.SpriteSheet;
 import utilities.Clock;
 
+/**
+ * Factory class used for creating different types of towers.
+ */
 public class GameTowerFactory {
     static         EnemyManager enemyManager;
     private static ClockManager clockManager;

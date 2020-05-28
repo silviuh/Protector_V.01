@@ -7,6 +7,9 @@ import utilities.Clock;
 
 import java.awt.*;
 
+/**
+ * Specialized tower class, it used zombie missles.
+ */
 public class ZombieTower extends Tower {
 
     public ZombieTower(int xPos, int yPos, SpriteSheet sprite, Color innerCirclecColor, Color outerCircleColor,

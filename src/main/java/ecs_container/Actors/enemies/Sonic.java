@@ -8,6 +8,10 @@ import utilities.Clock;
 
 import java.util.ArrayList;
 
+/**
+ * Sonic class, inherits Enemy
+ */
+
 public class Sonic extends Enemy {
     public Sonic() {
         super();

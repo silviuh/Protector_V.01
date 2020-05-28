@@ -8,6 +8,9 @@ import utilities.Clock;
 import java.awt.*;
 import java.sql.Connection;
 
+/**
+ * Specialized tower class, it used Arcane blasts.
+ */
 public class ArcaneTower extends Tower {
     public ArcaneTower(int xPos, int yPos, SpriteSheet sprite, Color innerCirclecColor, Color outerCircleColor,
                        Color textInfoColor, int range, String name, TowerBehaviour towerBehaviour,

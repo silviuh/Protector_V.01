@@ -5,6 +5,9 @@ import ecs_container.Actors.enemies.Enemy;
 import graphic_context.SpriteSheet;
 import utilities.Clock;
 
+/**
+ * Specialized projectile used for enemy tracking
+ */
 public class Tracker extends Projectile {
     public Constants.PairOfCoordinates towerCentre;
     public int                         dx;

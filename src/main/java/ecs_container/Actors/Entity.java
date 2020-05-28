@@ -4,6 +4,9 @@ import java.awt.*;
 import java.util.Random;
 import java.util.logging.Level;
 
+/**
+ *Top-level hierarchy class, in the entity-component-system paradigm
+ */
 public abstract class Entity {
     protected int x, y;
     protected boolean isActive = true;

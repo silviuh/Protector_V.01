@@ -4,6 +4,14 @@ import utilities.GameLogger;
 
 import javax.swing.*;
 
+/**
+ * @author silviu hartan
+ * @version  1.0
+ * @since 2020-05-15
+ * Main starting point
+ * invokes the swing thread
+ */
+
 public class App {
     public static void main(String[] args) {
         SwingUtilities.invokeLater( new Runnable() {
