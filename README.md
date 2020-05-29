@@ -45,6 +45,10 @@ In a tower defense, unlike the base, the player's main character is often invinc
 ![](readme_images/level_3.png)
 
 ##  Usage :question:
+-   The main menu used for controlling the game.
+
+![](readme_images/starting_menu.png)
+---
 -   The game provides a help menu.
 
 ![](readme_images/help_menu.png)
