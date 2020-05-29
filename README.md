@@ -9,7 +9,7 @@
 	* Install java on Windows: [link](https://www.java.com/en/download/help/windows_manual_download.xml)
 	*  Install java on Ubuntu and Linux Mint: 
 		```bash
-			 sudo apt install default-jre
+		     sudo apt install default-jre
 		     sudo apt install default-jdk
 		     sudo apt install oracle-java14-installer
 		     sudo apt install oracle-java14-set-default
